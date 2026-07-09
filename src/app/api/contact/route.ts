@@ -73,7 +73,7 @@ export async function POST(req: Request) {
           html: `
             <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 30px 20px; border-radius: 8px; background-color: #ffffff;">
               <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid #f0eada; padding-bottom: 15px;">
-                <img src="https://www.rnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS" style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #FF8A6B; display: inline-block; background-color: #ffffff;" />
+                <img src="https://rmnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS" style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #FF8A6B; display: inline-block; background-color: #ffffff;" />
                 <h3 style="color: #FF8A6B; margin: 8px 0 0; font-size: 16px; font-weight: bold; letter-spacing: 2px; font-family: Georgia, serif;">NIKASH CRACKERS</h3>
               </div>
               <h2 style="color: #E8394F; margin-top: 0;">Welcome to NIKASH CRACKERS!</h2>
@@ -95,7 +95,7 @@ export async function POST(req: Request) {
           html: `
             <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 30px 20px; border-radius: 8px; background-color: #ffffff;">
               <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid #f0eada; padding-bottom: 15px;">
-                <img src="https://www.rnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS" style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #FF8A6B; display: inline-block; background-color: #ffffff;" />
+                <img src="https://rmnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS" style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid #FF8A6B; display: inline-block; background-color: #ffffff;" />
                 <h3 style="color: #FF8A6B; margin: 8px 0 0; font-size: 16px; font-weight: bold; letter-spacing: 2px; font-family: Georgia, serif;">NIKASH CRACKERS</h3>
               </div>
               <h2 style="color: #d9534f; margin-top: 0;">New Contact Inquiry</h2>

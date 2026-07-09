@@ -145,11 +145,11 @@ const C = {
   bgRow:     [248, 248, 248]  as const,
   bgCard:    [245, 245, 245]  as const,
   white:     [255, 255, 255]  as const,
-  coral:     [255, 107, 74]   as const,
+  coral:     [140, 29, 29]    as const, // Burgundy Red for Nikash
   green:     [22, 128, 57]    as const,
   greenBg:   [235, 250, 240]  as const,
   greenBdr:  [34, 160, 72]    as const,
-  tableHead: [38, 38, 38]     as const,
+  tableHead: [140, 29, 29]    as const, // Burgundy Red for Nikash
 };
 
 const PAGE_W = 210;
@@ -211,7 +211,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
 
     // Company name block
     const tx = M + 24;
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(20);
     doc.setTextColor(...C.black);
     doc.text('NIKASH CRACKERS', tx, y + 7);
@@ -221,19 +221,19 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
     doc.text('NIKASH CRACKERS | SIVAKASI FACTORY DIRECT FIREWORKS', tx, y + 12.5);
 
     doc.setFontSize(6.5);
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(...C.mid);
-    doc.text('1/406, Sivakasi-Vembakottai Main Road, Opp. EB Office, Vembakottai, Tamil Nadu', tx, y + 16.5);
+    doc.text('9QCM+7FJ, Madathupatti, Kananjampatti, Tamil Nadu 626128', tx, y + 16.5);
     doc.text('Phone: +91 78679 55841  |  Email: rnikashcrackers@gmail.com', tx, y + 20);
 
     // Receipt title (right side)
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(15);
     doc.setTextColor(...C.coral);
     doc.text('ORDER RECEIPT', PAGE_W - M, y + 7, { align: 'right' });
 
     doc.setFontSize(7);
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(...C.mid);
     if (isFirstPage) {
       doc.text('ORIGINAL FOR CUSTOMER - ' + String(data.customerName || ''), PAGE_W - M, y + 12, { align: 'right' });
@@ -259,17 +259,17 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
     doc.setLineWidth(0.3);
     doc.line(M, fy, PAGE_W - M, fy);
 
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(7);
     doc.setTextColor(...C.black);
     doc.text('NIKASH CRACKERS  |  SIVAKASI', PAGE_W / 2, fy + 5, { align: 'center' });
 
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(6);
     doc.setTextColor(...C.mid);
     doc.text('Premium Friendly Sivakasi Fireworks  |  Contact: +91 78679 55841', PAGE_W / 2, fy + 9, { align: 'center' });
 
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(6.5);
     doc.setTextColor(...C.dark);
     doc.text('Page ' + pageNum + ' of ' + totalPgs, PAGE_W / 2, fy + 14, { align: 'center' });
@@ -286,7 +286,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
     doc.rect(M, y, CW, TH, 'F');
 
     doc.setFontSize(6.5);
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(...C.white);
 
     const ty = y + 4.8;
@@ -346,7 +346,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   doc.roundedRect(M, y, CW, cardH, 1.5, 1.5, 'FD');
 
   // Row 1: Order Ref & Date
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
   doc.setTextColor(...C.dark);
   doc.text('Order Reference:', M + 6, y + 5.5);
@@ -355,12 +355,12 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
 
   doc.setTextColor(...C.dark);
   doc.text('Order Date:', M + 100, y + 5.5);
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setTextColor(...C.mid);
   doc.text(String(data.date || ''), M + 122, y + 5.5);
 
   // Row 2: Order Status — CONFIRMED badge
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setTextColor(...C.dark);
   doc.text('Order Status:', M + 6, y + 11.5);
 
@@ -374,7 +374,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   doc.setLineWidth(0.5);
   doc.roundedRect(bx, by, bw, bh, 1.5, 1.5, 'FD');
   doc.setFontSize(7);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setTextColor(...C.green);
   doc.text('CONFIRMED', bx + bw / 2, by + 3.8, { align: 'center' });
 
@@ -402,16 +402,16 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
 
   // LEFT: Customer Details
   doc.setFontSize(7);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setTextColor(...C.coral);
   doc.text('CUSTOMER DETAILS', M + 6, y + 6);
 
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
   doc.setTextColor(...C.black);
   doc.text(String(data.customerName || ''), M + 6, y + 12);
 
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   doc.setTextColor(...C.dark);
   doc.text('Phone:  ' + String(data.customerPhone || ''), M + 6, y + 17);
@@ -429,11 +429,11 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   // RIGHT: Place of Supply & Transport
   const rx = midX + 6;
   doc.setFontSize(7);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setTextColor(...C.coral);
   doc.text('PLACE OF SUPPLY & TRANSPORT', rx, y + 6);
 
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   const supplyData = [
     ['State:', custState || 'N/A'],
@@ -443,16 +443,16 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   ];
   let ry = y + 12;
   for (const [label, value] of supplyData) {
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(...C.dark);
     doc.text(label, rx, ry);
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(...C.black);
     doc.text(String(value), rx + 26, ry);
     ry += 4.5;
   }
 
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setFontSize(6.5);
   doc.setTextColor(...C.coral);
   doc.text('Pickup: Nearest Transport Office Hub', rx, ry + 1);
@@ -487,14 +487,14 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
     const ty = rowTop + 5;
 
     // S.No
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
     doc.setTextColor(...C.mid);
     doc.text(String(index + 1), col.sno + 5, ty, { align: 'center' });
 
     // Product Description
     doc.setTextColor(...C.black);
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     const nameStr = String(item.name || '');
     const maxNameW = col.qty - col.prod - 4; // 89 - 24 - 4 = 61mm
     const nameLines = doc.splitTextToSize(nameStr, maxNameW);
@@ -518,11 +518,11 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
     doc.text(rs(lineDiscount), col.actDiscount + 22, ty, { align: 'right' });
 
     // Net Total (Price * Qty, right-aligned, bold)
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(...C.black);
     const lineTotal = (item.price || 0) * (item.quantity || 0);
     doc.text(rs(lineTotal), col.end - 2, ty, { align: 'right' });
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
 
     // Draw row grid lines
     drawRowBorders(rowTop);
@@ -548,43 +548,43 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   // 1. Gross Amount (Actual Total MRP)
   const grossAmount = data.subtotal || data.items.reduce((sum, item) => sum + (item.mrp || item.price) * item.quantity, 0);
   doc.setFontSize(7.5);
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setTextColor(...C.mid);
   doc.text('Gross Amount (Actual Total):', totLabelX, y);
   doc.setTextColor(...C.dark);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.text(rs(grossAmount), totValueX, y, { align: 'right' });
   y += 5.5;
 
   // 2. Less: Discount
   const totalDiscount = data.discountTotal || 0;
   if (totalDiscount > 0) {
-    doc.setFont('times', 'normal');
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(...C.mid);
     doc.text('Less: Discount:', totLabelX, y);
     doc.setTextColor(...C.green);
-    doc.setFont('times', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.text('-' + rs(totalDiscount), totValueX, y, { align: 'right' });
     y += 5.5;
   }
 
   // 3. Total Value (Net)
   const netValue = grossAmount - totalDiscount;
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setTextColor(...C.mid);
   doc.text('Total Value (Net Amount):', totLabelX, y);
   doc.setTextColor(...C.dark);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.text(rs(netValue), totValueX, y, { align: 'right' });
   y += 5.5;
 
   // 4. Add: Packing & Forwarding Charges (3%)
   const packingCharges = data.packingCharges !== undefined ? data.packingCharges : Math.round(netValue * 0.03);
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setTextColor(...C.mid);
   doc.text('Add: Packing Charges (3%):', totLabelX, y);
   doc.setTextColor(...C.dark);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.text(rs(packingCharges), totValueX, y, { align: 'right' });
   y += 5.5;
 
@@ -602,7 +602,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   doc.roundedRect(npX, y - 2.5, npW, 11, 1.5, 1.5, 'F');
 
   doc.setFontSize(8.5);
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setTextColor(...C.white);
   doc.text('NET PAYABLE AMOUNT:', npX + 4, y + 4.5);
   doc.setTextColor(...C.coral);
@@ -617,7 +617,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   doc.setDrawColor(...C.border);
   doc.setLineWidth(0.3);
   doc.line(sigX, sigLineY, sigX + 45, sigLineY);
-  doc.setFont('times', 'normal');
+  doc.setFont('helvetica', 'normal');
   doc.setFontSize(6.5);
   doc.setTextColor(...C.mid);
   doc.text('Authorized Signatory', 66.5, sigLineY + 4, { align: 'center' });
@@ -634,12 +634,12 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   }
 
   // ── Professional Thank You Message ──
-  doc.setFont('times', 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
   doc.setTextColor(...C.coral);
   doc.text('Thank you for choosing us!', PAGE_W / 2, y + 5, { align: 'center' });
 
-  doc.setFont('times', 'italic');
+  doc.setFont('helvetica', 'italic');
   doc.setFontSize(12);
   doc.setTextColor(...C.dark);
   doc.text('Celebrate the joy from NIKASH CRACKERS.', PAGE_W / 2, y + 12, { align: 'center' });

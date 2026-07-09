@@ -218,7 +218,7 @@ export async function sendOrderStatusNotification(options: SendNotificationOptio
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;background-color:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.05);border:1px solid #E8E2D1;">
                   <tr>
                     <td style="background:linear-gradient(135deg,#1A1400 0%,#2D2200 100%);padding:35px 24px;text-align:center;">
-                      <img src="https://www.rnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS Logo" style="width:65px;height:65px;border-radius:50%;margin-bottom:12px;border:2px solid #FF8A6B;background-color:#ffffff;display:inline-block;" />
+                      <img src="https://rmnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS Logo" style="width:65px;height:65px;border-radius:50%;margin-bottom:12px;border:2px solid #FF8A6B;background-color:#ffffff;display:inline-block;" />
                       <h1 style="color:#FF8A6B;margin:0;font-size:22px;font-weight:800;letter-spacing:2px;font-family:'Cinzel', Georgia, serif;">NIKASH CRACKERS</h1>
                       <p style="color:#F4E296;margin:4px 0 0;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:600;font-family:'Inter', Arial, sans-serif;">Affordable Sivakasi Family Fireworks</p>
                     </td>

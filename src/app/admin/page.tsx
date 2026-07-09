@@ -239,7 +239,7 @@ function printLog(title: string, headers: string[], rows: string[][]) {
         <div class="brand">✦ NIKASH CRACKERS ✦</div>
         <h1>${title}</h1>
         <p>Generated on ${new Date().toLocaleDateString('en-IN', { day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit' })}</p>
-        <p>1/406, Sivakasi-Vembakottai Main Road, Opp. EB Office, Vembakottai | ☎ +91 78679 55841</p>
+        <p>9QCM+7FJ, Madathupatti, Kananjampatti, Tamil Nadu 626128 | ☎ +91 78679 55841</p>
       </div>
       <table>
         <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
@@ -339,7 +339,7 @@ export default function AdminPage() {
     global_discount: '60',
     min_order_value: '2000',
     company_name: 'NIKASH CRACKERS',
-    company_address: '1/406, SIVAKASI -VEMBAKOTAI MAIN ROAD, Opp to EB OFFICE,VEMBAKOTTAI.',
+    company_address: '9QCM+7FJ, Madathupatti, Kananjampatti, Tamil Nadu 626128.',
     mobile_number_1: '7867955841',
     mobile_number_2: '7867955841',
     whatsapp_number: '7867955841',
@@ -2742,155 +2742,7 @@ export default function AdminPage() {
                   />
                 </div>
 
-                {/* WHATSAPP API & NOTIFICATIONS SETTINGS */}
-                <div className="border-t border-[#E8E2D8]/60 pt-6 space-y-6">
-                  <div>
-                    <h3 className="text-sm font-bold font-display text-[#8C1D1D]">WhatsApp API & Notifications Settings</h3>
-                    <p className="text-[10px] text-[#5C544C] mt-1">Configure automated notifications via Meta Business API or UltraMsg</p>
-                  </div>
 
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">WhatsApp Provider *</label>
-                      <select 
-                        value={settings.whatsapp_provider || 'none'} 
-                        onChange={(e) => setSettings({...settings, whatsapp_provider: e.target.value})} 
-                        className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none cursor-pointer"
-                      >
-                        <option value="none">None / Disabled</option>
-                        <option value="ultramsg">UltraMsg (Unofficial Gateway)</option>
-                        <option value="whatsapp_business">Meta WhatsApp Business API (Official)</option>
-                      </select>
-                    </div>
-
-                    {(settings.whatsapp_provider === 'whatsapp_business') && (
-                      <div>
-                        <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Meta Template Name *</label>
-                        <input 
-                          value={settings.whatsapp_template_name || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_template_name: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none" 
-                          placeholder="e.g. order_status_update"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {settings.whatsapp_provider === 'whatsapp_business' && (
-                    <div className="grid sm:grid-cols-2 gap-6 bg-white/70 border-[#E8E2D8]/40 p-4 border border-[#E8E2D8] rounded-xl">
-                      <div>
-                        <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Meta Phone Number ID *</label>
-                        <input 
-                          value={settings.whatsapp_business_phone_number_id || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_business_phone_number_id: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none" 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Meta System User Access Token *</label>
-                        <input 
-                          type="password" 
-                          value={settings.whatsapp_business_access_token || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_business_access_token: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none" 
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {settings.whatsapp_provider === 'ultramsg' && (
-                    <div className="grid sm:grid-cols-2 gap-6 bg-white/70 border-[#E8E2D8]/40 p-4 border border-[#E8E2D8] rounded-xl">
-                      <div>
-                        <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">UltraMsg Instance ID *</label>
-                        <input 
-                          value={settings.whatsapp_ultramsg_instance_id || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_ultramsg_instance_id: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none" 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">UltraMsg Access Token *</label>
-                        <input 
-                          type="password" 
-                          value={settings.whatsapp_ultramsg_token || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_ultramsg_token: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none" 
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Status Custom Messages */}
-                  <div className="space-y-4 bg-white/70 border-[#E8E2D8]/20 p-4 border border-[#E8E2D8]/40 rounded-2xl">
-                    <div className="text-[10px] font-bold text-[#5C544C] uppercase tracking-wider">Status Update Message Templates (WhatsApp & Email)</div>
-                    <p className="text-[9px] text-[#5C544C] -mt-1 leading-normal">
-                      Use placeholders like <code className="text-[#8C1D1D] font-mono font-bold">{"{{customer_name}}"}</code>, <code className="text-[#8C1D1D] font-mono font-bold">{"{{order_number}}"}</code>, and <code className="text-[#8C1D1D] font-mono font-bold">{"{{tracking_info}}"}</code> to insert values dynamically.
-                    </p>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Pending Status Message</label>
-                        <textarea 
-                          rows={2} 
-                          value={settings.whatsapp_msg_pending || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_msg_pending: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none" 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Confirmed Status Message</label>
-                        <textarea 
-                          rows={2} 
-                          value={settings.whatsapp_msg_confirmed || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_msg_confirmed: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none" 
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Processing Status Message</label>
-                        <textarea 
-                          rows={2} 
-                          value={settings.whatsapp_msg_processing || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_msg_processing: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none" 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Shipped Status Message</label>
-                        <textarea 
-                          rows={2} 
-                          value={settings.whatsapp_msg_shipped || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_msg_shipped: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none" 
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Delivered Status Message</label>
-                        <textarea 
-                          rows={2} 
-                          value={settings.whatsapp_msg_delivered || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_msg_delivered: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none" 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Cancelled Status Message</label>
-                        <textarea 
-                          rows={2} 
-                          value={settings.whatsapp_msg_cancelled || ''} 
-                          onChange={(e) => setSettings({...settings, whatsapp_msg_cancelled: e.target.value})} 
-                          className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none" 
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="flex items-center justify-between pt-4">
                   <span className="text-xs text-[#8C1D1D] font-bold">{settingsStatus}</span>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Contact Sivakasi Office & Wholesale Booking | NIKASH CRACKERS',
-  description: 'Connect with NIKASH CRACKERS wholesale support: Call +91 78679 55841. Visit our Sivakasi-Vembakottai Main Road showroom or enquire online for custom wedding orders.',
+  description: 'Connect with NIKASH CRACKERS wholesale support: Call +91 78679 55841. Visit our Madathupatti, Kananjampatti showroom or enquire online for custom wedding orders.',
   keywords: [
     'Sivakasi crackers wholesale contact number',
     'buy crackers directly from Sivakasi factory',

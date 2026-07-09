@@ -110,9 +110,10 @@ export default function RootLayout({
                 email: 'rnikashcrackers@gmail.com',
                 address: {
                   '@type': 'PostalAddress',
-                  streetAddress: 'Nikash Crackers, Sivakasi-Vembakottai Road',
-                  addressLocality: 'Sivakasi',
+                  streetAddress: '9QCM+7FJ, Madathupatti, Kananjampatti',
+                  addressLocality: 'Kananjampatti',
                   addressRegion: 'Tamil Nadu',
+                  postalCode: '626128',
                   addressCountry: 'IN',
                 },
                 sameAs: [
@@ -129,10 +130,10 @@ export default function RootLayout({
                 telephone: '+91-78679-55841',
                 address: {
                   '@type': 'PostalAddress',
-                  streetAddress: 'Nikash Crackers, Sivakasi-Vembakottai Road',
-                  addressLocality: 'Sivakasi',
+                  streetAddress: '9QCM+7FJ, Madathupatti, Kananjampatti',
+                  addressLocality: 'Kananjampatti',
                   addressRegion: 'Tamil Nadu',
-                  postalCode: '626123',
+                  postalCode: '626128',
                   addressCountry: 'IN',
                 },
                 geo: {

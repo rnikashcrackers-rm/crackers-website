@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, MessageCircle, Sparkles, ArrowRight } from 'lucide-react';
 
 const contactInfo = [
-  { icon: MapPin, label: 'Visit Us', value: '1/406, Sivakasi-Vembakottai Main Road, Opp. EB Office, Vembakottai, Tamil Nadu', link: 'https://maps.app.goo.gl/MCznWB9HQJ3xpLsN6' },
+  { icon: MapPin, label: 'Visit Us', value: '9QCM+7FJ, Madathupatti, Kananjampatti, Tamil Nadu 626128', link: 'https://maps.app.goo.gl/MCznWB9HQJ3xpLsN6' },
   { icon: Phone, label: 'Call Us', value: '+91 78679 55841', link: 'tel:+917867955841' },
   { icon: Mail, label: 'Email Us', value: 'rnikashcrackers@gmail.com', link: 'mailto:rnikashcrackers@gmail.com' },
   { icon: MessageCircle, label: 'WhatsApp', value: 'Chat with us instantly', link: 'https://wa.me/917867955841' },
