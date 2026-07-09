@@ -40,6 +40,12 @@ export default async function HomePage() {
           <div className="lg:col-span-7 flex flex-col justify-center items-start">
             <SlideInLeft className="max-w-2xl">
               
+              {/* Premium Brand Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF5F2] border border-[#FF8A6B]/20 text-[#8C1D1D] text-[10px] font-black tracking-widest uppercase mb-6 select-none shadow-[0_2px_8px_rgba(0,0,0,0.01)]">
+                <Image src="/logo/logo.png" alt="Logo" width={16} height={16} className="object-contain shrink-0" />
+                <span>Nikash Crackers Sivakasi</span>
+              </div>
+              
               {/* Main Headline */}
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-[#2D241E] leading-[1.15] mb-6 tracking-tight text-left">
                 Celebrate Every Moment <br />
@@ -140,21 +146,21 @@ export default async function HomePage() {
               title: 'SPARKLERS',
               symbol: '🪄',
               gradient: 'from-[#D2E0FB] to-[#8E9BFF]',
-              image: '/product-assets/10-cm-color-sparkler-110.jpg',
+              image: '/product-assets/sparklers_brand.png',
               href: '/products?category=sparklers',
             },
             {
               title: 'FLOWER POTS',
               symbol: '🪴',
               gradient: 'from-[#F9F3CC] to-[#FF8E8F]',
-              image: '/product-assets/flower-pot-special-17.jpg',
+              image: '/product-assets/flower_pots_brand.png',
               href: '/products?category=flowerpots',
             },
             {
               title: 'AERIAL SHOTS',
               symbol: '🚀',
               gradient: 'from-[#E1AFD1] to-[#A98CF0]',
-              image: '/product-assets/12-shots-97.jpg',
+              image: '/product-assets/aerial_shots_brand.png',
               href: '/products?category=multishots',
             },
           ].map((cat, i) => (

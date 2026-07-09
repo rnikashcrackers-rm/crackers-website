@@ -63,7 +63,7 @@ export async function POST(req: Request) {
                 <td style="background:linear-gradient(135deg,#1A1400 0%,#2D2200 100%);padding:35px 32px;text-align:center;">
                   <img src="https://www.rnikashcrackers.com/logo/logo.png" alt="NIKASH CRACKERS Logo" style="width:70px;height:70px;border-radius:50%;margin-bottom:15px;border:2px solid #FF8A6B;background-color:#ffffff;display:inline-block;" />
                   <h1 style="color:#FF8A6B;margin:0;font-size:24px;font-weight:800;letter-spacing:3px;text-shadow:0 2px 4px rgba(0,0,0,0.2);font-family:'Cinzel', Georgia, serif;">NIKASH CRACKERS</h1>
-                  <p style="color:#F4E296;margin:8px 0 0;font-size:10px;letter-spacing:4px;text-transform:uppercase;font-weight:600;font-family:'Inter', Arial, sans-serif;">Premium Sivakasi Fireworks</p>
+                  <p style="color:#F4E296;margin:8px 0 0;font-size:10px;letter-spacing:4px;text-transform:uppercase;font-weight:600;font-family:'Inter', Arial, sans-serif;">Affordable Sivakasi Family Fireworks</p>
                 </td>
               </tr>
               
@@ -233,10 +233,14 @@ export async function POST(req: Request) {
     };
 
     if (pdfBase64) {
+      const base64Data = pdfBase64.includes('base64,')
+        ? pdfBase64.split('base64,')[1]
+        : pdfBase64;
+
       emailPayload.attachments = [
         {
           filename: `NC-Crackers-Receipt-${orderNumber}.pdf`,
-          content: pdfBase64,
+          content: Buffer.from(base64Data, 'base64'),
           contentType: 'application/pdf',
         },
       ];

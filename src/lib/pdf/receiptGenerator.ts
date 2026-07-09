@@ -218,7 +218,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
 
     doc.setFontSize(8);
     doc.setTextColor(...C.coral);
-    doc.text('NIKASH CRACKERS | PREMIUM SIVAKASI FIREWORKS', tx, y + 12.5);
+    doc.text('NIKASH CRACKERS | SIVAKASI FACTORY DIRECT FIREWORKS', tx, y + 12.5);
 
     doc.setFontSize(6.5);
     doc.setFont('times', 'normal');

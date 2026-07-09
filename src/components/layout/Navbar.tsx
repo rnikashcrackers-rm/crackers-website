@@ -42,37 +42,30 @@ export function Navbar() {
             ? 'top-2 py-2.5 bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.06)] rounded-full' 
             : 'top-4 py-3.5 bg-white/60 backdrop-blur-lg border border-white/30 shadow-[0_4px_24px_rgba(0,0,0,0.03)] rounded-full'
         }`}>
-        <div suppressHydrationWarning className="w-full px-6 md:px-8 flex items-center justify-between">
+        <div suppressHydrationWarning className="w-full px-6 md:px-8 flex items-center justify-between relative">
           
+          {/* Mobile Menu Toggle on Left */}
+          <motion.button whileTap={{ scale: 0.9 }} className="md:hidden p-2 text-[#2D241E] rounded-full bg-white/50 border border-black/5 z-10"
+            onClick={() => setMobileMenuOpen(true)} id="nav-mobile-toggle" aria-label="Open navigation menu">
+            <Menu size={18} />
+          </motion.button>
+
           {/* Logo with decorative Laurel Wreath */}
-          <Link href="/" suppressHydrationWarning className="flex items-center gap-1 group select-none" id="nav-logo">
-            {/* Left Laurel Wreath branch */}
-            <svg className="w-6 h-6 text-[#FF8A6B] opacity-90 transition-transform group-hover:rotate-[-5deg]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M6 19C8.5 17 9.5 13.5 9.5 10C9.5 6.5 7.5 3.5 5 1.5" strokeLinecap="round"/>
-              <path d="M4.5 14.5C6.2 14 7.8 12.5 8.2 10.5" strokeLinecap="round"/>
-              <path d="M5 10.5C6.8 10 8.2 8.5 8.5 6.5" strokeLinecap="round"/>
-              <path d="M5.8 6.5C7.3 6 8.3 4.5 8.5 3" strokeLinecap="round"/>
-              <path d="M7 16.5C8.8 16 10.2 14.5 10.5 12.5" strokeLinecap="round"/>
-            </svg>
+          <Link href="/" suppressHydrationWarning className="flex items-center gap-2.5 group select-none md:static absolute left-1/2 -translate-x-1/2 md:translate-x-0 z-10" id="nav-logo">
+            {/* Logo Image */}
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full p-0.5 border border-[#FF8A6B]/25 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.04)] group-hover:scale-105 transition-transform duration-300">
+              <img src="/logo/logo.png" alt="Nikash Crackers Logo" className="object-contain w-full h-full rounded-full" />
+            </div>
 
             {/* Central Text Column */}
-            <div className="flex flex-col text-center px-1">
+            <div className="flex flex-col text-left">
               <span className="font-display text-sm sm:text-base font-black tracking-tight text-[#8C1D1D] leading-none">
                 NIKASH CRACKERS
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[#FF8A6B] font-extrabold leading-none mt-1">
+              <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-[#FF8A6B] font-extrabold leading-none mt-1">
                 SIVAKASI
               </span>
             </div>
-
-            {/* Right Laurel Wreath branch (mirrored) */}
-            <svg className="w-6 h-6 text-[#FF8A6B] opacity-90 scale-x-[-1] transition-transform group-hover:rotate-[-5deg]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M6 19C8.5 17 9.5 13.5 9.5 10C9.5 6.5 7.5 3.5 5 1.5" strokeLinecap="round"/>
-              <path d="M4.5 14.5C6.2 14 7.8 12.5 8.2 10.5" strokeLinecap="round"/>
-              <path d="M5 10.5C6.8 10 8.2 8.5 8.5 6.5" strokeLinecap="round"/>
-              <path d="M5.8 6.5C7.3 6 8.3 4.5 8.5 3" strokeLinecap="round"/>
-              <path d="M7 16.5C8.8 16 10.2 14.5 10.5 12.5" strokeLinecap="round"/>
-            </svg>
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -122,11 +115,8 @@ export function Navbar() {
               </motion.button>
             </Link>
 
-            {/* Mobile Menu Toggle */}
-            <motion.button whileTap={{ scale: 0.9 }} className="md:hidden p-2 text-[#2D241E] rounded-full bg-white/50 border border-black/5"
-              onClick={() => setMobileMenuOpen(true)} id="nav-mobile-toggle" aria-label="Open navigation menu">
-              <Menu size={18} />
-            </motion.button>
+            {/* Mobile Menu Toggle (Moved to left, spacer here on desktop) */}
+            <div className="md:hidden w-8" />
           </div>
         </div>
       </header>
@@ -137,9 +127,9 @@ export function Navbar() {
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="fixed inset-0 z-[99] bg-black/40 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-            <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
-              className="fixed top-0 right-0 bottom-0 w-[80vw] max-w-[360px] z-[100] bg-[#FFFDF9] border-l border-[#E8E2D8] flex flex-col shadow-2xl">
+              className="fixed top-0 left-0 bottom-0 w-[80vw] max-w-[360px] z-[100] bg-[#FFFDF9] border-r border-[#E8E2D8] flex flex-col shadow-2xl">
               <div className="flex items-center justify-between p-6 border-b border-[#E8E2D8]">
                 <div className="flex items-center gap-2">
                   <Sparkles size={16} className="text-[#FF8A6B]" />

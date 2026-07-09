@@ -41,34 +41,21 @@ export function Footer() {
       <div className="relative max-w-[1300px] mx-auto px-6 pt-16 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           <div className="lg:col-span-2">
-            <Link href="/" suppressHydrationWarning className="inline-flex items-center gap-1 mb-6 group select-none">
-              {/* Left Laurel Wreath branch */}
-              <svg className="w-6 h-6 text-[#FF8A6B] opacity-90 transition-transform group-hover:rotate-[-5deg]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M6 19C8.5 17 9.5 13.5 9.5 10C9.5 6.5 7.5 3.5 5 1.5" strokeLinecap="round"/>
-                <path d="M4.5 14.5C6.2 14 7.8 12.5 8.2 10.5" strokeLinecap="round"/>
-                <path d="M5 10.5C6.8 10 8.2 8.5 8.5 6.5" strokeLinecap="round"/>
-                <path d="M5.8 6.5C7.3 6 8.3 4.5 8.5 3" strokeLinecap="round"/>
-                <path d="M7 16.5C8.8 16 10.2 14.5 10.5 12.5" strokeLinecap="round"/>
-              </svg>
+            <Link href="/" suppressHydrationWarning className="inline-flex items-center gap-2.5 mb-6 group select-none">
+              {/* Logo Image */}
+              <div className="relative w-8 h-8 sm:w-9 sm:h-9 bg-white rounded-full p-0.5 border border-[#FF8A6B]/25 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.04)] group-hover:scale-105 transition-transform duration-300">
+                <img src="/logo/logo.png" alt="Nikash Crackers Logo" className="object-contain w-full h-full rounded-full" />
+              </div>
 
               {/* Central Text Column */}
-              <div className="flex flex-col text-center px-1">
+              <div className="flex flex-col text-left">
                 <span className="font-display text-sm sm:text-base font-black tracking-tight text-[#8C1D1D] leading-none">
                   NIKASH CRACKERS
                 </span>
-                <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[#FF8A6B] font-extrabold leading-none mt-1">
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-[#FF8A6B] font-extrabold leading-none mt-1">
                   SIVAKASI
                 </span>
               </div>
-
-              {/* Right Laurel Wreath branch (mirrored) */}
-              <svg className="w-6 h-6 text-[#FF8A6B] opacity-90 scale-x-[-1] transition-transform group-hover:rotate-[-5deg]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M6 19C8.5 17 9.5 13.5 9.5 10C9.5 6.5 7.5 3.5 5 1.5" strokeLinecap="round"/>
-                <path d="M4.5 14.5C6.2 14 7.8 12.5 8.2 10.5" strokeLinecap="round"/>
-                <path d="M5 10.5C6.8 10 8.2 8.5 8.5 6.5" strokeLinecap="round"/>
-                <path d="M5.8 6.5C7.3 6 8.3 4.5 8.5 3" strokeLinecap="round"/>
-                <path d="M7 16.5C8.8 16 10.2 14.5 10.5 12.5" strokeLinecap="round"/>
-              </svg>
             </Link>
             
             <p className="text-[#5C544C] max-w-sm mb-6 leading-relaxed text-sm">
