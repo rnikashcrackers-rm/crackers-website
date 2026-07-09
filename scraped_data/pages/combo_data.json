@@ -1,0 +1,2580 @@
+{
+  "component": "ComboPack",
+  "props": {
+    "errors": {},
+    "auth": {
+      "user": null
+    },
+    "ziggy": {
+      "url": "https://rnikashcrackers.com",
+      "port": null,
+      "defaults": [],
+      "routes": {
+        "filament.exports.download": {
+          "uri": "filament/exports/{export}/download",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "export"
+          ],
+          "bindings": {
+            "export": "id"
+          }
+        },
+        "filament.imports.failed-rows.download": {
+          "uri": "filament/imports/{import}/failed-rows/download",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "import"
+          ],
+          "bindings": {
+            "import": "id"
+          }
+        },
+        "filament.admin.auth.login": {
+          "uri": "admin/login",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.auth.logout": {
+          "uri": "admin/logout",
+          "methods": [
+            "POST"
+          ]
+        },
+        "filament.admin.pages.dashboard": {
+          "uri": "admin",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.pages.settings": {
+          "uri": "admin/settings",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.bank-accounts.index": {
+          "uri": "admin/bank-accounts",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.bank-accounts.create": {
+          "uri": "admin/bank-accounts/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.bank-accounts.edit": {
+          "uri": "admin/bank-accounts/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "filament.admin.resources.categories.index": {
+          "uri": "admin/categories",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.categories.create": {
+          "uri": "admin/categories/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.categories.edit": {
+          "uri": "admin/categories/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "filament.admin.resources.customers.index": {
+          "uri": "admin/customers",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.customers.create": {
+          "uri": "admin/customers/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.customers.edit": {
+          "uri": "admin/customers/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "filament.admin.resources.enquiries.index": {
+          "uri": "admin/enquiries",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.enquiries.create": {
+          "uri": "admin/enquiries/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.enquiries.edit": {
+          "uri": "admin/enquiries/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "filament.admin.resources.orders.index": {
+          "uri": "admin/orders",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.orders.create": {
+          "uri": "admin/orders/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.orders.edit": {
+          "uri": "admin/orders/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "filament.admin.resources.products.index": {
+          "uri": "admin/products",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.products.create": {
+          "uri": "admin/products/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.products.edit": {
+          "uri": "admin/products/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "filament.admin.resources.sliders.index": {
+          "uri": "admin/sliders",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.sliders.create": {
+          "uri": "admin/sliders/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "filament.admin.resources.sliders.edit": {
+          "uri": "admin/sliders/{record}/edit",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "record"
+          ]
+        },
+        "sanctum.csrf-cookie": {
+          "uri": "sanctum/csrf-cookie",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "livewire.update": {
+          "uri": "livewire/update",
+          "methods": [
+            "POST"
+          ]
+        },
+        "livewire.upload-file": {
+          "uri": "livewire/upload-file",
+          "methods": [
+            "POST"
+          ]
+        },
+        "livewire.preview-file": {
+          "uri": "livewire/preview-file/{filename}",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "filename"
+          ]
+        },
+        "ignition.healthCheck": {
+          "uri": "_ignition/health-check",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "ignition.executeSolution": {
+          "uri": "_ignition/execute-solution",
+          "methods": [
+            "POST"
+          ]
+        },
+        "ignition.updateConfig": {
+          "uri": "_ignition/update-config",
+          "methods": [
+            "POST"
+          ]
+        },
+        "Home": {
+          "uri": "/",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "HomePage": {
+          "uri": "home",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "ContactUs": {
+          "uri": "contact-us",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "AboutUs": {
+          "uri": "about-us",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "OrderNow": {
+          "uri": "order-now",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "ComboPack": {
+          "uri": "combo-pack",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "thankyou-combo": {
+          "uri": "thankyou-combo",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "download-pdf": {
+          "uri": "download-pdf",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "SafetyTips": {
+          "uri": "safety-tips",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "orders.create": {
+          "uri": "orders/create",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "orders.store": {
+          "uri": "orders",
+          "methods": [
+            "POST"
+          ]
+        },
+        "admin.orders.print": {
+          "uri": "admin/orders/{id}/print",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "id"
+          ]
+        },
+        "admin.orders.download": {
+          "uri": "admin/orders/{id}/download",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "id"
+          ]
+        },
+        "admin.download": {
+          "uri": "admin/download",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "products": {
+          "uri": "products",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "address": {
+          "uri": "address",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "account-details": {
+          "uri": "account-details",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "change-password": {
+          "uri": "cart",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "orderlist": {
+          "uri": "order-list",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "kids-gun": {
+          "uri": "kids-gun",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "thankyou": {
+          "uri": "thankyou",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "profile.edit": {
+          "uri": "profile",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "profile.update": {
+          "uri": "profile",
+          "methods": [
+            "PATCH"
+          ]
+        },
+        "profile.destroy": {
+          "uri": "profile",
+          "methods": [
+            "DELETE"
+          ]
+        },
+        "register": {
+          "uri": "register",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "login": {
+          "uri": "login",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "password.request": {
+          "uri": "forgot-password",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "password.email": {
+          "uri": "forgot-password",
+          "methods": [
+            "POST"
+          ]
+        },
+        "password.reset": {
+          "uri": "reset-password/{token}",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "token"
+          ]
+        },
+        "password.store": {
+          "uri": "reset-password",
+          "methods": [
+            "POST"
+          ]
+        },
+        "verification.notice": {
+          "uri": "verify-email",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "verification.verify": {
+          "uri": "verify-email/{id}/{hash}",
+          "methods": [
+            "GET",
+            "HEAD"
+          ],
+          "parameters": [
+            "id",
+            "hash"
+          ]
+        },
+        "verification.send": {
+          "uri": "email/verification-notification",
+          "methods": [
+            "POST"
+          ]
+        },
+        "password.confirm": {
+          "uri": "confirm-password",
+          "methods": [
+            "GET",
+            "HEAD"
+          ]
+        },
+        "password.update": {
+          "uri": "password",
+          "methods": [
+            "PUT"
+          ]
+        },
+        "logout": {
+          "uri": "logout",
+          "methods": [
+            "POST"
+          ]
+        }
+      },
+      "location": "https://rnikashcrackers.com/combo-pack"
+    },
+    "sliders": [
+      {
+        "id": 5,
+        "image": "6p8OOEgvvMSQbAvVmzE1594U5VknZf-metabXMgY3JhY2tlcnMgKDE5MjEgw5cgNzk3IHB4KSAoNSkucG5n-.png",
+        "created_at": "2023-10-13T04:39:44.000000Z",
+        "updated_at": "2023-10-13T04:39:44.000000Z"
+      },
+      {
+        "id": 6,
+        "image": "lDhWS5QONXXzJ1ThW1jBA3tePKdgYW-metabXMgY3JhY2tlcnMgKDE5MjEgw5cgNzk3IHB4KSAoNykucG5n-.png",
+        "created_at": "2023-10-13T04:41:02.000000Z",
+        "updated_at": "2023-10-13T04:41:02.000000Z"
+      },
+      {
+        "id": 7,
+        "image": "zyI91RGstEo0rs1xZBQRywe7PLK0Fn-metabXMgY3JhY2tlcnMgKDE5MjEgw5cgNzk3IHB4KSAoOCkucG5n-.png",
+        "created_at": "2023-10-13T04:41:25.000000Z",
+        "updated_at": "2023-10-13T04:41:25.000000Z"
+      }
+    ],
+    "marquee": "R.NIKASH CRCAKERS 80% disscount",
+    "products": [
+      {
+        "id": 1,
+        "name": "2 3/4 Kuruvi ",
+        "seo_title": "2 3/4 Kuruvi ",
+        "price": 10,
+        "image": "Ue5nOPg8yRhoksYSh3cXxNsOGtLhDJ-metaYmlqXzAyM3EuanBn-.jpg",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:30:42.000000Z",
+        "updated_at": "2025-09-04T12:10:19.000000Z",
+        "sort": null
+      },
+      {
+        "id": 2,
+        "name": "3 1/2\" Lakshmi ",
+        "seo_title": "3 1/2\" Lakshmi ",
+        "price": 15,
+        "image": "Z8RdKpjo0ejVkCrWxOfZu0cNXvcreT-metaS3BKZGJpUWcuanBlZw==-.jpg",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:32:00.000000Z",
+        "updated_at": "2025-09-04T12:11:04.000000Z",
+        "sort": null
+      },
+      {
+        "id": 3,
+        "name": "4\" Lakshmi ",
+        "seo_title": "4\" Lakshmi ",
+        "price": 30,
+        "image": "WwD0mg0Pji9sJCYHbxfurh54ojtyMi-metadW5uYW1lZC5wbmc=-.png",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:33:16.000000Z",
+        "updated_at": "2025-09-04T12:11:15.000000Z",
+        "sort": null
+      },
+      {
+        "id": 4,
+        "name": "4\" Gold Lakshmi ",
+        "seo_title": "4\" Gold Lakshmi ",
+        "price": 35,
+        "image": "HSzkCLJkAbNtplerCl6kcVFS1vhPbb-metaZ29sZC1sYWtzaG1pLWVlNjI2ZTQyLTZlNjEtNDEyOC1iYTIwLTU1MjM0YTJjNjA0NC5qcGc=-.jpg",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:34:15.000000Z",
+        "updated_at": "2025-09-04T12:11:28.000000Z",
+        "sort": null
+      },
+      {
+        "id": 5,
+        "name": "4 1/2\" Bahubali",
+        "seo_title": "4 1/2\" Bahubali",
+        "price": 45,
+        "image": "kmMqevTWhw8HnhsuFAHkda5Gv8vCfD-metaNS1pbmNoLWJhaHViYWxpLTVwY3MtcG9ja2V0LS01MDB4NTAwLndlYnA=-.webp",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:35:08.000000Z",
+        "updated_at": "2025-09-04T12:11:56.000000Z",
+        "sort": null
+      },
+      {
+        "id": 7,
+        "name": "5\" Jallikattu ",
+        "seo_title": "5\" Jallikattu ",
+        "price": 60,
+        "image": "3fpwZVe1q4go2MjRRRcqQbct21JPo5-metaMl8wMDIwX3N0b3JlY2FtZXJhX2t6azY1ZzhfbnVnZ2kxLmpwZw==-.jpg",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:38:03.000000Z",
+        "updated_at": "2025-09-04T12:12:21.000000Z",
+        "sort": null
+      },
+      {
+        "id": 8,
+        "name": "6\" Lion King ",
+        "seo_title": "6\" Lion King ",
+        "price": 80,
+        "image": "aIDGIBQpSnNSWAbDG3v6NSZvzsSmQj-metaZG93bmxvYWQuanBn-.jpg",
+        "category_id": 1,
+        "created_at": "2023-09-15T10:42:06.000000Z",
+        "updated_at": "2025-09-04T12:12:34.000000Z",
+        "sort": null
+      },
+      {
+        "id": 9,
+        "name": "28 Chorsa",
+        "seo_title": "28 Chorsa",
+        "price": 10,
+        "image": "XzSn0B46aV4ZhSPaso3bqovz2HiryT-metaaW1hZ2VzLmpwZw==-.jpg",
+        "category_id": 2,
+        "created_at": "2023-09-15T10:43:45.000000Z",
+        "updated_at": "2025-09-04T12:13:09.000000Z",
+        "sort": null
+      },
+      {
+        "id": 10,
+        "name": "28 Giant",
+        "seo_title": "28 Giant",
+        "price": 20,
+        "image": "83ZAQYxtZOyNW846llf2oJBkBaczsF-metaMjgtUmVkZm9ydC1HaWFudC5wbmc=-.png",
+        "category_id": 2,
+        "created_at": "2023-09-15T10:44:57.000000Z",
+        "updated_at": "2025-09-04T12:13:20.000000Z",
+        "sort": null
+      },
+      {
+        "id": 11,
+        "name": "56 Giant ",
+        "seo_title": "56 Giant ",
+        "price": 40,
+        "image": "EXhENr6fvsi5akkB8cQym75lYp6QAe-metaZG93bmxvYWQgKDEpLmpwZw==-.jpg",
+        "category_id": 2,
+        "created_at": "2023-09-15T10:46:12.000000Z",
+        "updated_at": "2025-09-04T12:13:33.000000Z",
+        "sort": null
+      },
+      {
+        "id": 12,
+        "name": "24 DIx ",
+        "seo_title": "24 DIx ",
+        "price": 30,
+        "image": "PFJ335MQzHUDiFjuF6SoIGMAlfCZ5y-metaeTEud2VicA==-.webp",
+        "category_id": 3,
+        "created_at": "2023-09-15T10:47:44.000000Z",
+        "updated_at": "2025-09-04T12:13:55.000000Z",
+        "sort": null
+      },
+      {
+        "id": 14,
+        "name": "50 Dlx ",
+        "seo_title": "50 Dlx ",
+        "price": 75,
+        "image": "5NJabLU2c5dDgG7CfjxO6psoKDrBLm-metaNTBkZWx1eGUtY3JhY2tlcnMtZmlyZWNyYWNrZXItMzc3MjE3MDY2LXRxbHJsLmpwZw==-.jpg",
+        "category_id": 3,
+        "created_at": "2023-09-15T11:00:06.000000Z",
+        "updated_at": "2025-09-04T12:14:06.000000Z",
+        "sort": null
+      },
+      {
+        "id": 16,
+        "name": "Flower Pots Small ",
+        "seo_title": "Flower Pots Small ",
+        "price": 60,
+        "image": "OPUzW8BA9CHveHrQrayfxBdlJ6mdUd-metaV2hhdHNBcHAtSW1hZ2UtMjAyMi0wOS0yMi1hdC0zLjM3LjU3LVBNLTEuanBlZw==-.jpg",
+        "category_id": 4,
+        "created_at": "2023-09-15T11:04:24.000000Z",
+        "updated_at": "2025-09-04T12:14:35.000000Z",
+        "sort": 2
+      },
+      {
+        "id": 17,
+        "name": "Flower Pots Big ",
+        "seo_title": "Flower Pots Big ",
+        "price": 70,
+        "image": "XcFUTT5zCDveepdt5KGK4hUeaacAAa-metaYmlnLWNvbmljYWwtZmxvd2VyLXBvdC1jcmFja2VyLTkxNy5qcGc=-.jpg",
+        "category_id": 4,
+        "created_at": "2023-09-15T11:05:36.000000Z",
+        "updated_at": "2025-09-04T12:14:35.000000Z",
+        "sort": 1
+      },
+      {
+        "id": 18,
+        "name": "Flower Pots Special",
+        "seo_title": "Flower Pots Special",
+        "price": 80,
+        "image": "eg2q7S5Jfz5DfBXCyDRoDhbb8W8HSc-metaZmxvd2VyLXBvdHMtc3BlY2lhbC5qcGVn-.jpg",
+        "category_id": 4,
+        "created_at": "2023-09-15T11:06:38.000000Z",
+        "updated_at": "2025-09-04T12:15:01.000000Z",
+        "sort": 3
+      },
+      {
+        "id": 19,
+        "name": "Flower Pots Asoka",
+        "seo_title": "Flower Pots Asoka",
+        "price": 120,
+        "image": "wj20oo9HgHo0OqkIuZup4NhsQWs5uB-metaU3Vuc2hpbmUtRmxvd2VyLVBvdHMtQXNva2EtMTAtUGNzLmpwZw==-.jpg",
+        "category_id": 4,
+        "created_at": "2023-09-15T11:07:34.000000Z",
+        "updated_at": "2025-09-04T12:15:15.000000Z",
+        "sort": 4
+      },
+      {
+        "id": 20,
+        "name": "Colour Kotti",
+        "seo_title": "Colour Kotti",
+        "price": 200,
+        "image": "VGzYohy4a7lbfYWzZ27C5LIJx8rQrN-metaU3Vuc2hpbmUtRmxvd2VyLVBvdHMtQ29sb3Jrb3R0aS1HaWFudC0xMC1QY3MuanBn-.jpg",
+        "category_id": 4,
+        "created_at": "2023-09-15T11:08:30.000000Z",
+        "updated_at": "2025-09-04T12:15:27.000000Z",
+        "sort": 5
+      },
+      {
+        "id": 21,
+        "name": "Chakkar Big (10 pcs) ",
+        "seo_title": "Chakkar Big (10 pcs) ",
+        "price": 40,
+        "image": "iI0OuU0MkUmF3dG5xUrUDU0L9kPt1h-metaMWMzZTE4MTI1ZTk4NjgxZDhjNGNjODQwOGJjZjk1MjAuanBn-.jpg",
+        "category_id": 5,
+        "created_at": "2023-09-15T11:10:46.000000Z",
+        "updated_at": "2025-09-04T12:16:03.000000Z",
+        "sort": null
+      },
+      {
+        "id": 22,
+        "name": "Chakkar Special",
+        "seo_title": "Chakkar Special",
+        "price": 95,
+        "image": "CKA3yYD1dOFgJbLeHk5mGgwCnyGe3V-metaZG93bmxvYWQgKDIpLmpwZw==-.jpg",
+        "category_id": 5,
+        "created_at": "2023-09-15T11:12:05.000000Z",
+        "updated_at": "2025-09-04T12:16:21.000000Z",
+        "sort": null
+      },
+      {
+        "id": 23,
+        "name": "Chakkar Dlx",
+        "seo_title": "Chakkar Dlx",
+        "price": 150,
+        "image": "7kTlxr3cxXC1KuqZmXCZlFMIaXCFo4-metaU3Vuc2hpbmUtR3JvdW5kLUNoYWtrYXItRGVsdXhlLTEwLVBjcy5qcGc=-.jpg",
+        "category_id": 5,
+        "created_at": "2023-09-15T11:13:52.000000Z",
+        "updated_at": "2025-09-04T12:16:40.000000Z",
+        "sort": null
+      },
+      {
+        "id": 27,
+        "name": "Red Bijili",
+        "seo_title": "Red Bijili",
+        "price": 30,
+        "image": "rwCbuykST4HaO4z6h6Lc6lonpVkWJ6-metaZG93bmxvYWQuanBn-.jpg",
+        "category_id": 6,
+        "created_at": "2023-09-15T11:21:36.000000Z",
+        "updated_at": "2023-10-12T05:52:55.000000Z",
+        "sort": null
+      },
+      {
+        "id": 28,
+        "name": "Striped Bijili",
+        "seo_title": "Striped Bijili",
+        "price": 35,
+        "image": "rqDZGyY0dpbeHrjT9gzAXaPfO2mUo6-metaYmlqaWxpc3RyaXAxMDAucG5n-.png",
+        "category_id": 6,
+        "created_at": "2023-09-15T11:23:44.000000Z",
+        "updated_at": "2023-10-12T05:53:16.000000Z",
+        "sort": null
+      },
+      {
+        "id": 29,
+        "name": "Gold Bijili",
+        "seo_title": "Gold Bijili",
+        "price": 40,
+        "image": "GBZbmVk3KUVvmi0Kw6vd3n6sErnGJ3-metaOWQ0OGJhMWIuanBn-.jpg",
+        "category_id": 6,
+        "created_at": "2023-09-15T11:24:56.000000Z",
+        "updated_at": "2023-10-12T05:53:30.000000Z",
+        "sort": null
+      },
+      {
+        "id": 31,
+        "name": "Colour Rocket",
+        "seo_title": "Colour Rocket",
+        "price": 55,
+        "image": "Euj7qrXaAkj48cLaWUTZKA1H8S6lt7-metaY29sb3VyLXJvY2tldC5qcGc=-.jpg",
+        "category_id": 7,
+        "created_at": "2023-09-15T11:29:50.000000Z",
+        "updated_at": "2025-09-06T05:16:37.000000Z",
+        "sort": 1
+      },
+      {
+        "id": 32,
+        "name": "Rocket Bombs ",
+        "seo_title": "Rocket Bombs ",
+        "price": 80,
+        "image": "hy6xSMrUmW6ijKzeQ9vP9yBsGqIErX-metacm9ja2V0LWJvbWItY29ybmF0aW9uLmpwZw==-.jpg",
+        "category_id": 7,
+        "created_at": "2023-09-15T11:30:56.000000Z",
+        "updated_at": "2025-09-06T05:16:37.000000Z",
+        "sort": 2
+      },
+      {
+        "id": 33,
+        "name": "Lunic Rocket ",
+        "seo_title": "Lunic Rocket ",
+        "price": 150,
+        "image": "cgInmtw8QiDEVd8NroJyfwGM2LxPbo-metaU3Vuc2hpbmUtTHVuaWstUm9ja2V0LTEwLVBjcy5qcGc=-.jpg",
+        "category_id": 7,
+        "created_at": "2023-09-15T11:32:47.000000Z",
+        "updated_at": "2025-09-06T05:16:37.000000Z",
+        "sort": 3
+      },
+      {
+        "id": 35,
+        "name": "2 Sound Rocket ",
+        "seo_title": "2 Sound Rocket ",
+        "price": 160,
+        "image": "t86r8SUuC4xAxX7DKZB20BXqflyofn-metaMi1zb3VuZC1maXJld29yay1yb2NrZXQuanBn-.jpg",
+        "category_id": 7,
+        "created_at": "2023-09-15T11:35:26.000000Z",
+        "updated_at": "2025-09-06T05:17:33.000000Z",
+        "sort": 5
+      },
+      {
+        "id": 37,
+        "name": "1 1/2\" Twinkling Star Small ",
+        "seo_title": "1 1/2\" Twinkling Star ",
+        "price": 30,
+        "image": "uZCqzwA5901XKVoEeVYyqQ1yJESGSG-metaZG93bmxvYWQgKDMpLmpwZw==-.jpg",
+        "category_id": 8,
+        "created_at": "2023-09-15T11:38:53.000000Z",
+        "updated_at": "2025-09-04T12:17:51.000000Z",
+        "sort": null
+      },
+      {
+        "id": 38,
+        "name": "4\" Twinkling Star Dlx ",
+        "seo_title": "4\" Twinkling Star Dlx ",
+        "price": 60,
+        "image": "CESh7epA2RTfRmgYo8wugKDDYRFeaK-metac2lsdmVyLXR3aW5rbGluZ3MtZGVsdXhlLTEyMGNtLTQtMTAtcGNzLS5wbmc=-.png",
+        "category_id": 8,
+        "created_at": "2023-09-15T11:41:13.000000Z",
+        "updated_at": "2025-09-04T12:18:02.000000Z",
+        "sort": null
+      },
+      {
+        "id": 40,
+        "name": "Classic  bomb",
+        "seo_title": "Classic ",
+        "price": 130,
+        "image": "BtfdsmPeWYLFKXod57gOFaPNAh9CdJ-metaQ0hBLTAxMi5qcGc=-.jpg",
+        "category_id": 9,
+        "created_at": "2023-09-15T11:51:03.000000Z",
+        "updated_at": "2025-09-06T09:38:31.000000Z",
+        "sort": 1
+      },
+      {
+        "id": 43,
+        "name": "Mercury Tourch ",
+        "seo_title": "Mercury Tourch ",
+        "price": 55,
+        "image": "jnglmivhyvmUbXon4EsplcEd7EDF24-metaM1RXUlBlMnUud2VicA==-.webp",
+        "category_id": 10,
+        "created_at": "2023-09-15T11:56:01.000000Z",
+        "updated_at": "2023-10-12T06:00:40.000000Z",
+        "sort": null
+      },
+      {
+        "id": 45,
+        "name": "Super DLX Matches ",
+        "seo_title": "Super DLX Matches ",
+        "price": 80,
+        "image": "fDO5c7CypUh4X3LdJg6nCRIrchCL9a-metaY2hhbXBpb24tZGVsdXhlLWNvbG9yLW1hdGNoZXMtNTU5LmpwZw==-.jpg",
+        "category_id": 11,
+        "created_at": "2023-09-15T12:01:34.000000Z",
+        "updated_at": "2023-10-12T06:01:59.000000Z",
+        "sort": null
+      },
+      {
+        "id": 47,
+        "name": "100 Wala",
+        "seo_title": "100 Wala",
+        "price": 30,
+        "image": "yupwwBXDxt97waO8istVUI79HeOUHB-metab291RThrRjhFcm5wbU1LWlMxMFNrSnZKUHVrMHRSLW1ldGFVMk55WldWdWMyaHZkRjh5TURJek1EUXdNbDh5TWpFd05ESXRNREV0TURVdWFuQmxadz09LS5qcGc=-.jpg",
+        "category_id": 12,
+        "created_at": "2023-09-15T12:04:00.000000Z",
+        "updated_at": "2025-09-04T12:28:28.000000Z",
+        "sort": null
+      },
+      {
+        "id": 51,
+        "name": "1000 Wala ",
+        "seo_title": "1000 Wala ",
+        "price": 120,
+        "image": "iPKTDDDzsU95RdUdqd0Ph1HW9JHVGG-metaNENtZTM0Y0IzZ0YxbGpjNzhUeEMwaUVwZWhnb01zLW1ldGFhVzFoWjJWeklDMGdNakF5TXkwd055MHlORlF4TXpBMU1ERXVNakkyTG1wd1pXYz0tLmpwZw==-.jpg",
+        "category_id": 12,
+        "created_at": "2023-09-15T12:06:48.000000Z",
+        "updated_at": "2025-09-04T12:28:50.000000Z",
+        "sort": null
+      },
+      {
+        "id": 52,
+        "name": "2000 Wala ",
+        "seo_title": "2000 Wala ",
+        "price": 240,
+        "image": "grTNl79mNFt5C8xn5ROcCXuCggh274-metaazFaMjdUV205ZW1wZXlYTnFBWlNKZlN6WnB4Yzd2LW1ldGFhVzFoWjJWeklDMGdNakF5TXkwd055MHlORlF4TXpBME5ETXVPVEV5TG1wd1pXYz0tLmpwZw==-.jpg",
+        "category_id": 12,
+        "created_at": "2023-09-15T12:07:45.000000Z",
+        "updated_at": "2025-09-04T12:29:05.000000Z",
+        "sort": null
+      },
+      {
+        "id": 53,
+        "name": "5000 Wala ",
+        "seo_title": "5000 Wala ",
+        "price": 600,
+        "image": "I7DoDzEpsH2MwslaAZSlR1YLNfSVhJ-metaRE5UV3hNRjZ6a2VqVlNRWTk2V3NPcWt3RFhwTG5xLW1ldGFOVEF3TUMxM1lXeGhMV2RoY214aGJtUXRZM0poWTJ0bGNuTXROVEF3ZURVd01DNXFjR1ZuLS5qcGc=-.jpg",
+        "category_id": 12,
+        "created_at": "2023-09-15T12:08:21.000000Z",
+        "updated_at": "2025-09-04T12:29:16.000000Z",
+        "sort": null
+      },
+      {
+        "id": 54,
+        "name": "10000 Wala",
+        "seo_title": "10000 Wala",
+        "price": 1200,
+        "image": "UNvT75eHjtPf6du5XhLRXUTyeXFCAP-metad3dxWVVjTklJTFJBNHhQS3NnZzBNTkthZ1pHZGd3LW1ldGFhVzFoWjJWeklDMGdNakF5TXkwd055MHlORlF4TXpBNU5ETXVPVEU1TG1wd1pXYz0tLmpwZw==-.jpg",
+        "category_id": 12,
+        "created_at": "2023-09-15T12:09:04.000000Z",
+        "updated_at": "2025-09-04T12:29:31.000000Z",
+        "sort": null
+      },
+      {
+        "id": 55,
+        "name": "Electric Stone ",
+        "seo_title": "Electric Stone ",
+        "price": 15,
+        "image": "tISBj4lSNxhBlsb9UBUjTZ0WRQAfhW-metaZG93bmxvYWQgKDQpLmpwZw==-.jpg",
+        "category_id": 13,
+        "created_at": "2023-09-15T12:12:47.000000Z",
+        "updated_at": "2023-10-12T06:07:04.000000Z",
+        "sort": null
+      },
+      {
+        "id": 56,
+        "name": "Cortoon",
+        "seo_title": "Cortoon",
+        "price": 15,
+        "image": "4B5pzdUlSee7ATmq7A6KaCdzO0gFB7-metaVW50aXRsZWQgZGVzaWduICg3OCkucG5n-.png",
+        "category_id": 13,
+        "created_at": "2023-09-15T12:13:49.000000Z",
+        "updated_at": "2023-10-12T06:07:18.000000Z",
+        "sort": null
+      },
+      {
+        "id": 58,
+        "name": "Serpent ",
+        "seo_title": "Serpent ",
+        "price": 50,
+        "image": "morXc9UawSBvZ8hs6DQaKPC3s1X9Lz-metaMi1WaW50YWdlLUNvYnJhLUZpcmV3b3Jrcy1MYWJlbHMtRmlyZWNyYWNrZXJzLVdyYXBwZXJzLndlYnA=-.webp",
+        "category_id": 13,
+        "created_at": "2023-09-15T12:15:50.000000Z",
+        "updated_at": "2023-10-12T06:08:00.000000Z",
+        "sort": null
+      },
+      {
+        "id": 59,
+        "name": "Adiyal (1/4 Kg)",
+        "seo_title": "Adiyal (1/4 Kg)",
+        "price": 50,
+        "image": "XAYm9lSZmgn32hlkws8Hx6l2cyTtm3-metadGc4VlBmdHhCVm5pOTV0NGtvZ1BTS2RweWNNMThzLW1ldGFObDlWTFRFMU1DNXFjR2M9LS5qcGc=-.jpg",
+        "category_id": 14,
+        "created_at": "2023-09-15T12:18:08.000000Z",
+        "updated_at": "2023-10-12T06:08:31.000000Z",
+        "sort": null
+      },
+      {
+        "id": 60,
+        "name": "Adiyal (1/2 Kg)",
+        "seo_title": "Adiyal DLX (1/2 Kg)",
+        "price": 100,
+        "image": "5G9M1zLMQJvZrRZTIDN9vdeyVJqCUf-metadGc4VlBmdHhCVm5pOTV0NGtvZ1BTS2RweWNNMThzLW1ldGFObDlWTFRFMU1DNXFjR2M9LS5qcGc=-.jpg",
+        "category_id": 14,
+        "created_at": "2023-09-15T12:19:13.000000Z",
+        "updated_at": "2025-09-06T09:49:54.000000Z",
+        "sort": null
+      },
+      {
+        "id": 61,
+        "name": "Adiyal Heavy (1 Kg) ",
+        "seo_title": "Adiyal 1 Kg",
+        "price": 200,
+        "image": "SATx64LHd8HmDXItK2OGJfuwjhBQYV-metadGc4VlBmdHhCVm5pOTV0NGtvZ1BTS2RweWNNMThzLW1ldGFObDlWTFRFMU1DNXFjR2M9LS5qcGc=-.jpg",
+        "category_id": 14,
+        "created_at": "2023-09-15T12:19:47.000000Z",
+        "updated_at": "2025-09-06T09:50:11.000000Z",
+        "sort": null
+      },
+      {
+        "id": 63,
+        "name": " DANCING PEACOCK(3 IN 1)",
+        "seo_title": " DANCING PEACOCK(3 IN 1)",
+        "price": 200,
+        "image": "Nub4b1H7uRoGmDL5Gvch36rwn6988U-metaZ2xpdHRlcmluZy1wZWFjb2NrLTUwMHg1MDAud2VicA==-.webp",
+        "category_id": 15,
+        "created_at": "2023-09-16T03:52:18.000000Z",
+        "updated_at": "2025-09-06T05:39:38.000000Z",
+        "sort": null
+      },
+      {
+        "id": 64,
+        "name": "Photo Flash ",
+        "seo_title": "Photo Flash ",
+        "price": 80,
+        "image": "EvmJytoSBcDDy8lL769ZSTYhPRIx5y-metaZG93bmxvYWQgKDUpLmpwZw==-.jpg",
+        "category_id": 15,
+        "created_at": "2023-09-16T03:53:18.000000Z",
+        "updated_at": "2025-09-06T05:39:47.000000Z",
+        "sort": null
+      },
+      {
+        "id": 101,
+        "name": "2\" Pipe Combopack (3 Pcs) ",
+        "seo_title": "2\" Pipe Combopack (3 Pcs) ",
+        "price": 250,
+        "image": "up6MvcYZUCMmWbWnLbi0kGv7pRquMd-metaZG93bmxvYWQgKDEzKS5qcGc=-.jpg",
+        "category_id": 16,
+        "created_at": "2023-09-16T04:58:48.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 3
+      },
+      {
+        "id": 111,
+        "name": "2\" SINGLE FANCY",
+        "seo_title": "2\" SINGLE FANCY",
+        "price": 80,
+        "image": "FRGLZPnvOtIo1YzWFYQDIm0zCJQNjS-metaZG93bmxvYWQgKDEwKS5qcGc=-.jpg",
+        "category_id": 16,
+        "created_at": "2023-09-16T05:22:58.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 2
+      },
+      {
+        "id": 124,
+        "name": "12 Shot Raider ",
+        "seo_title": "12 Shot Raider ",
+        "price": 160,
+        "image": "ErGxLAQ7movm7AJqRwdXN9EK7qfrac-metaMTItc2hvdHMtcmlkZXItMXBjZS1ib3gtLTUwMHg1MDAud2VicA==-.webp",
+        "category_id": 17,
+        "created_at": "2023-09-16T05:44:47.000000Z",
+        "updated_at": "2024-09-17T17:27:00.000000Z",
+        "sort": null
+      },
+      {
+        "id": 125,
+        "name": " 7 Cm Electric Sparkle ",
+        "seo_title": " 7 Cm Electric Sparkle ",
+        "price": 10,
+        "image": "nKrsyaH5OaAdWu4A8oxIa39OIGTz9D-metaYmlqXzAxMS5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:48:14.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 1
+      },
+      {
+        "id": 126,
+        "name": " 7 Cm Color Sparkle ",
+        "seo_title": "7 Cm Color Sparkle ",
+        "price": 12,
+        "image": "9Y7bETf1tZzyhDQpvecBvvUoOZ8IqR-metaYmlqXzAxMS5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:49:32.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 2
+      },
+      {
+        "id": 127,
+        "name": "7 Cm Green Sparkle ",
+        "seo_title": "7 Cm Green Sparkle ",
+        "price": 14,
+        "image": "DPrY5fX3gMTm3p2rtTRFZMwG9SzvyA-metaYmlqXzAxMS5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:50:11.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 3
+      },
+      {
+        "id": 128,
+        "name": "10 Cm Electric Sparkle",
+        "seo_title": "10 Cm Electric Sparkle",
+        "price": 22,
+        "image": "04ISHaDljJaulzBefigMXo38XITTQ2-metaYmlqXzAwNXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:51:16.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 4
+      },
+      {
+        "id": 129,
+        "name": "10 Cm Color Sparkle ",
+        "seo_title": "10 Cm Color Sparkle ",
+        "price": 25,
+        "image": "kh1gRB6q7FW48vwdpYfkHpcOKORDLX-metaYmlqXzAwNXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:51:49.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 5
+      },
+      {
+        "id": 130,
+        "name": "10 Cm Green Sparkle",
+        "seo_title": "10 Cm Green Sparkle",
+        "price": 26,
+        "image": "dckNG3jyfFuQ9wMCsfCoXPcKX7yySQ-metaYmlqXzAwNXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:53:21.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 6
+      },
+      {
+        "id": 131,
+        "name": "15 Cm Electric Sparkle ",
+        "seo_title": "15 Cm Electric Sparkle ",
+        "price": 43,
+        "image": "KL1MprriL94AatlduaULnEhHdW3PMt-metaYmlqXzAxMXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:54:41.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 8
+      },
+      {
+        "id": 132,
+        "name": "15 Cm Colour Sparkle",
+        "seo_title": "15 Cm Colour Sparkle",
+        "price": 45,
+        "image": "I1MmkoQp634JWIOBIinolY2nQYg1yA-metaYmlqXzAxMXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:55:52.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 9
+      },
+      {
+        "id": 133,
+        "name": "15 Cm Green Sparkle",
+        "seo_title": "15 Cm Green Sparkle",
+        "price": 47,
+        "image": "anASSreud3NOAGAKfaYO3b4SxiHmwN-metaYmlqXzAxMXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:56:48.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 10
+      },
+      {
+        "id": 134,
+        "name": "15 Cm Red Sparkle ",
+        "seo_title": "15 Cm Red Sparkle ",
+        "price": 50,
+        "image": "gEImTkGev3Vqe1udTtbgofjGXaQzxt-metaYmlqXzAxMXEuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:57:21.000000Z",
+        "updated_at": "2023-10-12T07:13:45.000000Z",
+        "sort": null
+      },
+      {
+        "id": 135,
+        "name": "30 Cm Electric Sparkle ",
+        "seo_title": "30 Cm Electric Sparkle ",
+        "price": 43,
+        "image": "O0KKyZuaSaKqyAw4f5lmFG7gnzg4ib-metaMTBDTSBFTEVDVFJJQyBTUEFSS0xFUy5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:59:02.000000Z",
+        "updated_at": "2023-10-12T07:14:12.000000Z",
+        "sort": null
+      },
+      {
+        "id": 136,
+        "name": "30 Cm Colour Sparkle",
+        "seo_title": "30 Cm Colour Sparkle",
+        "price": 45,
+        "image": "iHMZhnbZgm8Gv51UgP7gnnnpoep1Tu-metaMTBDTSBFTEVDVFJJQyBTUEFSS0xFUy5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T05:59:39.000000Z",
+        "updated_at": "2023-10-12T07:14:26.000000Z",
+        "sort": null
+      },
+      {
+        "id": 137,
+        "name": "30 Cm Green Sparkle ",
+        "seo_title": "30 Cm Green Sparkle ",
+        "price": 47,
+        "image": "VEK1byWqCnNbVa73JuQmoan1nU9FdJ-metaMTBDTSBFTEVDVFJJQyBTUEFSS0xFUy5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T06:00:15.000000Z",
+        "updated_at": "2023-10-12T07:14:53.000000Z",
+        "sort": null
+      },
+      {
+        "id": 138,
+        "name": "30 Cm Red Sparkle ",
+        "seo_title": "30 Cm Red Sparkle ",
+        "price": 50,
+        "image": "tXSMAWnYKDggL45OAqHUFGm6amSh5s-metaMTBDTSBFTEVDVFJJQyBTUEFSS0xFUy5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T06:00:50.000000Z",
+        "updated_at": "2023-10-12T07:15:13.000000Z",
+        "sort": null
+      },
+      {
+        "id": 139,
+        "name": "50 Cm Electric Sparkle ",
+        "seo_title": "50 Cm Electric Sparkle ",
+        "price": 240,
+        "image": "b9RoJwCLZudqbcup9zcvEUCASlGh2w-metaNTBjbS1jcmFja2xpbmctNXBjcy1waXBlLS5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T06:02:05.000000Z",
+        "updated_at": "2023-10-12T07:15:56.000000Z",
+        "sort": null
+      },
+      {
+        "id": 140,
+        "name": "50 Cm Colour Sparkle",
+        "seo_title": "50 Cm Colour Sparkle",
+        "price": 270,
+        "image": "YdslwiTmFRhicKeAjEnJI3yjr1xI5q-metaNTBjbS1jcmFja2xpbmctNXBjcy1waXBlLS5qcGc=-.jpg",
+        "category_id": 18,
+        "created_at": "2023-09-16T06:02:31.000000Z",
+        "updated_at": "2023-10-12T07:16:26.000000Z",
+        "sort": null
+      },
+      {
+        "id": 141,
+        "name": "21 ITEM",
+        "seo_title": "21 ITEM",
+        "price": 250,
+        "image": "GWcRXwcy8s4cepm11pIpqpDtapHbIV-metaQVR1bmVETjVDV1BYenBxU0pVdTU1RlRDWEhIU2xDLW1ldGFURFF1VUU1SC0ucG5n-.png",
+        "category_id": 19,
+        "created_at": "2023-09-19T08:41:36.000000Z",
+        "updated_at": "2025-09-06T08:13:09.000000Z",
+        "sort": null
+      },
+      {
+        "id": 142,
+        "name": "31 ITEM ",
+        "seo_title": "31 ITEM ",
+        "price": 400,
+        "image": "ViAjMcneoCqYeoGUBKRHE5Iyx4vtiq-metaQVR1bmVETjVDV1BYenBxU0pVdTU1RlRDWEhIU2xDLW1ldGFURFF1VUU1SC0ucG5n-.png",
+        "category_id": 19,
+        "created_at": "2023-09-19T08:42:11.000000Z",
+        "updated_at": "2025-09-06T08:13:20.000000Z",
+        "sort": null
+      },
+      {
+        "id": 144,
+        "name": "41 ITEM ",
+        "seo_title": "41 ITEM ",
+        "price": 600,
+        "image": "hcmj5vsicuGtZJdpiatejDx2RMSCWZ-metaQVR1bmVETjVDV1BYenBxU0pVdTU1RlRDWEhIU2xDLW1ldGFURFF1VUU1SC0ucG5n-.png",
+        "category_id": 19,
+        "created_at": "2023-09-19T08:43:40.000000Z",
+        "updated_at": "2025-09-06T08:13:29.000000Z",
+        "sort": null
+      },
+      {
+        "id": 156,
+        "name": "Wire Chakkar",
+        "seo_title": "Wire Chakkar",
+        "price": 220,
+        "image": "CLILG5gc8lGVg5RH1yPJtKdzZulUkU-metaNi0yICgxKS53ZWJw-.webp",
+        "category_id": 5,
+        "created_at": "2023-10-12T07:51:40.000000Z",
+        "updated_at": "2025-09-04T12:16:52.000000Z",
+        "sort": 6
+      },
+      {
+        "id": 157,
+        "name": "10 x 10 Sky Damaka",
+        "seo_title": "10 x 10 Sky Damaka",
+        "price": 3400,
+        "image": "IBWEAPbPhph66HkjrDaX7eqdR3pq90-metaSU1HLTIwMjMxMDEyLVdBMDAwNS5qcGc=-.jpg",
+        "category_id": 20,
+        "created_at": "2023-10-12T07:57:00.000000Z",
+        "updated_at": "2023-10-12T08:04:02.000000Z",
+        "sort": 7
+      },
+      {
+        "id": 159,
+        "name": "50 ITEM ",
+        "seo_title": "50 ITEM ",
+        "price": 800,
+        "image": "wjA72iATubN3BMoQZe0lwLSBea87bS-metaaGNtajV2c2ljdUd0WkpkcGlhdGVqRHgyUk1TQ1daLW1ldGFRVlIxYm1WRVRqVkRWMUJZZW5CeFUwcFZkVFUxUmxSRFdFaElVMnhETFcxbGRHRlVSRkYxVlVVMVNDMHVjRzVuLS5wbmc=-.png",
+        "category_id": 19,
+        "created_at": "2023-10-12T08:41:30.000000Z",
+        "updated_at": "2025-09-06T08:13:44.000000Z",
+        "sort": null
+      },
+      {
+        "id": 163,
+        "name": "Deluxe colour koti",
+        "seo_title": "Deluxe colour koti ",
+        "price": 300,
+        "image": "FY778104FW0qakKXWXpCK9HoWP5gj4-metaU2NyZWVuc2hvdF8yMDI0LTA5LTA1LTE4LTUxLTI5LTMyXzk5YzA0ODE3YzBkZTU2NTIzOTdmYzhiNTZjM2IzODE3LmpwZw==-.jpg",
+        "category_id": 4,
+        "created_at": "2024-09-17T15:55:34.000000Z",
+        "updated_at": "2025-09-04T12:15:45.000000Z",
+        "sort": 6
+      },
+      {
+        "id": 164,
+        "name": "New umbrella sparklers ",
+        "seo_title": "New umbrella sparklers ",
+        "price": 200,
+        "image": "1omhudHxKIJzXDgAGTuruRwqr7ejQO-metaSU1HLTIwMjQwOTE3LVdBMDAxMS5qcGVn-.jpg",
+        "category_id": 18,
+        "created_at": "2024-09-17T16:01:02.000000Z",
+        "updated_at": "2024-09-17T16:01:02.000000Z",
+        "sort": null
+      },
+      {
+        "id": 177,
+        "name": " 1\" fancy chotta ",
+        "seo_title": " 1\" fancy chotta  ",
+        "price": 40,
+        "image": "jW6U9Q4OsdUPpll5p9b0wY8uoTYMU9-metaMTcyNzg3MDI1OTgyNjQ1NzE0NTk3ODIzNzM2NjA1MDkuanBn-.jpg",
+        "category_id": 16,
+        "created_at": "2024-10-02T11:58:12.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 1
+      },
+      {
+        "id": 178,
+        "name": "5 laxmi",
+        "seo_title": "5 laxmi",
+        "price": 40,
+        "image": "ftXuigEmkgci0EFGpp4PmJPwOJCKEo-metaMTcyNzg3MDUyMDQ4MTU0MzczODE4MjU2MjYzNjA5NjguanBn-.jpg",
+        "category_id": 1,
+        "created_at": "2024-10-02T12:03:28.000000Z",
+        "updated_at": "2024-10-02T12:03:28.000000Z",
+        "sort": null
+      },
+      {
+        "id": 180,
+        "name": "Star rush",
+        "seo_title": "Star rush",
+        "price": 200,
+        "image": "uFExbtwECkWGD11MwgYaW6W7jD74WA-metaMTAwMDE0NzE1MC5qcGc=-.jpg",
+        "category_id": 15,
+        "created_at": "2024-10-04T11:53:34.000000Z",
+        "updated_at": "2024-10-04T11:53:34.000000Z",
+        "sort": null
+      },
+      {
+        "id": 183,
+        "name": "Roll cap",
+        "seo_title": "Roll cap",
+        "price": 70,
+        "image": "8tC9issv31S6EtYE15VtnNWRQNKcKJ-metaMTAwMDE1MDIxMC5qcGc=-.jpg",
+        "category_id": 13,
+        "created_at": "2024-10-08T09:02:12.000000Z",
+        "updated_at": "2024-10-08T09:02:12.000000Z",
+        "sort": null
+      },
+      {
+        "id": 184,
+        "name": "Pokemon match box",
+        "seo_title": "Pokemon match box",
+        "price": 150,
+        "image": "WfYqO0jC5Kji9gZSp0eDVSrzVZZDai-metaMTAwMDE1MDIxMy5qcGc=-.jpg",
+        "category_id": 11,
+        "created_at": "2024-10-08T09:45:41.000000Z",
+        "updated_at": "2024-10-08T09:45:41.000000Z",
+        "sort": null
+      },
+      {
+        "id": 186,
+        "name": "whistling rocket ",
+        "seo_title": "whistling rocket 🚀",
+        "price": 200,
+        "image": "Y9Dv0lXQoYPP8bnvGnj9VcjtxawjSX-metaMTAwMDE2MDE3Ny5qcGc=-.jpg",
+        "category_id": 7,
+        "created_at": "2024-10-21T10:51:46.000000Z",
+        "updated_at": "2025-09-06T05:16:52.000000Z",
+        "sort": 4
+      },
+      {
+        "id": 187,
+        "name": "Jurassic bomb",
+        "seo_title": "Jurassic bomb",
+        "price": 220,
+        "image": "ogyYfHQ3qEnxU4LtaPkmtSF4wOaade-metaSnVyYXNzaWMgYm9tYi5qZmlm-.jpg",
+        "category_id": 9,
+        "created_at": "2025-09-04T12:01:06.000000Z",
+        "updated_at": "2025-09-06T09:38:31.000000Z",
+        "sort": 2
+      },
+      {
+        "id": 188,
+        "name": "DTS Digital Bomb",
+        "seo_title": "DTS Digital Bomb",
+        "price": 300,
+        "image": "h4ZO2JqyQuATay8gbpMixsuUbH9KKd-metaRFRTIERpZ2l0YWwgQm9tYi5qZmlm-.jpg",
+        "category_id": 9,
+        "created_at": "2025-09-04T12:03:18.000000Z",
+        "updated_at": "2025-09-06T09:38:31.000000Z",
+        "sort": 3
+      },
+      {
+        "id": 189,
+        "name": "CANDY CRUSH",
+        "seo_title": "CANDY CRUSH",
+        "price": 120,
+        "image": "LObJ3nriDCPSJz4g7z7Buh44iv1XLk-metaQ0FORFkgQ1JVU0guamZpZg==-.jpg",
+        "category_id": 24,
+        "created_at": "2025-09-06T05:11:47.000000Z",
+        "updated_at": "2025-09-06T05:11:47.000000Z",
+        "sort": null
+      },
+      {
+        "id": 190,
+        "name": "INSTA FLASH",
+        "seo_title": "INSTA FLASH",
+        "price": 160,
+        "image": "lBX24YuWlqoZXwUiSrwQeeYXMEaEeP-metaSU5TVEEgRkxBU0guamZpZg==-.jpg",
+        "category_id": 24,
+        "created_at": "2025-09-06T05:13:32.000000Z",
+        "updated_at": "2025-09-06T05:13:32.000000Z",
+        "sort": null
+      },
+      {
+        "id": 191,
+        "name": "COLOUR SMOKE",
+        "seo_title": "COLOUR SMOKE",
+        "price": 160,
+        "image": "P0nl7qVTn47KkK7kM1yuHOPdcgzZjH-metaQ09MT1VSIFNNT0tFLmpmaWY=-.jpg",
+        "category_id": 24,
+        "created_at": "2025-09-06T05:15:04.000000Z",
+        "updated_at": "2025-09-06T05:15:04.000000Z",
+        "sort": null
+      },
+      {
+        "id": 192,
+        "name": "ELECTRIC STONE",
+        "seo_title": "ELECTRIC STONE",
+        "price": 15,
+        "image": "01A2n7Dh0Oc2SFCRgs6rGnCAaHE0pK-metaRUxFQ1RSSUMgU1RPTkUuamZpZg==-.jpg",
+        "category_id": 25,
+        "created_at": "2025-09-06T05:21:00.000000Z",
+        "updated_at": "2025-09-06T05:21:00.000000Z",
+        "sort": null
+      },
+      {
+        "id": 193,
+        "name": "ASSORTED CARTOONS",
+        "seo_title": "ASSORTED CARTOONS",
+        "price": 15,
+        "image": "Tu0SHr6ttq8X2M81XX3jlLu9Od8RO3-metaQVNTT1JURUQgQ0FSVE9PTlMuamZpZg==-.jpg",
+        "category_id": 25,
+        "created_at": "2025-09-06T05:22:49.000000Z",
+        "updated_at": "2025-09-06T05:22:49.000000Z",
+        "sort": null
+      },
+      {
+        "id": 194,
+        "name": "ROLL CAP ",
+        "seo_title": "ROLL CAP ",
+        "price": 80,
+        "image": "uSGCbmenU7N1Fsen4dCNnRJEp1s57W-metaUk9MTCBDQVAuamZpZg==-.jpg",
+        "category_id": 25,
+        "created_at": "2025-09-06T05:28:18.000000Z",
+        "updated_at": "2025-09-06T05:28:18.000000Z",
+        "sort": null
+      },
+      {
+        "id": 195,
+        "name": "KIT KAT",
+        "seo_title": "KIT KAT",
+        "price": 30,
+        "image": "7SxlDGPCjywLpOd4CGaMJCEdafnHvR-metaS0lUIEtBVC5qZmlm-.jpg",
+        "category_id": 25,
+        "created_at": "2025-09-06T05:31:59.000000Z",
+        "updated_at": "2025-09-06T05:31:59.000000Z",
+        "sort": null
+      },
+      {
+        "id": 196,
+        "name": "SNAKE TABLE",
+        "seo_title": "SNAKE TABLE",
+        "price": 50,
+        "image": "iixOPDOWMz81FCm00G1GOK01S0JH7d-metaU05BS0UgVEFCTEUuamZpZg==-.jpg",
+        "category_id": 25,
+        "created_at": "2025-09-06T05:33:19.000000Z",
+        "updated_at": "2025-09-06T05:33:19.000000Z",
+        "sort": null
+      },
+      {
+        "id": 197,
+        "name": "SUPER  DELUXE  MATCHES",
+        "seo_title": "SUPER  DELUXE  MATCHES",
+        "price": 80,
+        "image": "cQn5qHKufxOb5HOMJThXoAk1q06Ax5-metaU1VQRVIgIERFTFVYRSAgTUFUQ0hFUy5qZmlm-.jpg",
+        "category_id": 26,
+        "created_at": "2025-09-06T05:36:05.000000Z",
+        "updated_at": "2025-09-06T05:36:05.000000Z",
+        "sort": null
+      },
+      {
+        "id": 198,
+        "name": " POKEMAN MATCHES",
+        "seo_title": "POKEMAN MATCHES",
+        "price": 150,
+        "image": "8nmcWeKnAHYKMTrfZbvIY6yecBrr3y-metaUE9LRU1BTi5qZmlm-.jpg",
+        "category_id": 26,
+        "created_at": "2025-09-06T05:37:31.000000Z",
+        "updated_at": "2025-09-06T05:37:31.000000Z",
+        "sort": null
+      },
+      {
+        "id": 199,
+        "name": "ANGRY BIRD  SERIES ",
+        "seo_title": "ANGRY BIRD  SERIES ",
+        "price": 190,
+        "image": "tzwA2yQOSGSc54u85ikAlNmKcOVG4u-metaQU5HUlkgQklSRCAgU0VSSUVTLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:40:53.000000Z",
+        "updated_at": "2025-09-06T05:40:53.000000Z",
+        "sort": null
+      },
+      {
+        "id": 200,
+        "name": "WONDER 3in1",
+        "seo_title": "WONDER 3in1",
+        "price": 250,
+        "image": "CAlnqRcVWz7qYyKolNGgNgAPLrqaiI-metaV09OREVSIDNpbjEuamZpZg==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:42:34.000000Z",
+        "updated_at": "2025-09-06T05:42:34.000000Z",
+        "sort": null
+      },
+      {
+        "id": 201,
+        "name": "STAR RUSH ",
+        "seo_title": "STAR RUSH ",
+        "price": 60,
+        "image": "ATlarYIWCVUtj3GpvfLc4KCDnazVoJ-metaU1RBUiBSVVNILmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:43:54.000000Z",
+        "updated_at": "2025-09-06T05:43:54.000000Z",
+        "sort": null
+      },
+      {
+        "id": 202,
+        "name": " I CONE ",
+        "seo_title": " I CONE ",
+        "price": 250,
+        "image": "8LNl6zWfRMZ8pWiUXDmWmaTAKOLnhC-metaSSBDT05FLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:44:43.000000Z",
+        "updated_at": "2025-09-06T05:44:43.000000Z",
+        "sort": null
+      },
+      {
+        "id": 204,
+        "name": "LUCKY 2IN1",
+        "seo_title": "LUCKY 2IN1",
+        "price": 200,
+        "image": "cp4SLuPisuhTSbIS4OQRtyPduR8SK1-metaTFVDS1kgMklOMS5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:52:43.000000Z",
+        "updated_at": "2025-09-06T05:52:43.000000Z",
+        "sort": null
+      },
+      {
+        "id": 205,
+        "name": "SQUARD",
+        "seo_title": "SQUARD",
+        "price": 150,
+        "image": "yuA7StoLpybmhtGyV9irs9sBmYG4xh-metaMTIzLmpwZw==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:54:19.000000Z",
+        "updated_at": "2025-09-06T05:54:19.000000Z",
+        "sort": null
+      },
+      {
+        "id": 206,
+        "name": "LOTUS 4*4",
+        "seo_title": "LOTUS 4*4",
+        "price": 200,
+        "image": "bFsOq0Iq5Qrtgmy0CZ8bkkhRZNTBM6-metaTG90dXMtV2hlZWwzcGNzLndlYnA=-.webp",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:55:37.000000Z",
+        "updated_at": "2025-09-06T05:55:37.000000Z",
+        "sort": null
+      },
+      {
+        "id": 207,
+        "name": "LOLLIPOP",
+        "seo_title": "LOTUS 4*4",
+        "price": 150,
+        "image": "QlxmGAEBBO9rmphoxOvwbBPhSLbvCC-metaTE9MTElQT1AuamZpZg==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T05:58:10.000000Z",
+        "updated_at": "2025-09-06T05:58:10.000000Z",
+        "sort": null
+      },
+      {
+        "id": 208,
+        "name": "BAT AND BALL",
+        "seo_title": "BAT AND BALL",
+        "price": 250,
+        "image": "NakplF5vhoRwRnmz10BSGHvFFoYpE1-metaQkFUIEFORCBCQUxMLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:01:01.000000Z",
+        "updated_at": "2025-09-06T06:01:01.000000Z",
+        "sort": null
+      },
+      {
+        "id": 209,
+        "name": "RED SUN",
+        "seo_title": "RED SUN",
+        "price": 120,
+        "image": "vO4wlTjkFqCbnkBNTfuHM7VIWo3wWq-metaUkVEIFNVTi5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:01:59.000000Z",
+        "updated_at": "2025-09-06T06:01:59.000000Z",
+        "sort": null
+      },
+      {
+        "id": 210,
+        "name": "MISS BUTTERFLY",
+        "seo_title": "MISS BUTTERFLY",
+        "price": 120,
+        "image": "lnEF3H8LYDJL34z5W5GeDOvE7gDPa5-metaTUlTUyBCVVRURVJGTFkuamZpZg==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:03:38.000000Z",
+        "updated_at": "2025-09-06T06:03:38.000000Z",
+        "sort": null
+      },
+      {
+        "id": 211,
+        "name": "BLUE ICE",
+        "seo_title": "BLUE ICE",
+        "price": 120,
+        "image": "QefalFT8jjwhpux7YnmERXKIxkJPhd-metaQkxVRSBJQ0UuamZpZg==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:06:02.000000Z",
+        "updated_at": "2025-09-06T06:06:02.000000Z",
+        "sort": null
+      },
+      {
+        "id": 212,
+        "name": "GREEN GARDEN",
+        "seo_title": "GREEN GARDEN",
+        "price": 120,
+        "image": "gyDes8EZhuxVnCt1UcCoChIuuU6WDj-metaR1JFRU4gR0FSREVOLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:09:26.000000Z",
+        "updated_at": "2025-09-06T06:09:26.000000Z",
+        "sort": null
+      },
+      {
+        "id": 213,
+        "name": "SUN FEAST  2IN1",
+        "seo_title": "SUN FEAST  2IN1",
+        "price": 200,
+        "image": "1lGktYnsB4kbAH4rwmHxTnh6Tr8cQQ-metaU1VOIEZFQVNUICAySU4xLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:22:44.000000Z",
+        "updated_at": "2025-09-06T06:22:44.000000Z",
+        "sort": null
+      },
+      {
+        "id": 214,
+        "name": "GREEN  CRACKLING",
+        "seo_title": "GREEN  CRACKLING",
+        "price": 200,
+        "image": "6VokIfoiIHyh9gd2vBXR3DykMOs85q-metaR1JFRU4gIENSQUNLTElORy5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:24:46.000000Z",
+        "updated_at": "2025-09-06T06:24:46.000000Z",
+        "sort": null
+      },
+      {
+        "id": 215,
+        "name": "GOLD CRACKLING",
+        "seo_title": "GOLD CRACKLING",
+        "price": 200,
+        "image": "zlnTE6VHQRYzBkdUNGBO7lLnHtpF7X-metaR09MRCBDUkFDS0xJTkcuamZpZg==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:26:37.000000Z",
+        "updated_at": "2025-09-06T06:26:37.000000Z",
+        "sort": null
+      },
+      {
+        "id": 216,
+        "name": "SKY  WINGS",
+        "seo_title": "SKY  WINGS",
+        "price": 200,
+        "image": "KqQwHOOaF3dlGpockN4nugnH3S7IJv-metaU0tZICBXSU5HUy5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:30:14.000000Z",
+        "updated_at": "2025-09-06T06:30:14.000000Z",
+        "sort": null
+      },
+      {
+        "id": 217,
+        "name": "GOLDEN IGNOT",
+        "seo_title": "GOLDEN IGNOT",
+        "price": 200,
+        "image": "pda5Ubggl7n4HNg74FWdjjnDvcXpdy-metaR09MREVOIElHTk9ULmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:31:55.000000Z",
+        "updated_at": "2025-09-06T06:31:55.000000Z",
+        "sort": null
+      },
+      {
+        "id": 218,
+        "name": "MINI TRY COLOR",
+        "seo_title": "MINI TRY COLOR",
+        "price": 200,
+        "image": "Oehhi6h7hg12HpyPIoXviZMh5NOkw5-metaTUlOSSBUUlkgQ09MT1IuamZpZg==-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:34:30.000000Z",
+        "updated_at": "2025-09-06T06:34:30.000000Z",
+        "sort": null
+      },
+      {
+        "id": 219,
+        "name": "TRY COLOR",
+        "seo_title": "TRY COLOR",
+        "price": 300,
+        "image": "qYEca8q2HvAvE9ayWSAmy36eC3CjDX-metaVFJZIENPTE9SLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:35:17.000000Z",
+        "updated_at": "2025-09-06T06:35:17.000000Z",
+        "sort": null
+      },
+      {
+        "id": 220,
+        "name": "BAMBARA",
+        "seo_title": "BAMBARA",
+        "price": 120,
+        "image": "t4J3mkQdDgsXzS2DpLmzRxrFEHNMEB-metaQkFNQkFSQS5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:36:38.000000Z",
+        "updated_at": "2025-09-06T06:36:38.000000Z",
+        "sort": null
+      },
+      {
+        "id": 221,
+        "name": "HELICOPTER",
+        "seo_title": "HELICOPTER",
+        "price": 100,
+        "image": "o1NfwofAt5byGqdWJqtLitQ31dFsyD-metaSEVMSUNPUFRFUi5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:39:34.000000Z",
+        "updated_at": "2025-09-06T06:39:34.000000Z",
+        "sort": null
+      },
+      {
+        "id": 222,
+        "name": "BUTTERFLY",
+        "seo_title": "BUTTERFLY",
+        "price": 80,
+        "image": "6BxJljolFB3nC4nTA9eCan02BhASjC-metaQlVUVEVSRkxZLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:40:30.000000Z",
+        "updated_at": "2025-09-06T06:40:30.000000Z",
+        "sort": null
+      },
+      {
+        "id": 223,
+        "name": "GOLD LINE",
+        "seo_title": "GOLD LINE",
+        "price": 300,
+        "image": "ESKzjWsoiebhXXTsOidLXM1A1PvWQI-metaR09MRCBMSU5FLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:41:50.000000Z",
+        "updated_at": "2025-09-06T06:41:50.000000Z",
+        "sort": null
+      },
+      {
+        "id": 224,
+        "name": "GOLD STAR",
+        "seo_title": "GOLD STAR",
+        "price": 150,
+        "image": "aoxe7JSSePrh4ssofEKteOOWJ2kGlV-metaR09MRCBTVEFSLmpmaWY=-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:42:45.000000Z",
+        "updated_at": "2025-09-06T06:42:45.000000Z",
+        "sort": null
+      },
+      {
+        "id": 225,
+        "name": "APPU FOUNTAIN",
+        "seo_title": "APPU FOUNTAIN",
+        "price": 250,
+        "image": "CZdP59SB0JQhStIe7kS2wog40rYxDl-metaQVBQVSBGT1VOVEFJTi5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:43:49.000000Z",
+        "updated_at": "2025-09-06T06:43:49.000000Z",
+        "sort": null
+      },
+      {
+        "id": 226,
+        "name": "MINI SIREN",
+        "seo_title": "MINI SIREN",
+        "price": 150,
+        "image": "mvDTfANZ15Y7H7dNKzasxNc7bZy438-metaTUlOSSBTSVJFTi5qZmlm-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-06T06:45:16.000000Z",
+        "updated_at": "2025-09-06T06:45:16.000000Z",
+        "sort": null
+      },
+      {
+        "id": 228,
+        "name": "MOUNT  EVEREST ",
+        "seo_title": "MOUNT  EVEREST ",
+        "price": 520,
+        "image": "2w2x8FPdGq9j9liGjOU2Vo4ZKkLmxg-metaTU9VTlQgIEVWRVJFU1QuamZpZg==-.jpg",
+        "category_id": 27,
+        "created_at": "2025-09-06T06:54:13.000000Z",
+        "updated_at": "2025-09-06T06:54:13.000000Z",
+        "sort": null
+      },
+      {
+        "id": 229,
+        "name": "SNEAKE  PEAK",
+        "seo_title": "SNEAKE  PEAK",
+        "price": 520,
+        "image": "918P0CK0m6CQv4RZgjwh8j4klT0A8T-metaU05FQUtFICBQRUFLLmpmaWY=-.jpg",
+        "category_id": 27,
+        "created_at": "2025-09-06T06:55:38.000000Z",
+        "updated_at": "2025-09-06T06:55:38.000000Z",
+        "sort": null
+      },
+      {
+        "id": 230,
+        "name": "GOOD  TIMES",
+        "seo_title": "GOOD  TIMES",
+        "price": 520,
+        "image": "AUqXR1sh3oi4L0kNYU142xQbKEWTBl-metaR09PRCAgVElNRVMuamZpZg==-.jpg",
+        "category_id": 27,
+        "created_at": "2025-09-06T06:56:38.000000Z",
+        "updated_at": "2025-09-06T06:56:38.000000Z",
+        "sort": null
+      },
+      {
+        "id": 231,
+        "name": "SPACE RACE",
+        "seo_title": "SPACE RACE",
+        "price": 520,
+        "image": "KfBPCHKVmekLusUAe1rc1kTFQkDxCV-metaU1BBQ0UgUkFDRS5qZmlm-.jpg",
+        "category_id": 27,
+        "created_at": "2025-09-06T06:58:25.000000Z",
+        "updated_at": "2025-09-06T06:58:25.000000Z",
+        "sort": null
+      },
+      {
+        "id": 232,
+        "name": "MAST MAST",
+        "seo_title": "MAST MAST",
+        "price": 520,
+        "image": "VP15kzlVapFAI5qQw4ClpgSO93G2cM-metaTUFTVCBNQVNULmpmaWY=-.jpg",
+        "category_id": 27,
+        "created_at": "2025-09-06T06:59:55.000000Z",
+        "updated_at": "2025-09-06T06:59:55.000000Z",
+        "sort": null
+      },
+      {
+        "id": 233,
+        "name": "TRIPLE BALL",
+        "seo_title": "TRIPLE BALL",
+        "price": 250,
+        "image": "85ZgsqaCdPKROLQA092wUbU384m8WB-metaVFJJUExFIEJBTEwuamZpZg==-.jpg",
+        "category_id": 28,
+        "created_at": "2025-09-06T07:02:33.000000Z",
+        "updated_at": "2025-09-06T07:02:33.000000Z",
+        "sort": null
+      },
+      {
+        "id": 234,
+        "name": "GOLDEN ATTACK",
+        "seo_title": "GOLDEN ATTACK",
+        "price": 400,
+        "image": "rb40kUSDHXQn1rsLzMD9yliy3taDKx-metaR09MREVOIEFUVEFDSy5qZmlm-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:04:29.000000Z",
+        "updated_at": "2025-09-06T07:04:29.000000Z",
+        "sort": null
+      },
+      {
+        "id": 235,
+        "name": "MERCURY",
+        "seo_title": "MERCURY",
+        "price": 400,
+        "image": "4f4rII81wbR5mPICd05WU52vtT0QLm-metaTUVSQ1VSWS5qZmlm-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:06:19.000000Z",
+        "updated_at": "2025-09-06T07:06:19.000000Z",
+        "sort": null
+      },
+      {
+        "id": 236,
+        "name": "PIN PEARL ",
+        "seo_title": "PIN PEARL ",
+        "price": 400,
+        "image": "wQmoxMS7oclaY1eZ1paa2XcynLXfyd-metaUElOIFBFQVJMLmpmaWY=-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:07:35.000000Z",
+        "updated_at": "2025-09-06T07:07:35.000000Z",
+        "sort": null
+      },
+      {
+        "id": 237,
+        "name": " HOT KASMEER CHILLI",
+        "seo_title": " HOT KASMEER CHILLI",
+        "price": 400,
+        "image": "gmTH0hURkZnhy8e4PVBvgFsoryKK9x-metaY3JhY2tlcnMxLmpwZw==-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:09:33.000000Z",
+        "updated_at": "2025-09-06T07:09:33.000000Z",
+        "sort": null
+      },
+      {
+        "id": 238,
+        "name": "PEACOCK JAIL",
+        "seo_title": "PEACOCK JAIL",
+        "price": 400,
+        "image": "kYYYIjIoOYkTB1NQ8QLp7CpSTsYWkW-metaUEVBQ09DSyBKQUlMLmpmaWY=-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:10:44.000000Z",
+        "updated_at": "2025-09-06T07:10:44.000000Z",
+        "sort": null
+      },
+      {
+        "id": 239,
+        "name": "PLAY BOY",
+        "seo_title": "PLAY BOY",
+        "price": 400,
+        "image": "53SnFdkVfDnJo1d2KVopNeLWB6FrgS-metaUExBWSBCT1kuamZpZg==-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:11:33.000000Z",
+        "updated_at": "2025-09-06T07:11:33.000000Z",
+        "sort": null
+      },
+      {
+        "id": 240,
+        "name": "X MAN ",
+        "seo_title": "X MAN ",
+        "price": 400,
+        "image": "oDFakA89yxgFNBT7lWdKDOb0Mzo9Oy-metaWCBNQU4uamZpZg==-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:12:26.000000Z",
+        "updated_at": "2025-09-06T07:12:26.000000Z",
+        "sort": null
+      },
+      {
+        "id": 241,
+        "name": "WEBSITE RAINBOW",
+        "seo_title": "WEBSITE RAINBOW",
+        "price": 400,
+        "image": "qMNAcIyn46q4tNgMKGkWph7iBAQHOy-metaV0VCU0lURSBSQUlOQk9XLmpmaWY=-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:13:47.000000Z",
+        "updated_at": "2025-09-06T07:13:47.000000Z",
+        "sort": null
+      },
+      {
+        "id": 242,
+        "name": "OUTLOOK",
+        "seo_title": "OUTLOOK",
+        "price": 400,
+        "image": "Q4LPUKSikDDAkfLzorEdaFRrnYq7iP-metaT1VUTE9PSy5qZmlm-.jpg",
+        "category_id": 29,
+        "created_at": "2025-09-06T07:14:45.000000Z",
+        "updated_at": "2025-09-06T07:14:45.000000Z",
+        "sort": null
+      },
+      {
+        "id": 243,
+        "name": "NIRBHAY",
+        "seo_title": "NIRBHAY",
+        "price": 620,
+        "image": "ZbH6bXLopvsS0UEXGahGcS9J0nWgsX-metaTklSQkhBWS5qZmlm-.jpg",
+        "category_id": 30,
+        "created_at": "2025-09-06T07:17:28.000000Z",
+        "updated_at": "2025-09-06T07:17:28.000000Z",
+        "sort": null
+      },
+      {
+        "id": 244,
+        "name": "AGNI",
+        "seo_title": "AGNI",
+        "price": 620,
+        "image": "52UcZTOApH0RbDhmDUUaaynGiNveag-metaQUdOSS5qZmlm-.jpg",
+        "category_id": 30,
+        "created_at": "2025-09-06T07:18:14.000000Z",
+        "updated_at": "2025-09-06T07:18:14.000000Z",
+        "sort": null
+      },
+      {
+        "id": 245,
+        "name": "ASTRA",
+        "seo_title": "ASTRA",
+        "price": 620,
+        "image": "Dxj97UUw99A3BFBu3ltHECztF4LeGs-metaQVNUUkEuamZpZg==-.jpg",
+        "category_id": 30,
+        "created_at": "2025-09-06T07:19:01.000000Z",
+        "updated_at": "2025-09-06T07:19:01.000000Z",
+        "sort": null
+      },
+      {
+        "id": 246,
+        "name": "BRAHMOS",
+        "seo_title": "BRAHMOS",
+        "price": 620,
+        "image": "LYGOEeqwpe4Nj1yUkAlPfZKWndBhUc-metaQlJBSE1PUy5qZmlm-.jpg",
+        "category_id": 30,
+        "created_at": "2025-09-06T07:20:09.000000Z",
+        "updated_at": "2025-09-06T07:20:09.000000Z",
+        "sort": null
+      },
+      {
+        "id": 247,
+        "name": "HELINA",
+        "seo_title": "HELINA",
+        "price": 620,
+        "image": "gGcN8iINo7HWjMyzgPX2ALonZ0AcLO-metaSEVMSU5BLmpmaWY=-.jpg",
+        "category_id": 30,
+        "created_at": "2025-09-06T07:21:36.000000Z",
+        "updated_at": "2025-09-06T07:21:36.000000Z",
+        "sort": null
+      },
+      {
+        "id": 248,
+        "name": "PRITHVI",
+        "seo_title": "PRITHVI",
+        "price": 620,
+        "image": "GmlqaFlnz4aZeIbpYa6aYQuu6SuYgO-metaUFJJVEhWSS5qZmlm-.jpg",
+        "category_id": 30,
+        "created_at": "2025-09-06T07:22:48.000000Z",
+        "updated_at": "2025-09-06T07:22:48.000000Z",
+        "sort": null
+      },
+      {
+        "id": 249,
+        "name": "NAYAGARA  FALLS ",
+        "seo_title": "NAYAGARA  FALLS ",
+        "price": 450,
+        "image": "8sX6gOTVRSSIJ0vAY7z0cSrDpt4LiJ-metaTkFZQUdBUkEgIEZBTExTIEFLICgzIFBDUykud2VicA==-.webp",
+        "category_id": 31,
+        "created_at": "2025-09-06T07:24:18.000000Z",
+        "updated_at": "2025-09-06T07:24:18.000000Z",
+        "sort": null
+      },
+      {
+        "id": 250,
+        "name": "MASTER CRACKLING",
+        "seo_title": "MASTER CRACKLING",
+        "price": 450,
+        "image": "AovFhweMzNJvq2fjOVBDfffuT4aUTg-metaTUFTVEVSIENSQUNLTElORy5qZmlm-.jpg",
+        "category_id": 31,
+        "created_at": "2025-09-06T07:25:22.000000Z",
+        "updated_at": "2025-09-06T07:25:22.000000Z",
+        "sort": null
+      },
+      {
+        "id": 251,
+        "name": "BINGO BOOM",
+        "seo_title": "BINGO BOOM",
+        "price": 450,
+        "image": "swtMWfFifWp86JYc0J3TWw7ESyri1T-metaQklOR08gQk9PTS5qZmlm-.jpg",
+        "category_id": 31,
+        "created_at": "2025-09-06T07:26:22.000000Z",
+        "updated_at": "2025-09-06T07:26:22.000000Z",
+        "sort": null
+      },
+      {
+        "id": 252,
+        "name": "BLUE PEARL",
+        "seo_title": "BLUE PEARL",
+        "price": 450,
+        "image": "id5oD1NUysa4XGQlnO2uPTmUxJxomE-metaQkxVRSBQRUFSTC5qZmlm-.jpg",
+        "category_id": 31,
+        "created_at": "2025-09-06T07:27:11.000000Z",
+        "updated_at": "2025-09-06T07:27:11.000000Z",
+        "sort": null
+      },
+      {
+        "id": 253,
+        "name": "CRACKLING COLORS ",
+        "seo_title": "CRACKLING COLORS ",
+        "price": 850,
+        "image": "PMgm4n0Z1nr9HD86w89sU4Xi8ni7vu-metaQ1JBQ0tMSU5HIENPTE9SUy5qZmlm-.jpg",
+        "category_id": 32,
+        "created_at": "2025-09-06T07:29:30.000000Z",
+        "updated_at": "2025-09-06T07:29:30.000000Z",
+        "sort": null
+      },
+      {
+        "id": 254,
+        "name": "NATIONAL  GEOGRAPHY",
+        "seo_title": "NATIONAL  GEOGRAPHY",
+        "price": 850,
+        "image": "nYAcABQvCQ2v1rjOIT7V5VaTgczWZK-metaTkFUSU9OQUwgIEdFT0dSQVBIWS5qZmlm-.jpg",
+        "category_id": 32,
+        "created_at": "2025-09-06T07:30:54.000000Z",
+        "updated_at": "2025-09-06T07:30:54.000000Z",
+        "sort": null
+      },
+      {
+        "id": 255,
+        "name": "CN CRACKLING",
+        "seo_title": "CN CRACKLING",
+        "price": 850,
+        "image": "DL75lIWaDviAdp6VWWlxWJesDodymX-metaQ04gQ1JBQ0tMSU5HLmpmaWY=-.jpg",
+        "category_id": 32,
+        "created_at": "2025-09-06T07:31:40.000000Z",
+        "updated_at": "2025-09-06T07:31:40.000000Z",
+        "sort": null
+      },
+      {
+        "id": 256,
+        "name": "AXN CRACKLING",
+        "seo_title": "AXN CRACKLING",
+        "price": 850,
+        "image": "W8W6uOWQZRK5dUnBQIJ6ZkTV3T0ZBv-metaQVhOIENSQUNLTElORy5qZmlm-.jpg",
+        "category_id": 32,
+        "created_at": "2025-09-06T07:32:38.000000Z",
+        "updated_at": "2025-09-06T07:32:38.000000Z",
+        "sort": null
+      },
+      {
+        "id": 257,
+        "name": "SONY MIX",
+        "seo_title": "SONY MIX",
+        "price": 850,
+        "image": "i59mHpVstubbzKDx876q3O4bVivOCj-metaU09OWSBNSVguamZpZg==-.jpg",
+        "category_id": 32,
+        "created_at": "2025-09-06T07:33:28.000000Z",
+        "updated_at": "2025-09-06T07:33:28.000000Z",
+        "sort": null
+      },
+      {
+        "id": 258,
+        "name": "STAR SPORTS",
+        "seo_title": "STAR SPORTS",
+        "price": 850,
+        "image": "qwb5FUDTnP88P1soTPV1yK3lGTJKV7-metaU1RBUiBTUE9SVFMuamZpZg==-.jpg",
+        "category_id": 32,
+        "created_at": "2025-09-06T07:35:14.000000Z",
+        "updated_at": "2025-09-06T07:35:14.000000Z",
+        "sort": null
+      },
+      {
+        "id": 259,
+        "name": "DURANDO",
+        "seo_title": "DURANDO",
+        "price": 1050,
+        "image": "byaGK0bwL7yqXkbvjMz3IE4OcRvhNN-metaRFVSQU5ETy5qZmlm-.jpg",
+        "category_id": 33,
+        "created_at": "2025-09-06T07:37:08.000000Z",
+        "updated_at": "2025-09-06T07:37:08.000000Z",
+        "sort": null
+      },
+      {
+        "id": 260,
+        "name": "RAJDHANI",
+        "seo_title": "RAJDHANI",
+        "price": 1050,
+        "image": "IueqyX8qjqRiEVUoR9Q5rpYZXLfiMB-metaUkFKREhBTkkuamZpZg==-.jpg",
+        "category_id": 33,
+        "created_at": "2025-09-06T07:38:18.000000Z",
+        "updated_at": "2025-09-06T07:38:18.000000Z",
+        "sort": null
+      },
+      {
+        "id": 261,
+        "name": "VANDE BHARATH",
+        "seo_title": "VANDE BHARATH",
+        "price": 1050,
+        "image": "k542akGJ9heBltcf8c5PnPneZsUInl-metaY3JhY2tlcnMxLmpwZw==-.jpg",
+        "category_id": 33,
+        "created_at": "2025-09-06T07:40:03.000000Z",
+        "updated_at": "2025-09-06T07:40:03.000000Z",
+        "sort": null
+      },
+      {
+        "id": 262,
+        "name": "SHATABADI",
+        "seo_title": "SHATABADI",
+        "price": 1050,
+        "image": "ZLqdnn87eXPunhg7ChTImXD35BLfgO-metaU0hBVEFCQURJLmpmaWY=-.jpg",
+        "category_id": 33,
+        "created_at": "2025-09-06T07:40:58.000000Z",
+        "updated_at": "2025-09-06T07:40:58.000000Z",
+        "sort": null
+      },
+      {
+        "id": 263,
+        "name": "GADIMAAN",
+        "seo_title": "GADIMAAN",
+        "price": 1050,
+        "image": "QHu3U1cRWW4jGE0b9wD7nnlIF1LyAY-metaR0FESU1BQU4uamZpZg==-.jpg",
+        "category_id": 33,
+        "created_at": "2025-09-06T07:41:57.000000Z",
+        "updated_at": "2025-09-06T07:41:57.000000Z",
+        "sort": null
+      },
+      {
+        "id": 264,
+        "name": " 7  COLOUR SHOTS",
+        "seo_title": "7  COLOUR SHOTS",
+        "price": 90,
+        "image": "aEpAhc9HzIhSe5cV9eZ1PiDSu8tzEw-metaNyAgQ09MT1VSIFNIT1RTLmpmaWY=-.jpg",
+        "category_id": 16,
+        "created_at": "2025-09-06T07:45:06.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 4
+      },
+      {
+        "id": 265,
+        "name": "12 SHOT FANCY",
+        "seo_title": "12 SHOT FANCY",
+        "price": 150,
+        "image": "L82f41dhTOjxfoGuGI0R8Ekh2vZzrQ-metaMTIgU0hPVCBGQU5DWS5qZmlm-.jpg",
+        "category_id": 16,
+        "created_at": "2025-09-06T07:46:00.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 5
+      },
+      {
+        "id": 266,
+        "name": "30  SHOTS  MULTI COLOR",
+        "seo_title": "30  SHOTS  MULTI COLOR",
+        "price": 400,
+        "image": "NGiRYSTA1A4CLJW29NC6hGFBL4US3a-metaMzAgU0hPVFMuanBlZw==-.jpg",
+        "category_id": 16,
+        "created_at": "2025-09-06T07:47:17.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 6
+      },
+      {
+        "id": 267,
+        "name": "60  SHOTS  MULTI COLOR",
+        "seo_title": "60  SHOTS  MULTI COLOR",
+        "price": 800,
+        "image": "bGK65EoQGCpZLHnPmEv1MJ9Y0PbFMg-metaNjAtU0hPVC1NVUxUSS1DT0xPVVItQlJBTkQtNjAt4K6a4K6+4K6f4K+NLeCuruCusuCvjeCun+Cuvy3grpXgrrLgrrDgr40tQlJBTkQuanBlZw==-.jpg",
+        "category_id": 16,
+        "created_at": "2025-09-06T07:54:11.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 7
+      },
+      {
+        "id": 268,
+        "name": "120  SHOTS  MULTI COLOR",
+        "seo_title": "120  SHOTS  MULTI COLOR",
+        "price": 1600,
+        "image": "357WkgJ8oCofKOz077dVZtnY2hJ9E9-metaMTIwICBTSE9UUyAgTVVMVEkgQ09MT1IuamZpZg==-.jpg",
+        "category_id": 16,
+        "created_at": "2025-09-06T07:54:59.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 8
+      },
+      {
+        "id": 269,
+        "name": "240  SHOTS  MULTI COLOR",
+        "seo_title": "240  SHOTS  MULTI COLOR",
+        "price": 3200,
+        "image": "54nPW6HISQYlIHkPiJyniqjm7IZVcp-metaMjQwICBTSE9UUyAgTVVMVEkgQ09MT1IuamZpZg==-.jpg",
+        "category_id": 16,
+        "created_at": "2025-09-06T07:55:45.000000Z",
+        "updated_at": "2025-09-06T07:56:07.000000Z",
+        "sort": 9
+      },
+      {
+        "id": 270,
+        "name": " 10 Cm  RED  Sparkle ",
+        "seo_title": " 10 Cm  RED  Sparkle ",
+        "price": 28,
+        "image": "pNweShRYo5vevQah47zA9PhgEH52le-metaMTAgQ20gIFJFRCAgU3BhcmtsZS5wbmc=-.png",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:00:06.000000Z",
+        "updated_at": "2025-09-06T08:00:28.000000Z",
+        "sort": 7
+      },
+      {
+        "id": 271,
+        "name": " 12 Cm ELECTRIC  Sparkle ",
+        "seo_title": " 12 Cm ELECTRIC  Sparkle ",
+        "price": 24,
+        "image": "JnhA8PkNAVhFGRUCL6K8rTtJJbeFos-metaMTIgQ20gRUxFQ1RSSUMgIFNwYXJrbGUuamZpZg==-.jpg",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:02:20.000000Z",
+        "updated_at": "2025-09-06T08:02:20.000000Z",
+        "sort": null
+      },
+      {
+        "id": 272,
+        "name": " 12 Cm COLOR   Sparkle ",
+        "seo_title": " 12 Cm COLOR   Sparkle ",
+        "price": 27,
+        "image": "tmaW4VXowHC9V0js11V3ljmytjgfJB-metaMTIgQ20gQ09MT1IgICBTcGFya2xlLnBuZw==-.png",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:04:26.000000Z",
+        "updated_at": "2025-09-06T08:04:26.000000Z",
+        "sort": null
+      },
+      {
+        "id": 273,
+        "name": "12 Cm  GREEN Sparkle ",
+        "seo_title": "12 Cm  GREEN Sparkle ",
+        "price": 28,
+        "image": "pXpkaPR7CewsZJ8V7hcrUg4blNsRJP-metaMTIgQ20gIEdSRUVOIFNwYXJrbGUucG5n-.png",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:06:03.000000Z",
+        "updated_at": "2025-09-06T08:06:03.000000Z",
+        "sort": null
+      },
+      {
+        "id": 274,
+        "name": "12 Cm  RED Sparkle ",
+        "seo_title": "12 Cm  RED Sparkle ",
+        "price": 30,
+        "image": "eyn3fAbv2FpBk6pVS5VvXbf2juPCd1-metaMTIgQ20gIFJFRCBTcGFya2xlLmpmaWY=-.jpg",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:06:51.000000Z",
+        "updated_at": "2025-09-06T08:06:51.000000Z",
+        "sort": null
+      },
+      {
+        "id": 275,
+        "name": "15  Cm  RED Sparkle ",
+        "seo_title": "15  Cm  RED Sparkle ",
+        "price": 50,
+        "image": "BWKkee7B3g1uTaQh4577dw5RRcg8lC-metaMTUgIENtICBSRUQgU3BhcmtsZS5qZmlm-.jpg",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:08:09.000000Z",
+        "updated_at": "2025-09-06T08:08:09.000000Z",
+        "sort": null
+      },
+      {
+        "id": 276,
+        "name": "DANCING UBERLLA ",
+        "seo_title": "DANCING UBERLLA ",
+        "price": 250,
+        "image": "LpZGHlnseuwc5SmhslvDLXL4c21PPD-metaREFOQ0lORyBVQkVSTExBLmpmaWY=-.jpg",
+        "category_id": 18,
+        "created_at": "2025-09-06T08:11:30.000000Z",
+        "updated_at": "2025-09-06T08:11:30.000000Z",
+        "sort": null
+      },
+      {
+        "id": 280,
+        "name": "cylinder bomb ",
+        "seo_title": "cylinder bomb ",
+        "price": 250,
+        "image": "kM1wQdn1g8FMIv56QdBjLfQk9fmqpE-metaSU1HMjAyNTA5MTAxNTM0MjMuanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T06:36:51.000000Z",
+        "updated_at": "2025-09-11T06:36:51.000000Z",
+        "sort": null
+      },
+      {
+        "id": 281,
+        "name": "Anuman kadayutham",
+        "seo_title": "fountain",
+        "price": 220,
+        "image": "6XpNJctr7GdvHJ3YZAuHyiRosv2rHT-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 20,
+        "created_at": "2025-09-11T10:55:45.000000Z",
+        "updated_at": "2025-09-11T10:55:45.000000Z",
+        "sort": null
+      },
+      {
+        "id": 282,
+        "name": "mega siren",
+        "seo_title": "mega siren",
+        "price": 200,
+        "image": "ZM47DrMsvbz4tUDoXtbc4MVA4paJzY-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T10:57:25.000000Z",
+        "updated_at": "2025-09-11T10:57:25.000000Z",
+        "sort": null
+      },
+      {
+        "id": 283,
+        "name": "bada peacock",
+        "seo_title": "bada peacock",
+        "price": 400,
+        "image": "kGbkaX0heLTpNSc2d7COjJA2QjDHHh-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T10:58:40.000000Z",
+        "updated_at": "2025-09-11T10:58:40.000000Z",
+        "sort": null
+      },
+      {
+        "id": 284,
+        "name": "money bank",
+        "seo_title": "money bank",
+        "price": 220,
+        "image": "3V4uiuUSy80nSF3L6AlwFaqXHtlV48-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T11:00:01.000000Z",
+        "updated_at": "2025-09-11T11:00:01.000000Z",
+        "sort": null
+      },
+      {
+        "id": 285,
+        "name": "magic lar",
+        "seo_title": "magic lar",
+        "price": 100,
+        "image": "quwfQT6iWPj63F4xc4DqVIXSllJg2I-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T11:05:00.000000Z",
+        "updated_at": "2025-09-11T11:05:00.000000Z",
+        "sort": null
+      },
+      {
+        "id": 286,
+        "name": "drone",
+        "seo_title": "drone",
+        "price": 200,
+        "image": "A1lXAcF6TntI8yzfsjvchdy5Ip5CML-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T11:06:09.000000Z",
+        "updated_at": "2025-09-11T11:06:09.000000Z",
+        "sort": null
+      },
+      {
+        "id": 287,
+        "name": "15 smoke shot",
+        "seo_title": "15 smoke shot",
+        "price": 450,
+        "image": "lGtve5ysXTZMFCkYBblHtU3GGyipBD-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-11T11:40:25.000000Z",
+        "updated_at": "2025-09-11T11:40:25.000000Z",
+        "sort": null
+      },
+      {
+        "id": 288,
+        "name": "tin bear",
+        "seo_title": "tin bear",
+        "price": 90,
+        "image": "acxLaKxPxp5vNQqqoHJQXmFE5u8fdJ-metaSU1HMjAyMzEyMjgyMTMwMzEuanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-15T03:59:45.000000Z",
+        "updated_at": "2025-09-15T03:59:45.000000Z",
+        "sort": null
+      },
+      {
+        "id": 289,
+        "name": "fether pops ",
+        "seo_title": "fether pops ",
+        "price": 120,
+        "image": "SEFZdvDAJrtnfDLnqtswwaCv8ks0I6-metaSU1HMjAyNTA5MTAxNTM0MzYuanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-09-15T04:08:47.000000Z",
+        "updated_at": "2025-09-15T04:08:47.000000Z",
+        "sort": null
+      },
+      {
+        "id": 290,
+        "name": "new umperla sparks ",
+        "seo_title": "new umperla sparks ",
+        "price": 200,
+        "image": "JIWuAMnU4MPXOGpK4pWDS5j0crYIsB-metaMTc1ODAwNzI0OTA5MjYyODQzNDE3OTk3MjU3ODI2MDIuanBn-.jpg",
+        "category_id": 18,
+        "created_at": "2025-09-16T07:21:43.000000Z",
+        "updated_at": "2025-09-16T07:21:43.000000Z",
+        "sort": null
+      },
+      {
+        "id": 291,
+        "name": "power of thor",
+        "seo_title": "power of thor",
+        "price": 250,
+        "image": "Qi21CYkK40zvM7gUw7pQI7MsHJPT0Q-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-10-02T05:06:41.000000Z",
+        "updated_at": "2025-10-02T05:06:41.000000Z",
+        "sort": null
+      },
+      {
+        "id": 292,
+        "name": "hydro bomb",
+        "seo_title": "hydro bomb",
+        "price": 70,
+        "image": "YiqJbdpttOHSfOVrtHusukoOeACmue-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 9,
+        "created_at": "2025-10-04T05:35:13.000000Z",
+        "updated_at": "2025-10-04T05:35:13.000000Z",
+        "sort": null
+      },
+      {
+        "id": 293,
+        "name": "crack jack",
+        "seo_title": "crack jack",
+        "price": 250,
+        "image": "buZtlSM17z83VeSITZC1hbZiInUJXG-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 15,
+        "created_at": "2025-10-06T05:46:47.000000Z",
+        "updated_at": "2025-10-06T05:46:47.000000Z",
+        "sort": null
+      },
+      {
+        "id": 294,
+        "name": "15 shot",
+        "seo_title": "15 shot",
+        "price": 300,
+        "image": "GFtUoX0vioL6vWkPezgapwLULS5vzX-metaNDU4MTg5OTk0XzUwODgyNTc0ODUxNjQ0OV83MzUzNDAyMjM4MzY1NzAyNzczX24uanBn-.jpg",
+        "category_id": 16,
+        "created_at": "2025-10-07T07:58:38.000000Z",
+        "updated_at": "2025-10-07T07:58:38.000000Z",
+        "sort": null
+      }
+    ],
+    "mobile_number_1": "7867955841",
+    "email_address": "nikash@gmail.com",
+    "bank_accounts": [
+      {
+        "id": 1,
+        "bank_name": "Bank of India",
+        "branch": "Salvarpatti",
+        "name": "M. Raja Pandian",
+        "account_number": "815710510003669",
+        "ifsc_code": "BK1D0008157",
+        "google_pay": "7867955841",
+        "phone_pay": "phone pay",
+        "created_at": "2023-09-15T08:28:49.000000Z",
+        "updated_at": "2023-10-12T07:31:44.000000Z"
+      }
+    ],
+    "company_address": "R.Nikash crackers",
+    "company_name": "R-nikash",
+    "whatsapp_number": "7867955841"
+  },
+  "url": "/combo-pack",
+  "version": "a1ae89c69952c36b3c7ac735d0670e99",
+  "clearHistory": false,
+  "encryptHistory": false
+}

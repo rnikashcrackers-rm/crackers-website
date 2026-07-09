@@ -1,0 +1,49 @@
+{
+  "total_products": 181,
+  "total_categories": 30,
+  "category_product_counts": {
+    "1": 8,
+    "2": 3,
+    "3": 2,
+    "4": 6,
+    "5": 4,
+    "6": 3,
+    "7": 5,
+    "8": 2,
+    "9": 4,
+    "10": 1,
+    "11": 2,
+    "12": 5,
+    "13": 4,
+    "14": 3,
+    "15": 41,
+    "16": 10,
+    "17": 1,
+    "18": 25,
+    "19": 4,
+    "20": 2,
+    "24": 3,
+    "25": 5,
+    "26": 2,
+    "27": 5,
+    "28": 1,
+    "29": 9,
+    "30": 6,
+    "31": 4,
+    "32": 6,
+    "33": 5
+  },
+  "total_sliders": 3,
+  "marquee_text": "R.NIKASH CRCAKERS 80% disscount",
+  "pages_scraped": [
+    "home",
+    "about",
+    "contact",
+    "safety",
+    "combo"
+  ],
+  "product_price_range": {
+    "min": 10,
+    "max": 3400
+  }
+}
