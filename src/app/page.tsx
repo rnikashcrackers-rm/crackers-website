@@ -1,255 +1,288 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { InteractiveHeroWrapper } from '@/components/effects/InteractiveHeroWrapper';
-import { SlideInLeft, SlideInRight, ScrollFadeInUp } from '@/components/ui/ClientAnimation';
+import {
+  ArrowRight,
+  Factory,
+  ShieldCheck,
+  Sparkles,
+  PhoneCall,
+  PackageCheck,
+  Headphones,
+} from 'lucide-react';
 import { getSiteSettings } from '@/lib/settings';
-import { Shield, Leaf, Factory, Package } from 'lucide-react';
+import { AnimatedKolam } from '@/components/ui/AnimatedKolam';
+import { DeepamFlameIcon } from '@/components/ui/TraditionalDeepamGarland';
+
+const categories = [
+  {
+    title: 'Gift Boxes',
+    subtitle: 'Ready-made family celebration boxes',
+    image: '/hero_gift_box.png',
+    href: '/products?category=giftbox',
+    badge: 'Popular',
+    count: '15+ Packs'
+  },
+  {
+    title: 'Sparklers & Fountains',
+    subtitle: 'Classic metallic, color & electric sparklers',
+    image: '/product-assets/sparklers_brand.png',
+    href: '/products?category=sparklers',
+    badge: 'Traditional',
+    count: '30+ Varieties'
+  },
+  {
+    title: 'Flower Pots',
+    subtitle: 'Golden & multicolor ground fountains',
+    image: '/product-assets/flower_pots_brand.png',
+    href: '/products?category=flowerpots',
+    badge: 'Festive',
+    count: '25+ Sizes'
+  },
+  {
+    title: 'Aerial Multi-Shots',
+    subtitle: 'Sky fireworks & repeater shots',
+    image: '/product-assets/aerial_shots_brand.png',
+    href: '/products?category=multishots',
+    badge: 'Sky Display',
+    count: '40+ Shots'
+  },
+];
 
 export default async function HomePage() {
   const settings = await getSiteSettings();
-  const globalDiscount = settings.global_discount || '60';
-  const marqueeText = settings.marquee || 'Welcome to Nikash Crackers Sivakasi - Direct Factory Price Quality Fireworks! We Give Special Festive Discounts!';
-
-  const displayMarquee = marqueeText.includes('[discount]')
-    ? marqueeText.replace(/\[discount\]/g, `${globalDiscount}%`)
-    : `${marqueeText} — 🔥 FLAT ${globalDiscount}% DISCOUNT ON ALL ITEMS! 🔥`;
+  const discount = settings.global_discount || '60';
 
   return (
-    <div className="flex flex-col bg-transparent -mt-24">
+    <div className="bg-[#0B132B] text-white min-h-screen overflow-x-hidden relative">
+      {/* Background Traditional Tamil Kolam Decorations */}
+      <div className="absolute top-10 left-4 pointer-events-none opacity-20 z-0 hidden md:block">
+        <AnimatedKolam size={260} color="#F7B733" />
+      </div>
+      <div className="absolute top-1/2 right-4 pointer-events-none opacity-20 z-0 hidden md:block">
+        <AnimatedKolam size={300} color="#F7B733" delay={0.5} />
+      </div>
 
-      {/* Hero Section */}
-      <InteractiveHeroWrapper>
-        {/* Dynamic Announcement Marquee Bar */}
-        <div className="relative w-full bg-[#FF8A6B]/10 border-t border-b border-[#FF8A6B]/20 py-2 sm:py-2.5 overflow-hidden flex select-none z-30 mt-28">
-          <div className="animate-marquee-horizontal flex gap-6 sm:gap-8 whitespace-nowrap uppercase tracking-[0.12em] sm:tracking-[0.15em] font-black text-[10px] sm:text-xs text-[#8C1D1D]">
-            <span>{displayMarquee}</span>
-            <span>🎆</span>
-            <span>{displayMarquee}</span>
-            <span>🎆</span>
-            <span>{displayMarquee}</span>
-            <span>🎆</span>
-            <span>{displayMarquee}</span>
-            <span>🎆</span>
-          </div>
+      {/* FULL-PAGE HERO WITH UPLOADED NIKASH BANNER & BLUE + GOLD GLASSMORPHISM */}
+      <section className="relative min-h-[85vh] flex items-center justify-center py-10 md:py-16 border-b border-[#172448] overflow-hidden">
+        {/* Full Hero Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/nikash-hero-banner.jpg"
+            alt="Nikash Crackers Luxury Hero Banner Display"
+            fill
+            priority
+            className="object-cover object-right md:object-center opacity-45 scale-105"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-[#0B132B]/80 to-[#0B132B]/50" />
         </div>
 
-        {/* Hero Main Content */}
-        <div className="relative z-10 max-w-[1300px] mx-auto px-6 pt-12 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
-          
-          {/* Left Text and Filter Column */}
-          <div className="lg:col-span-7 flex flex-col justify-center items-start">
-            <SlideInLeft className="max-w-2xl">
-              
-              {/* Premium Brand Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF5F2] border border-[#FF8A6B]/20 text-[#8C1D1D] text-[10px] font-black tracking-widest uppercase mb-6 select-none shadow-[0_2px_8px_rgba(0,0,0,0.01)]">
-                <Image src="/logo/logo.png" alt="Logo" width={16} height={16} className="object-contain shrink-0" />
-                <span>Nikash Crackers Sivakasi</span>
+        {/* Hero Glassmorphism Container */}
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+            {/* Left Glassmorphism Box */}
+            <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#F7B733]/40 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl space-y-5 relative overflow-hidden">
+              {/* Corner Deepams */}
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                <DeepamFlameIcon className="w-6 h-6 sm:w-7 sm:h-7" />
               </div>
-              
-              {/* Main Headline */}
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-[#2D241E] leading-[1.15] mb-6 tracking-tight text-left">
-                Celebrate Every Moment <br />
-                <span className="bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] bg-clip-text text-transparent">
-                  with Sivakasi's Finest <br /> Crackers
-                </span>
+
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#F7B733]/60 bg-[#0B132B]/80 px-3.5 py-1.5 text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#F7B733]">
+                <Sparkles size={14} className="shrink-0 text-[#F7B733]" /> NIKASH CRACKERS — SIVAKASI
+              </div>
+
+              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-white">
+                Make every night <span className="text-[#F7B733]">shine brighter.</span>
               </h1>
 
-              {/* Subheading / Description */}
-              <p className="text-[#5C544C] text-sm sm:text-base lg:text-lg mb-8 max-w-xl leading-relaxed">
-                Explore our premium collection of gift boxes, sparklers, and aerial displays for a spectacular celebration.
+              <p className="text-slate-300 text-xs sm:text-base leading-relaxed max-w-xl">
+                Nikash Crackers — premium fireworks delivered straight from our Sivakasi manufacturing hub. Select from eco-certified green crackers, build your order enquiry, and get direct factory pricing with up to {discount}% savings.
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-4 mb-10">
-                <Link href="/products">
-                  <button 
-                    className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-[0_8px_24px_rgba(255,107,74,0.3)] active:scale-[0.98] transition-all cursor-pointer"
-                  >
-                    Shop Now ↗
-                  </button>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <Link
+                  href="/products"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#F7B733] px-6 py-3.5 text-xs sm:text-sm font-extrabold text-[#101A36] transition hover:bg-[#FFD05C] active:scale-95 shadow-lg min-h-[48px]"
+                >
+                  Explore Catalogue <ArrowRight size={18} />
                 </Link>
-                <Link href="/products">
-                  <button 
-                    className="px-8 py-3.5 rounded-full border border-[#FF8A6B] bg-white/40 backdrop-blur-sm text-[#FF8A6B] font-extrabold text-xs sm:text-sm uppercase tracking-wider hover:bg-[#FF8A6B]/5 active:scale-[0.98] transition-all cursor-pointer"
-                  >
-                    View Catalogue
-                  </button>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-xs sm:text-sm font-bold text-white transition hover:bg-white/20 min-h-[48px] backdrop-blur-sm"
+                >
+                  <PhoneCall size={16} /> Order Support
                 </Link>
               </div>
 
-              {/* Horizontal Category pills exactly matching the reference design */}
-              <div className="flex flex-wrap gap-2.5 pt-4 border-t border-[#E8E2D8]/50">
-                {[
-                  { label: 'Sparklers', icon: '🪄', href: '/products?category=sparklers' },
-                  { label: 'Flower Pots', icon: '🪴', href: '/products?category=flowerpots' },
-                  { label: 'Rockets', icon: '🚀', href: '/products?category=rockets' },
-                  { label: 'New Arrivals', icon: '⭐', href: '/products?category=new' },
-                ].map((pill, i) => (
-                  <Link key={i} href={pill.href}>
-                    <div className="flex items-center gap-1.5 px-4.5 py-2 rounded-full bg-white/60 border border-black/5 hover:border-[#FF8A6B] hover:bg-white text-[11px] font-bold text-[#5C544C] hover:text-[#8C1D1D] shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition-all cursor-pointer">
-                      <span>{pill.icon}</span>
-                      <span>{pill.label}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-            </SlideInLeft>
-          </div>
-
-          {/* Right Hero Image Column */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <SlideInRight className="relative w-full max-w-[420px] aspect-square flex items-center justify-center" delay={0.25}>
-              {/* Soft background glow overlay */}
-              <div className="absolute inset-0 bg-radial-gradient(circle at center, rgba(255,107,74,0.15) 0%, transparent 60%) pointer-events-none -z-10" />
-              
-              {/* Glassmorphic border container */}
-              <div className="relative w-full h-full rounded-[40px] border border-white/40 shadow-xl overflow-hidden flex items-center justify-center p-6 bg-white/10 backdrop-blur-md">
-                <Image 
-                  src="/hero_gift_box.png" 
-                  alt="Nikash Crackers Premium Gift Box overflowing with fireworks" 
-                  fill 
-                  className="object-contain p-6 drop-shadow-[0_20px_45px_rgba(255,107,74,0.18)] select-none"
-                  priority
-                  sizes="(max-width: 640px) 100vw, 420px"
-                />
-                
-                {/* Brand label overlay on crackers box */}
-                <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 z-20 px-6 py-2 rounded-2xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-display font-black text-sm uppercase tracking-widest shadow-md border border-white/20 select-none">
-                  NIKASH
+              {/* Trust Highlights Grid */}
+              <div className="grid grid-cols-3 gap-3 border-t border-[#172448] pt-5 text-left">
+                <div>
+                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Up to {discount}% Off</p>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Factory rates</p>
+                </div>
+                <div>
+                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">100% Eco Green</p>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">CSIR Certified</p>
+                </div>
+                <div>
+                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Safe Freight</p>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Pan-India delivery</p>
                 </div>
               </div>
-            </SlideInRight>
-          </div>
+            </div>
 
-        </div>
-      </InteractiveHeroWrapper>
-
-      {/* Shop by Category Section */}
-      <section className="py-16 max-w-[1300px] mx-auto px-6 w-full">
-        <ScrollFadeInUp>
-          <h2 className="font-display text-2xl sm:text-3xl font-black text-[#2D241E] mb-8 select-none">
-            Shop by Category
-          </h2>
-        </ScrollFadeInUp>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: 'GIFT BOXES',
-              symbol: '🎁',
-              gradient: 'from-[#FFD3B6] to-[#FF8A6B]',
-              image: '/hero_gift_box.png',
-              href: '/products?category=giftbox',
-            },
-            {
-              title: 'SPARKLERS',
-              symbol: '🪄',
-              gradient: 'from-[#D2E0FB] to-[#8E9BFF]',
-              image: '/product-assets/sparklers_brand.png',
-              href: '/products?category=sparklers',
-            },
-            {
-              title: 'FLOWER POTS',
-              symbol: '🪴',
-              gradient: 'from-[#F9F3CC] to-[#FF8E8F]',
-              image: '/product-assets/flower_pots_brand.png',
-              href: '/products?category=flowerpots',
-            },
-            {
-              title: 'AERIAL SHOTS',
-              symbol: '🚀',
-              gradient: 'from-[#E1AFD1] to-[#A98CF0]',
-              image: '/product-assets/aerial_shots_brand.png',
-              href: '/products?category=multishots',
-            },
-          ].map((cat, i) => (
-            <ScrollFadeInUp key={i} delay={i * 0.08}>
-              <Link href={cat.href}>
-                <div className={`relative overflow-hidden rounded-3xl h-64 p-6 flex flex-col justify-between group shadow-md hover:shadow-xl transition-all cursor-pointer`}>
-                  {/* Gradient Backing */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-90 transition-transform group-hover:scale-[1.03] duration-500`} />
-                  
-                  {/* Floating Category Symbol Badge */}
-                  <div className="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/40 backdrop-blur-xs border border-white/30 flex items-center justify-center text-sm shadow-sm select-none z-10 group-hover:scale-105 transition-transform duration-300">
-                    {cat.symbol}
-                  </div>
-
-                  {/* Category Image */}
-                  <div className="absolute right-[-10%] bottom-[-5%] w-36 h-36 opacity-95 group-hover:scale-110 duration-500 select-none">
-                    <Image src={cat.image} alt={cat.title} fill className="object-contain" sizes="144px" />
-                  </div>
-
-                  {/* Card Header Content */}
-                  <div className="relative z-10">
-                    <h3 className="font-display font-black text-xl text-[#2D241E] tracking-tight leading-none mb-1">
-                      {cat.title}
-                    </h3>
-                  </div>
-
-                  {/* Explore Button */}
-                  <div className="relative z-10">
-                    <span className="inline-flex items-center gap-1.5 px-4.5 py-1.5 rounded-full bg-white text-xs font-bold text-[#2D241E] shadow-sm group-hover:bg-[#8C1D1D] group-hover:text-white transition-colors">
-                      Explore
-                    </span>
+            {/* Right Showcase Card */}
+            <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
+              <div className="relative overflow-hidden rounded-3xl border border-[#F7B733]/50 bg-[#101A36]/85 backdrop-blur-md shadow-2xl p-3">
+                <div className="aspect-[16/10] sm:aspect-[4/3] relative w-full rounded-2xl overflow-hidden border border-[#172448]">
+                  <Image
+                    src="/images/nikash-hero-banner.jpg"
+                    alt="Nikash Crackers — Premium Fireworks Luxury Box Display"
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 45vw"
+                  />
+                  <div className="absolute bottom-3 left-3 bg-[#0B132B]/90 backdrop-blur-md border border-[#F7B733]/40 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#F7B733]">
+                    ⚡ NIKASH CRACKERS WHOLESALE
                   </div>
                 </div>
-              </Link>
-            </ScrollFadeInUp>
-          ))}
+
+                <div className="p-3 pt-2 flex items-center justify-between text-xs font-bold text-white">
+                  <span className="flex items-center gap-2 text-xs">
+                    <DeepamFlameIcon className="w-4 h-4" /> Nikash Crackers Factory
+                  </span>
+                  <span className="text-[#F7B733] font-black">🔥 {discount}% OFF</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* TRUST BADGES Section */}
-      <section className="py-12 border-y border-[#E8E2D8]/40 bg-white/20 backdrop-blur-sm relative overflow-hidden">
-        <div className="max-w-[1300px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-12 w-full">
-          {[
-            { icon: Shield, title: 'Uncompromising Safety', desc: 'Fully Safety Certified' },
-            { icon: Leaf, title: 'Eco-Conscious', desc: 'Sustainable Green Crackers' },
-            { icon: Factory, title: 'Direct Source', desc: 'Authentic Sivakasi Pricing' },
-            { icon: Package, title: 'Premium Logistics', desc: 'Secure Packaging' }
-          ].map((b, i) => (
-            <ScrollFadeInUp key={i} delay={i * 0.08} className="flex flex-col items-center text-center gap-2 group">
-              <div className="w-12 h-12 rounded-2xl bg-white text-[#FF8A6B] flex items-center justify-center border border-[#E8E2D8]/30 group-hover:border-[#FF8A6B]/50 group-hover:bg-[#FF8A6B]/5 transition-all duration-300">
-                <b.icon size={20} className="group-hover:scale-110 transition-transform" />
-              </div>
-              <div className="space-y-0.5">
-                <h3 className="font-bold text-[#2D241E] text-xs sm:text-sm tracking-tight">{b.title}</h3>
-                <p className="text-[10px] sm:text-xs text-[#5C544C] font-semibold">{b.desc}</p>
-              </div>
-            </ScrollFadeInUp>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA BANNER - Red Gradient Banner */}
-      <section className="py-16 relative overflow-hidden max-w-[1300px] mx-auto px-6 w-full" id="cta">
-        <ScrollFadeInUp className="relative overflow-hidden w-full rounded-3xl shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FF8A6B] via-[#FF6B4A] to-[#FF5C7A] opacity-95" />
-          
-          <div className="relative z-10 py-16 text-center flex flex-col items-center justify-center px-6 sm:px-12">
-            <div className="text-3xl mx-auto mb-4 select-none">🎆</div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black text-white mb-4 leading-tight tracking-tight">
-              Ready to Light Up <br /> Your Next Celebration?
+      {/* Category Section */}
+      <section className="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-12 gap-4 border-b border-[#172448] pb-4 md:pb-6">
+          <div>
+            <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#F7B733]">
+              <DeepamFlameIcon className="w-4 h-4" /> EXPLORE BY CATEGORY
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-display font-black text-white mt-1">
+              Top Festive Categories
             </h2>
-            <p className="mx-auto mb-8 text-center text-white/90 text-sm sm:text-base max-w-lg leading-relaxed font-semibold">
-              Browse our premium collection or speak with our team for bulk event orders and wholesale pricing.
+          </div>
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#F7B733] hover:text-[#FFD05C] transition-colors"
+          >
+            View Full Catalogue <ArrowRight size={16} />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {categories.map((cat) => (
+            <Link key={cat.title} href={cat.href} className="group">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-3xl p-3 sm:p-4 shadow-2xl transition-all duration-300 group-hover:border-[#F7B733]/60 group-hover:-translate-y-1">
+                <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#0B132B] mb-3 border border-[#172448] flex items-center justify-center p-3">
+                  <Image
+                    src={cat.image}
+                    alt={cat.title}
+                    fill
+                    className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                  />
+                  <span className="absolute top-2 left-2 bg-[#F7B733] text-[#101A36] text-[8px] sm:text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+                    {cat.badge}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-xs sm:text-base text-white group-hover:text-[#F7B733] transition-colors truncate">
+                    {cat.title}
+                  </h3>
+                  <span className="text-[9px] sm:text-[10px] font-black bg-[#172448] text-[#F7B733] px-2 py-0.5 rounded-md shrink-0 ml-1">
+                    {cat.count}
+                  </span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-400 mt-1 line-clamp-1 hidden sm:block">
+                  {cat.subtitle}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Trust Badges Bar */}
+      <section className="py-10 bg-[#101A36]/80 border-y border-[#172448]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          {[
+            { icon: Factory, title: 'Direct Factory', desc: 'No middlemen markup' },
+            { icon: ShieldCheck, title: 'CSIR Certified', desc: 'Eco-friendly green crackers' },
+            { icon: PackageCheck, title: 'Safe Packing', desc: 'Damage-proof transport boxes' },
+            { icon: Headphones, title: 'Desk Support', desc: 'WhatsApp & phone updates' },
+          ].map((item) => (
+            <div key={item.title} className="p-3 sm:p-4 rounded-2xl bg-[#0B132B]/60 border border-[#172448]">
+              <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-[#172448] text-[#F7B733] flex items-center justify-center mx-auto mb-2">
+                <item.icon size={18} />
+              </div>
+              <p className="text-xs sm:text-sm font-extrabold text-white">{item.title}</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 mt-0.5">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Order Enquiry CTA Banner */}
+      <section className="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#101A36]/85 backdrop-blur-md rounded-3xl p-6 sm:p-10 md:p-12 border border-[#F7B733]/40 shadow-2xl text-center relative overflow-hidden">
+          
+          {/* Decorative Deepam Oil Lamps — rendered IN FRONT at z-20 */}
+          <div className="absolute top-4 left-4 z-20 pointer-events-none">
+            <DeepamFlameIcon className="w-8 h-8 sm:w-10 sm:h-10" />
+          </div>
+          <div className="absolute top-4 right-4 z-20 pointer-events-none">
+            <DeepamFlameIcon className="w-8 h-8 sm:w-10 sm:h-10" />
+          </div>
+          <div className="absolute bottom-4 left-6 z-20 pointer-events-none hidden sm:block">
+            <DeepamFlameIcon className="w-7 h-7" />
+          </div>
+          <div className="absolute bottom-4 right-6 z-20 pointer-events-none hidden sm:block">
+            <DeepamFlameIcon className="w-7 h-7" />
+          </div>
+          {/* Center top hanging Deepam */}
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 pointer-events-none hidden md:block">
+            <DeepamFlameIcon className="w-9 h-9" />
+          </div>
+
+          {/* Subtle background radial glow effects — behind content */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl">
+            <div className="absolute -top-10 -left-10 w-48 h-48 bg-[#F7B733]/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-10 -right-10 w-56 h-56 bg-[#D95136]/8 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-[#F7B733]/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="max-w-2xl mx-auto space-y-4 relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#F7B733]/40 bg-[#0B132B] text-[#F7B733] text-[11px] sm:text-xs font-black uppercase tracking-widest">
+              <DeepamFlameIcon className="w-4 h-4" /> NIKASH CRACKERS WHOLESALE
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-display font-black text-white">
+              Ready to Order Nikash Crackers Online?
+            </h2>
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Browse our complete price list, build your enquiry cart, and get direct factory confirmation within hours.
             </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link href="/products">
-                <button className="px-6 py-3 rounded-full bg-white text-[#FF5C7A] font-extrabold text-xs sm:text-sm shadow-md hover:bg-white/90 active:scale-[0.98] transition-all cursor-pointer">
-                  Shop Now →
-                </button>
-              </Link>
-              <Link href="/contact">
-                <button className="px-6 py-3 rounded-full border border-white bg-transparent text-white font-extrabold text-xs sm:text-sm hover:bg-white/10 active:scale-[0.98] transition-all cursor-pointer">
-                  Contact Us
-                </button>
+            <div className="pt-2 flex justify-center">
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#F7B733] px-6 sm:px-8 py-3.5 text-xs font-black uppercase tracking-wider text-[#101A36] hover:bg-[#FFD05C] transition-all min-h-[48px] shadow-lg"
+              >
+                Browse Complete Price List <ArrowRight size={16} />
               </Link>
             </div>
           </div>
-        </ScrollFadeInUp>
+        </div>
       </section>
     </div>
   );

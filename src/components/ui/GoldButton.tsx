@@ -10,20 +10,20 @@ interface GoldButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const GoldButton = forwardRef<HTMLButtonElement, GoldButtonProps>(
   ({ variant = 'gold', size = 'md', className, children, ...props }, ref) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-bold rounded-full transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-extrabold rounded-xl transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-md min-h-[44px]';
 
     const variantStyles = {
-      gold: 'bg-gradient-to-br from-[#FF8A6B] to-[#FF5C7A] text-white shadow-lg hover:shadow-[#FF8A6B]/40',
+      gold: 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] border border-[#FFF0BF]',
       outlined:
-        'border-2 border-[#FF8A6B]/60 text-[#FF8A6B] hover:bg-[#FF8A6B]/10 hover:border-[#FF8A6B]',
+        'border border-[#F7B733]/60 text-[#F7B733] hover:bg-[#F7B733]/15 hover:border-[#F7B733]',
       whatsapp:
-        'bg-gradient-to-br from-green-wa to-green-700 text-white shadow-lg hover:shadow-green-wa/40',
+        'bg-emerald-600 text-white hover:bg-emerald-500 shadow-md',
     };
 
     const sizeStyles = {
-      sm: 'px-4 py-2 text-sm',
-      md: 'px-6 py-3 text-base',
-      lg: 'px-8 py-4 text-lg',
+      sm: 'px-4 py-2 text-xs',
+      md: 'px-6 py-3 text-xs sm:text-sm',
+      lg: 'px-8 py-4 text-sm sm:text-base',
     };
 
     return (

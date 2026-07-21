@@ -14,16 +14,16 @@ export function GlassCard({
   children,
   ...props
 }: GlassCardProps) {
-  const baseStyles = 'rounded-2xl backdrop-blur-xl transition-all duration-300';
+  const baseStyles = 'rounded-3xl backdrop-blur-md transition-all duration-300 text-white';
 
   const variantStyles = {
-    default: 'bg-surface-high/50 border border-gold/15',
-    maroon: 'bg-maroon/30 border border-maroon-mid/30',
-    highlight: 'bg-gold/10 border border-gold/30',
+    default: 'bg-[#101A36]/90 border border-[#172448] shadow-2xl',
+    maroon: 'bg-[#101A36]/95 border border-[#D95136]/40 shadow-2xl',
+    highlight: 'bg-[#172448]/90 border border-[#F7B733]/40 shadow-2xl',
   };
 
   const hoverStyles = hover
-    ? 'hover:border-gold/40 hover:shadow-coral'
+    ? 'hover:border-[#F7B733]/60 hover:-translate-y-1'
     : '';
 
   return (
@@ -35,4 +35,3 @@ export function GlassCard({
     </motion.div>
   );
 }
-

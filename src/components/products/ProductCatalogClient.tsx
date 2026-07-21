@@ -215,6 +215,29 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
             <p className="text-[var(--text-muted)] max-w-2xl">
               Browse our premium collection of Sivakasi crackers. Quality and safety guaranteed.
             </p>
+            {/* Search Bar */}
+            <div className="mt-4 relative max-w-md">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search products by name, Tamil name, or category..."
+                className="w-full bg-[var(--surface-high)] border border-[var(--border)] rounded-xl px-4 py-3 pl-10 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:border-[var(--color-coral)] focus:outline-none transition-all"
+                id="product-search-input"
+              />
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.35-4.35" />
+              </svg>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)] hover:text-[var(--color-coral)] font-bold"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
 
           {/* View Toggle & Sort */}

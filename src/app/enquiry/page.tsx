@@ -7,7 +7,6 @@ import { Trash2, Plus, Minus, ArrowRight, ArrowLeft, PackageOpen, Sparkles, Shop
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { RealisticFirework } from '@/components/effects/RealisticFirework';
 import { formatOrderDate } from '@/lib/utils';
 
 export default function EnquiryPage() {
@@ -316,14 +315,7 @@ export default function EnquiryPage() {
     return (
       <div className="relative min-h-[60vh] md:min-h-[70vh] flex flex-col items-center justify-center p-4 md:p-6 text-center overflow-hidden z-10">
         
-        {/* Background Bursting Fireworks */}
-        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-          <AnimatePresence>
-            {bursts.map(b => (
-              <RealisticFirework key={b.id} x={b.x} y={b.y} type={b.type} onComplete={() => removeBurst(b.id)} />
-            ))}
-          </AnimatePresence>
-        </div>
+
 
         {/* Traditional Hanging Lamps (Diyas) popping up / hanging down */}
         <div className="absolute top-0 inset-x-0 flex justify-between px-6 sm:px-20 pointer-events-none z-10 overflow-hidden h-32">

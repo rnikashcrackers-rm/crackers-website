@@ -46,8 +46,8 @@ export async function getSiteSettings() {
       });
     }
     return settings;
-  } catch (error) {
-    console.error('Error getting settings directly on server:', error);
+  } catch {
+    // Silently return defaults when Supabase is unreachable or table doesn't exist
     return DEFAULT_SETTINGS;
   }
 }
