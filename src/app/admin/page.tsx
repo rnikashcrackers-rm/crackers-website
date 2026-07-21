@@ -48,24 +48,24 @@ function ConfirmDialog({ isOpen, title, message, confirmLabel, cancelLabel = 'Ca
             initial={{ opacity: 0, scale: 0.9, y: 20 }} 
             animate={{ opacity: 1, scale: 1, y: 0 }} 
             exit={{ opacity: 0, scale: 0.9, y: 20 }} 
-            className="relative z-10 w-full max-w-md bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-3xl p-8 shadow-2xl my-auto"
+            className="relative z-10 w-full max-w-md bg-[#101A36]/90 backdrop-blur-md border border-[#172448] rounded-3xl p-8 shadow-2xl my-auto"
           >
             <div className="text-center">
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 ${isDanger ? 'bg-rose-500/10 text-rose-400' : 'bg-[#FF8A6B]/10 text-[#8C1D1D]'}`}>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 ${isDanger ? 'bg-rose-500/10 text-rose-400' : 'bg-[#F7B733]/10 text-[#F7B733]'}`}>
                 {isDanger ? <Trash2 size={24} /> : <CheckCircle2 size={24} />}
               </div>
-              <h3 className="text-xl font-bold font-display text-[#2D241E] mb-2">{title}</h3>
-              <p className="text-sm text-[#5C544C] mb-6 leading-relaxed">{message}</p>
+              <h3 className="text-xl font-bold font-display text-white mb-2">{title}</h3>
+              <p className="text-sm text-slate-300 mb-6 leading-relaxed">{message}</p>
               <div className="flex gap-3">
                 <button 
                   onClick={onCancel} 
-                  className="flex-1 py-3 rounded-xl border border-[#E8E2D8] text-[#2D241E] font-bold text-sm hover:bg-[#FF8A6B]/5 transition-colors"
+                  className="flex-1 py-3 rounded-xl border border-[#172448] text-white bg-[#172448]/40 font-bold text-sm hover:bg-[#172448]/80 transition-colors"
                 >
                   {cancelLabel}
                 </button>
                 <button 
                   onClick={onConfirm} 
-                  className={`flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all ${isDanger ? 'bg-gradient-to-r from-rose-500 to-rose-600' : 'bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A]'}`}
+                  className={`flex-1 py-3 rounded-xl font-bold text-sm text-[#101A36] transition-all ${isDanger ? 'bg-gradient-to-r from-rose-500 to-rose-600 text-white' : 'bg-gradient-to-r from-[#F7B733] to-[#D49619]'}`}
                 >
                   {confirmLabel}
                 </button>
@@ -106,15 +106,15 @@ function AdminLogin({ onLogin }: { onLogin: (token: string) => void }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-transparent">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-[#0B132B]">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
-        <div className="glass-premium rounded-3xl p-10 text-center relative overflow-hidden shadow-xl border border-white/40 bg-white/30 backdrop-blur-md">
+        <div className="glass-premium rounded-3xl p-10 text-center relative overflow-hidden shadow-xl border border-[#172448] bg-[#101A36]/80 backdrop-blur-md">
           
-          <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-6 shadow-md border border-[#E8E2D8]/40 bg-white flex items-center justify-center text-2xl select-none">
+          <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-6 shadow-md border border-[#F7B733]/30 bg-[#172448] flex items-center justify-center text-2xl select-none">
              🎆
           </div>
-          <h1 className="text-3xl font-black font-display text-[#2D241E] mb-2 tracking-tight">Admin Console</h1>
-          <p className="text-[#5C544C] text-sm font-semibold mb-8">Authorize to enter the command center</p>
+          <h1 className="text-3xl font-black font-display text-white mb-2 tracking-tight">Admin Console</h1>
+          <p className="text-slate-300 text-sm font-semibold mb-8">Authorize to enter the command center</p>
           
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="relative">
@@ -124,7 +124,7 @@ function AdminLogin({ onLogin }: { onLogin: (token: string) => void }) {
                 onChange={(e) => setPassword(e.target.value)} 
                 placeholder="Enter admin password" 
                 required
-                className="w-full bg-white/70 border border-[#E8E2D8] rounded-xl px-4 py-3.5 text-center text-sm text-[#2D241E] placeholder-[#5C544C]/40 focus:border-[#FF8A6B] focus:outline-none transition-colors shadow-sm" 
+                className="w-full bg-[#172448] border border-[#22345E] rounded-xl px-4 py-3.5 text-center text-sm text-white placeholder-slate-400 focus:border-[#F7B733] focus:outline-none transition-colors shadow-sm" 
               />
             </div>
             
@@ -137,7 +137,7 @@ function AdminLogin({ onLogin }: { onLogin: (token: string) => void }) {
             <button 
               type="submit" 
               disabled={loading} 
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-[#2D241E] font-extrabold text-sm uppercase tracking-wider hover:shadow-[0_8px_24px_rgba(255,107,74,0.25)] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-[#101A36] font-extrabold text-sm uppercase tracking-wider hover:shadow-[0_8px_24px_rgba(247,183,51,0.25)] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
             >
               {loading ? 'Verifying Credentials...' : 'Access Command Center'}
             </button>
@@ -151,19 +151,19 @@ function AdminLogin({ onLogin }: { onLogin: (token: string) => void }) {
 // --- STAT CARD ---
 function StatCard({ icon: Icon, label, value, color, change }: { icon: any; label: string; value: string | number; color: string; change?: string }) {
   return (
-    <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 relative overflow-hidden group hover:border-[#FF8A6B]/40 transition-colors">
+    <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 relative overflow-hidden group hover:border-[#F7B733]/40 transition-colors">
       <div className="flex items-center justify-between mb-4">
         <div className={`w-12 h-12 rounded-xl ${color} flex items-center justify-center transition-transform group-hover:scale-105 duration-300`}>
           <Icon size={20} />
         </div>
         {change && (
-          <span className="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full">
+          <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full">
             {change}
           </span>
         )}
       </div>
-      <div className="text-3xl font-bold font-display text-[#2D241E] mb-1">{value}</div>
-      <div className="text-xs text-[#5C544C] font-bold uppercase tracking-wider">{label}</div>
+      <div className="text-3xl font-bold font-display text-white mb-1">{value}</div>
+      <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">{label}</div>
     </div>
   );
 }
@@ -179,7 +179,7 @@ function StatusBadge({ status }: { status: string }) {
     cancelled: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
   };
   return (
-    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${styles[status] || 'bg-[#2A2A24] text-[#5C544C] border-[#E8E2D8]'}`}>
+    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${styles[status] || 'bg-[#2A2A24] text-slate-300 border-[#172448]'}`}>
       {status}
     </span>
   );
@@ -264,7 +264,7 @@ function AdminSuccessToast({ message, onClose }: { message: string; onClose: () 
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -20, scale: 0.9 }}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-[#2D241E] shadow-[0_20px_60px_rgba(16,185,129,0.4)] border border-emerald-400/30 backdrop-blur-xl min-w-[300px] max-w-[90vw]"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-[0_20px_60px_rgba(16,185,129,0.4)] border border-emerald-400/30 backdrop-blur-xl min-w-[300px] max-w-[90vw]"
     >
       {/* Animated checkmark */}
       <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
@@ -273,7 +273,7 @@ function AdminSuccessToast({ message, onClose }: { message: string; onClose: () 
         </svg>
       </div>
       <span className="flex-1 font-bold text-sm leading-tight">{message}</span>
-      <button onClick={onClose} className="text-[#2D241E]/60 hover:text-[#2D241E] p-1 transition-colors">
+      <button onClick={onClose} className="text-white/60 hover:text-white p-1 transition-colors">
         <X size={14} />
       </button>
       {/* Confetti dots */}
@@ -1318,17 +1318,17 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-[#2D241E] flex flex-col md:flex-row font-sans selection:bg-[var(--color-coral)] selection:text-black">
+    <div className="min-h-screen bg-[#0B132B] text-white flex flex-col md:flex-row font-sans selection:bg-[#F7B733] selection:text-black">
       
       {/* SIDEBAR — Horizontal on mobile, vertical on desktop */}
-      <aside className="w-full md:w-64 bg-white/30 backdrop-blur-md border-b md:border-b-0 md:border-r border-[#E8E2D8] flex flex-col shrink-0">
-        <div className="p-4 md:p-6 border-b border-[#E8E2D8] flex items-center gap-3">
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border border-[#FF8A6B]/30 relative bg-white shadow-[0_0_15px_rgba(212,175,55,0.15)]">
-            <Image src="/logo/logo.png" alt="NIKASH CRACKERS" width={40} height={40} priority className="object-cover w-full h-full dark:brightness-[0.9] dark:contrast-[1.1] transition-all duration-300" />
+      <aside className="w-full md:w-64 bg-[#101A36]/90 backdrop-blur-md border-b md:border-b-0 md:border-r border-[#172448] flex flex-col shrink-0">
+        <div className="p-4 md:p-6 border-b border-[#172448] flex items-center gap-3">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden border border-[#F7B733]/30 relative bg-[#172448] shadow-[0_0_15px_rgba(247,183,83,0.15)]">
+            <Image src="/logo/logo.png" alt="NIKASH CRACKERS" width={40} height={40} priority className="object-cover w-full h-full" />
           </div>
           <div>
-            <h1 className="font-display font-bold text-sm tracking-tight text-[#2D241E]">JJ COMMAND</h1>
-            <p className="text-[9px] text-[#8C1D1D] font-bold tracking-widest uppercase">BI Console Hub</p>
+            <h1 className="font-display font-bold text-sm tracking-tight text-white">NIKASH COMMAND</h1>
+            <p className="text-[9px] text-[#F7B733] font-bold tracking-widest uppercase">BI Console Hub</p>
           </div>
         </div>
 
@@ -1341,17 +1341,17 @@ export default function AdminPage() {
                 onClick={() => handleTabChange(t.id)}
                 className={`flex items-center justify-between px-3 py-2 md:px-4 md:py-2.5 rounded-xl text-[10px] md:text-xs font-bold transition-all whitespace-nowrap shrink-0 md:w-full ${
                   activeTab === t.id 
-                    ? 'bg-gradient-to-r from-[var(--color-coral)]/10 to-[var(--color-coral-dark)]/5 text-[#8C1D1D] border border-[#FF8A6B]/20 shadow-[0_2px_10px_rgba(212,175,55,0.02)]' 
-                    : 'text-[#5C544C] hover:text-[#2D241E] hover:bg-white/70 border-[#E8E2D8] border border-transparent'
+                    ? 'bg-[#F7B733]/15 text-[#F7B733] border border-[#F7B733]/40 shadow-[0_2px_10px_rgba(247,183,51,0.05)] font-black' 
+                    : 'text-slate-350 hover:text-white hover:bg-[#172448]/60 border-transparent border'
                 }`}
               >
                 <span className="flex items-center gap-1.5 md:gap-2.5">
-                  <t.icon size={13} className={`md:w-[15px] md:h-[15px] ${activeTab === t.id ? 'text-[#8C1D1D]' : ''}`} />
+                  <t.icon size={13} className={`md:w-[15px] md:h-[15px] ${activeTab === t.id ? 'text-[#F7B733]' : ''}`} />
                   <span className="hidden md:inline">{t.label}</span>
                   <span className="md:hidden">{t.label.split(' ')[0]}</span>
                 </span>
                 {t.id === 'orders' && pendingOrders > 0 && (
-                  <span className="bg-rose-500 text-[#2D241E] text-[8px] md:text-[9px] font-black px-1.5 md:px-2 py-0.5 rounded-full ml-1">
+                  <span className="bg-rose-500 text-white text-[8px] md:text-[9px] font-black px-1.5 md:px-2 py-0.5 rounded-full ml-1">
                     {pendingOrders}
                   </span>
                 )}
@@ -1361,35 +1361,35 @@ export default function AdminPage() {
         </nav>
 
         {/* Footer info in sidebar — hidden on mobile */}
-        <div className="hidden md:flex p-4 border-t border-[#E8E2D8] items-center justify-between shrink-0">
+        <div className="hidden md:flex p-4 border-t border-[#172448] items-center justify-between shrink-0">
           <button 
             onClick={logout} 
-            className="flex items-center gap-2 text-[10px] font-bold text-rose-400 hover:text-rose-350 bg-rose-500/5 hover:bg-rose-500/10 px-3 py-2.5 rounded-xl border border-rose-500/15 transition-all w-full justify-center"
+            className="flex items-center gap-2 text-[10px] font-bold text-rose-400 hover:text-rose-350 bg-rose-500/10 hover:bg-rose-500/20 px-3 py-2.5 rounded-xl border border-rose-500/20 transition-all w-full justify-center"
           >
             <LogOut size={12} /> End Admin Session
           </button>
         </div>
         {/* Logout button visible on mobile */}
-        <div className="md:hidden p-2 border-t border-[#E8E2D8] flex justify-center">
-          <button onClick={logout} className="text-[9px] font-bold text-rose-400 bg-rose-500/5 px-3 py-1.5 rounded-lg border border-rose-500/15">
+        <div className="md:hidden p-2 border-t border-[#172448] flex justify-center">
+          <button onClick={logout} className="text-[9px] font-bold text-rose-400 bg-rose-500/10 px-3 py-1.5 rounded-lg border border-rose-500/20">
             <LogOut size={10} className="inline mr-1" /> Logout
           </button>
         </div>
       </aside>
 
       {/* MAIN CONTAINER */}
-      <main className="flex-grow flex flex-col min-w-0 bg-transparent">
+      <main className="flex-grow flex flex-col min-w-0 bg-[#0B132B]">
         {/* TOP BAR */}
-        <header className="h-16 border-b border-[#E8E2D8] bg-white/30 backdrop-blur-md/50 backdrop-blur-md px-6 flex items-center justify-between shrink-0 z-10">
+        <header className="h-16 border-b border-[#172448] bg-[#101A36]/90 backdrop-blur-md px-6 flex items-center justify-between shrink-0 z-10">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] text-[#5C544C] font-bold tracking-wider uppercase">Active Session &bull; Secured Connection</span>
+            <span className="text-[10px] text-slate-300 font-bold tracking-wider uppercase">Active Session &bull; Secured Connection</span>
           </div>
 
           <div className="flex items-center gap-3">
             <button 
               onClick={fetchData} 
-              className="p-2 rounded-lg hover:bg-white/70 border-[#E8E2D8] text-[#5C544C] hover:text-[#2D241E] transition-colors border border-transparent hover:border-[#E8E2D8]"
+              className="p-2 rounded-lg hover:bg-[#172448]/80 border-[#172448] text-slate-300 hover:text-white transition-colors border border-transparent hover:border-[#172448]"
               title="Refresh Data"
             >
               <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
@@ -1412,60 +1412,60 @@ export default function AdminPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Recent Orders Card */}
-                <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 flex flex-col">
+                <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 flex flex-col">
                   <div className="flex items-center justify-between mb-5">
-                    <h3 className="font-display font-bold text-sm text-[#2D241E]">Recent Sales Orders</h3>
-                    <button onClick={() => handleTabChange('orders')} className="text-xs text-[#8C1D1D] font-bold hover:underline flex items-center gap-1">
+                    <h3 className="font-display font-bold text-sm text-white">Recent Sales Orders</h3>
+                    <button onClick={() => handleTabChange('orders')} className="text-xs text-[#F7B733] font-bold hover:underline flex items-center gap-1">
                       View Log <ChevronRight size={12} />
                     </button>
                   </div>
                   
-                  <div className="divide-y divide-[#2A2A24]/60 flex-grow">
+                  <div className="divide-y divide-[#172448]/80 flex-grow">
                     {orders.slice(0, 5).map((o: any) => (
                       <div 
                         key={o.id} 
                         onClick={() => { setInspectedOrder(o); handleTabChange('orders'); }}
-                        className="flex items-center justify-between py-3.5 hover:bg-white/70 border-[#E8E2D8]/40 px-2 rounded-xl transition-all cursor-pointer group"
+                        className="flex items-center justify-between py-3.5 hover:bg-[#172448]/50 border-[#172448]/40 px-2 rounded-xl transition-all cursor-pointer group"
                       >
                         <div>
-                          <div className="font-bold text-xs text-[#8C1D1D] group-hover:text-[#FF8A6B] transition-colors">{o.order_number}</div>
-                          <div className="text-[10px] text-[#5C544C] mt-0.5">{o.customer_name}</div>
+                          <div className="font-bold text-xs text-[#F7B733] group-hover:underline transition-colors">{o.order_number}</div>
+                          <div className="text-[10px] text-slate-300 mt-0.5">{o.customer_name}</div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-xs">₹{o.total_amount?.toLocaleString('en-IN')}</span>
+                          <span className="font-bold text-xs text-white">₹{o.total_amount?.toLocaleString('en-IN')}</span>
                           <StatusBadge status={o.status} />
                         </div>
                       </div>
                     ))}
                     {orders.length === 0 && (
-                      <div className="text-[#5C544C] text-xs text-center py-12">No orders recorded yet</div>
+                      <div className="text-slate-400 text-xs text-center py-12">No orders recorded yet</div>
                     )}
                   </div>
                 </div>
 
                 {/* Recent Messages Card */}
-                <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 flex flex-col">
+                <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 flex flex-col">
                   <div className="flex items-center justify-between mb-5">
-                    <h3 className="font-display font-bold text-sm text-[#2D241E]">Recent Inquiry Messages</h3>
-                    <button onClick={() => handleTabChange('messages')} className="text-xs text-[#8C1D1D] font-bold hover:underline flex items-center gap-1">
+                    <h3 className="font-display font-bold text-sm text-white">Recent Inquiry Messages</h3>
+                    <button onClick={() => handleTabChange('messages')} className="text-xs text-[#F7B733] font-bold hover:underline flex items-center gap-1">
                       Open Inbox <ChevronRight size={12} />
                     </button>
                   </div>
 
-                  <div className="divide-y divide-[#2A2A24]/60 flex-grow border-b border-[#E8E2D8]/30 mb-3">
+                  <div className="divide-y divide-[#172448]/80 flex-grow border-b border-[#172448]/30 mb-3">
                     {messages.slice(0, 5).map((m: any) => (
                       <div key={m.id} className="py-3.5 px-2">
                         <div className="flex justify-between mb-1">
-                          <span className="font-bold text-xs text-[#2D241E]">{m.name}</span>
-                          <span className="text-[9px] text-[#5C544C] font-semibold">{new Date(m.created_at).toLocaleDateString()}</span>
+                          <span className="font-bold text-xs text-white">{m.name}</span>
+                          <span className="text-[9px] text-slate-400 font-semibold">{new Date(m.created_at).toLocaleDateString()}</span>
                         </div>
-                        <div className="text-[10px] text-[#5C544C] line-clamp-2 leading-relaxed">
-                          <span className="text-[#8C1D1D] font-semibold">{m.subject}:</span> {m.message}
+                        <div className="text-[10px] text-slate-350 line-clamp-2 leading-relaxed">
+                          <span className="text-[#F7B733] font-semibold">{m.subject}:</span> {m.message}
                         </div>
                       </div>
                     ))}
                     {messages.length === 0 && (
-                      <div className="text-[#5C544C] text-xs text-center py-12">No messages in inbox</div>
+                      <div className="text-slate-400 text-xs text-center py-12">No messages in inbox</div>
                     )}
                   </div>
                 </div>
@@ -1477,52 +1477,52 @@ export default function AdminPage() {
           {activeTab === 'analytics' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
               <div>
-                <h2 className="text-xl font-bold font-display text-[#2D241E]">Futuristic Business Growth & Analytics</h2>
-                <p className="text-xs text-[#5C544C] mt-1">Deep analysis metrics, geographical demand trends, and AI-driven growth parameters</p>
+                <h2 className="text-xl font-bold font-display text-white">Futuristic Business Growth & Analytics</h2>
+                <p className="text-xs text-slate-300 mt-1">Deep analysis metrics, geographical demand trends, and AI-driven growth parameters</p>
               </div>
 
               {/* Top AI Advisor HUD */}
-              <div className="bg-gradient-to-r from-[var(--color-coral)]/10 to-[#141412] border border-[#FF8A6B]/30 rounded-2xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--color-coral)]/5 blur-xl rounded-full" />
-                <h3 className="font-bold text-xs uppercase tracking-widest text-[#8C1D1D] flex items-center gap-2 mb-4">
-                  <Cpu size={16} className="text-[#8C1D1D] animate-pulse" />
+              <div className="bg-gradient-to-r from-[#F7B733]/15 to-[#101A36]/80 border border-[#F7B733]/30 rounded-2xl p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#F7B733]/5 blur-xl rounded-full" />
+                <h3 className="font-bold text-xs uppercase tracking-widest text-[#F7B733] flex items-center gap-2 mb-4">
+                  <Cpu size={16} className="text-[#F7B733] animate-pulse" />
                   AI Business Growth Engine Recommendations
                 </h3>
                 <div className="space-y-3 font-mono text-xs">
                   {aiGrowthAdvices.map((advice, i) => (
-                    <div key={i} className="flex gap-2 items-start border-l border-[#FF8A6B]/30 pl-3">
-                      <span className="text-[#8C1D1D]">&gt;</span>
-                      <p className="text-[#5C544C] leading-relaxed" dangerouslySetInnerHTML={{ __html: advice.replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#2D241E]">$1</strong>') }} />
+                    <div key={i} className="flex gap-2 items-start border-l border-[#F7B733]/30 pl-3">
+                      <span className="text-[#F7B733]">&gt;</span>
+                      <p className="text-slate-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: advice.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>') }} />
                     </div>
                   ))}
                   {aiGrowthAdvices.length === 0 && (
-                    <p className="text-[#5C544C]">&gt; Analyzing database metrics...</p>
+                    <p className="text-slate-400">&gt; Analyzing database metrics...</p>
                   )}
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Custom SVG Line Chart for revenue timeline */}
-                <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 lg:col-span-2 flex flex-col justify-between">
+                <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 lg:col-span-2 flex flex-col justify-between">
                   <div className="mb-4">
-                    <h3 className="font-display font-bold text-sm text-[#2D241E]">Total Cumulative Sales Growth</h3>
-                    <p className="text-[10px] text-[#5C544C]">Historical transaction volume progression curve</p>
+                    <h3 className="font-display font-bold text-sm text-white">Total Cumulative Sales Growth</h3>
+                    <p className="text-[10px] text-slate-455">Historical transaction volume progression curve</p>
                   </div>
                   
                   {/* SVG Chart */}
-                  <div className="w-full h-44 bg-transparent/40 border border-[#E8E2D8]/40 rounded-xl p-3 relative flex items-center justify-center overflow-hidden">
+                  <div className="w-full h-44 bg-[#0B132B]/60 border border-[#172448]/40 rounded-xl p-3 relative flex items-center justify-center overflow-hidden">
                     <svg viewBox="0 0 500 150" className="w-full h-full">
                       <defs>
                         <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#FF8A6B" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#FF8A6B" stopOpacity="0" />
+                          <stop offset="0%" stopColor="#F7B733" stopOpacity="0.3" />
+                          <stop offset="100%" stopColor="#F7B733" stopOpacity="0" />
                         </linearGradient>
                       </defs>
                       
                       {/* Grid Lines */}
-                      <line x1="0" y1="30" x2="500" y2="30" stroke="#2A2A24" strokeWidth="0.5" strokeDasharray="3 3" />
-                      <line x1="0" y1="75" x2="500" y2="75" stroke="#2A2A24" strokeWidth="0.5" strokeDasharray="3 3" />
-                      <line x1="0" y1="120" x2="500" y2="120" stroke="#2A2A24" strokeWidth="0.5" strokeDasharray="3 3" />
+                      <line x1="0" y1="30" x2="500" y2="30" stroke="#172448" strokeWidth="0.5" strokeDasharray="3 3" />
+                      <line x1="0" y1="75" x2="500" y2="75" stroke="#172448" strokeWidth="0.5" strokeDasharray="3 3" />
+                      <line x1="0" y1="120" x2="500" y2="120" stroke="#172448" strokeWidth="0.5" strokeDasharray="3 3" />
                       
                       {/* Gradient Fill under line */}
                       <path d={`M0,150 L${getChartPoints()} L500,150 Z`} fill="url(#chartGlow)" />
@@ -1530,26 +1530,26 @@ export default function AdminPage() {
                       {/* Chart Line */}
                       <polyline
                         fill="none"
-                        stroke="#FF8A6B"
+                        stroke="#F7B733"
                         strokeWidth="2.5"
                         points={getChartPoints()}
-                        className="drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]"
+                        className="drop-shadow-[0_0_10px_rgba(247,183,51,0.4)]"
                       />
                     </svg>
-                    <div className="absolute top-2 right-4 text-[9px] font-bold text-[#8C1D1D]">Cumulative Net Revenue</div>
+                    <div className="absolute top-2 right-4 text-[9px] font-bold text-[#F7B733]">Cumulative Net Revenue</div>
                   </div>
                   
-                  <div className="flex justify-between items-center text-[10px] font-bold text-[#5C544C] mt-3 uppercase tracking-wider">
+                  <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 mt-3 uppercase tracking-wider">
                     <span>First Order</span>
                     <span>Recent Date</span>
                   </div>
                 </div>
 
                 {/* Town Demand Density */}
-                <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 flex flex-col justify-between">
+                <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-display font-bold text-sm text-[#2D241E]">Town Demand Density</h3>
-                    <p className="text-[10px] text-[#5C544C] mb-4">Combined sales volume & enquiry estimates by town</p>
+                    <h3 className="font-display font-bold text-sm text-white">Town Demand Density</h3>
+                    <p className="text-[10px] text-slate-300 mb-4">Combined sales volume & enquiry estimates by town</p>
                   </div>
 
                   <div className="space-y-4 max-h-48 overflow-y-auto pr-1 scrollbar-thin flex-grow">
@@ -1582,22 +1582,22 @@ export default function AdminPage() {
                               <span>{town}</span>
                               <span>₹{amt.toLocaleString('en-IN')} ({percent}%)</span>
                             </div>
-                            <div className="h-1.5 bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-full overflow-hidden">
-                              <div className="h-full bg-[var(--color-coral)] rounded-full" style={{ width: `${percent}%` }} />
+                            <div className="h-1.5 bg-[#0B132B] border border-[#172448] rounded-full overflow-hidden">
+                              <div className="h-full bg-[#F7B733] rounded-full" style={{ width: `${percent}%` }} />
                             </div>
                           </div>
                         );
                       })}
                     {orders.length === 0 && enquiries.length === 0 && (
-                      <div className="text-center py-12 text-[#5C544C] text-xs">No town metrics available</div>
+                      <div className="text-center py-12 text-slate-400 text-xs">No town metrics available</div>
                     )}
                   </div>
                 </div>
               </div>
 
               {/* Progress bars categories */}
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6">
-                <h3 className="font-display font-bold text-sm mb-6 text-[#2D241E]">Product Segment sales distribution</h3>
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6">
+                <h3 className="font-display font-bold text-sm mb-6 text-white">Product Segment sales distribution</h3>
                 <div className="space-y-4">
                   {Object.entries(products.reduce((acc: any, p: any) => { 
                     acc[p.category] = (acc[p.category] || 0) + 1; 
@@ -1607,15 +1607,15 @@ export default function AdminPage() {
                     return (
                       <div key={cat} className="space-y-2">
                         <div className="flex justify-between items-center text-xs font-semibold">
-                          <span className="capitalize text-[#2D241E]">{cat.replace('-', ' ')}</span>
-                          <span className="text-[#5C544C]">{count as number} products ({percentage}%)</span>
+                          <span className="capitalize text-white">{cat.replace('-', ' ')}</span>
+                          <span className="text-slate-350">{count as number} products ({percentage}%)</span>
                         </div>
-                        <div className="h-2 bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-full overflow-hidden">
+                        <div className="h-2 bg-[#0B132B] border border-[#172448] rounded-full overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }} 
                             animate={{ width: `${percentage}%` }} 
                             transition={{ duration: 1, ease: 'easeOut' }}
-                            className="h-full bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] rounded-full" 
+                            className="h-full bg-gradient-to-r from-[#F7B733] to-[#D49619] rounded-full" 
                           />
                         </div>
                       </div>
@@ -1631,20 +1631,20 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Sales Orders Log</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Review orders list, inspect invoices, print receipts and update logs</p>
+                  <h2 className="text-xl font-bold font-display text-white">Sales Orders Log</h2>
+                  <p className="text-xs text-slate-350 mt-1">Review orders list, inspect invoices, print receipts and update logs</p>
                 </div>
                 
                 <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                   {/* Search */}
                   <div className="relative w-full sm:w-60">
-                    <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C544C]" />
+                    <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input 
                       type="text" 
                       placeholder="Search by order ID, name..." 
                       value={orderQuery}
                       onChange={(e) => setOrderQuery(e.target.value)}
-                      className="w-full bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-xl py-2.5 pl-10 pr-4 text-xs text-[#2D241E] placeholder-[#A0A090]/40 focus:border-[#FF8A6B] focus:outline-none transition-colors"
+                      className="w-full bg-[#172448] border border-[#22345E] rounded-xl py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-400 focus:border-[#F7B733] focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -1662,7 +1662,7 @@ export default function AdminPage() {
                       ];
                       downloadCSV(filteredOrders, cols, 'orders_log');
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/80 hover:bg-[#172448] border border-[#22345E] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Download CSV"
                   >
                     <Download size={14} /> <span className="hidden sm:inline">CSV</span>
@@ -1681,7 +1681,7 @@ export default function AdminPage() {
                       ]);
                       printLog('Sales Orders Log', headers, rows);
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/80 hover:bg-[#172448] border border-[#22345E] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Print Log"
                   >
                     <Printer size={14} /> <span className="hidden sm:inline">Print</span>
@@ -1689,11 +1689,11 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
-                      <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                      <tr className="border-b border-[#172448] bg-[#172448]/50 text-[#F7B733] font-bold uppercase tracking-wider text-[10px]">
                         <th className="p-4">Order Code</th>
                         <th className="p-4">Customer Details</th>
                         <th className="p-4">Products count</th>
@@ -1702,18 +1702,18 @@ export default function AdminPage() {
                         <th className="p-4 text-center">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2A2A24]/40">
+                    <tbody className="divide-y divide-[#172448]/40">
                       {filteredOrders.map((o: any) => (
-                        <tr key={o.id} className="hover:bg-white/70 border-[#E8E2D8]/20 transition-colors">
-                          <td className="p-4 font-bold text-[#8C1D1D]">{o.order_number}</td>
+                        <tr key={o.id} className="hover:bg-[#172448]/30 border-b border-[#172448]/20 transition-colors">
+                          <td className="p-4 font-bold text-[#F7B733]">{o.order_number}</td>
                           <td className="p-4">
-                            <div className="font-bold text-[#2D241E]">{o.customer_name}</div>
-                            <div className="text-[10px] text-[#5C544C] mt-0.5">{o.customer_phone}</div>
+                            <div className="font-bold text-white">{o.customer_name}</div>
+                            <div className="text-[10px] text-slate-350 mt-0.5">{o.customer_phone}</div>
                           </td>
-                          <td className="p-4 text-[#5C544C]">
+                          <td className="p-4 text-slate-300">
                             {Array.isArray(o.items) ? o.items.length : 0} line items
                           </td>
-                          <td className="p-4 text-right font-bold text-[#2D241E]">
+                          <td className="p-4 text-right font-bold text-white">
                             ₹{o.total_amount?.toLocaleString('en-IN')}
                           </td>
                           <td className="p-4 text-center">
@@ -1722,7 +1722,7 @@ export default function AdminPage() {
                           <td className="p-4 text-center flex items-center justify-center gap-2">
                             <button 
                               onClick={() => setInspectedOrder(o)}
-                              className="px-3 py-1.5 bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-lg font-bold text-[#2D241E] hover:text-[#8C1D1D] transition-all flex items-center gap-1.5"
+                              className="px-3 py-1.5 bg-[#172448]/80 hover:bg-[#172448] border border-[#22345E] hover:border-[#F7B733] rounded-lg font-bold text-white transition-all flex items-center gap-1.5"
                             >
                               <Eye size={12} /> Inspect
                             </button>
@@ -1739,7 +1739,7 @@ export default function AdminPage() {
                     </tbody>
                   </table>
                   {filteredOrders.length === 0 && (
-                    <div className="text-center py-16 text-[#5C544C]">No orders found matching the filter query</div>
+                    <div className="text-center py-16 text-slate-400">No orders found matching the filter query</div>
                   )}
                 </div>
               </div>
@@ -1751,20 +1751,20 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Product Inventory</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Review inventory items, import database tables from spreadsheets or seed defaults</p>
+                  <h2 className="text-xl font-bold font-display text-white">Product Inventory</h2>
+                  <p className="text-xs text-slate-350 mt-1">Review inventory items, import database tables from spreadsheets or seed defaults</p>
                 </div>
                 
                 <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                   {/* Search */}
                   <div className="relative w-full sm:w-48">
-                    <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5C544C]" />
+                    <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300" />
                     <input 
                       type="text" 
                       placeholder="Search title, category..." 
                       value={productQuery}
                       onChange={(e) => setProductQuery(e.target.value)}
-                      className="w-full bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-xl py-2.5 pl-10 pr-4 text-xs text-[#2D241E] placeholder-[#A0A090]/40 focus:border-[#FF8A6B] focus:outline-none transition-colors"
+                      className="w-full bg-[#172448] border border-[#22345E] rounded-xl py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-400 focus:border-[#F7B733] focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -1781,7 +1781,7 @@ export default function AdminPage() {
                       ];
                       downloadCSV(filteredProducts, cols, 'product_inventory');
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/80 hover:bg-[#172448] border border-[#22345E] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Download CSV"
                   >
                     <Download size={14} />
@@ -1800,7 +1800,7 @@ export default function AdminPage() {
                       ]);
                       printLog('Product Inventory Log', headers, rows);
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/80 hover:bg-[#172448] border border-[#22345E] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Print Log"
                   >
                     <Printer size={14} />
@@ -1822,7 +1822,7 @@ export default function AdminPage() {
                         });
                       }
                     }}
-                    className="px-3 py-2.5 rounded-xl bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] text-[#5C544C] hover:text-[#8C1D1D] font-bold text-xs flex items-center gap-1 transition-colors cursor-pointer"
+                    className="px-3 py-2.5 rounded-xl bg-[#172448]/80 hover:bg-[#172448] border border-[#22345E] hover:border-[#F7B733] text-slate-300 hover:text-white font-bold text-xs flex items-center gap-1 transition-colors cursor-pointer"
                     title="Select / Deselect All Visible"
                   >
                     {filteredProducts.length > 0 && filteredProducts.every(p => selectedProductIds.includes(p.id)) ? 'Deselect All' : 'Select All'}
@@ -1837,7 +1837,7 @@ export default function AdminPage() {
                       });
                       setProductFormOpen(true);
                     }}
-                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all shrink-0"
+                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-[#101A36] font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(247,183,51,0.25)] transition-all shrink-0"
                   >
                     <Plus size={14} /> <span className="hidden sm:inline">Add Crackers</span><span className="sm:hidden">Add</span>
                   </button>
@@ -1857,19 +1857,19 @@ export default function AdminPage() {
                       onClick={() => {
                         setSelectedProductIds(filteredProducts.map(p => p.id));
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-white/70 border-[#E8E2D8] hover:bg-[#2A2A24] border border-[#E8E2D8] text-xs font-bold text-[#2D241E] transition-colors cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-[#172448] border border-[#22345E] hover:bg-[#22345E] text-xs font-bold text-white transition-colors cursor-pointer"
                     >
                       Select All Visible
                     </button>
                     <button
                       onClick={() => setSelectedProductIds([])}
-                      className="px-3 py-1.5 rounded-lg bg-white/70 border-[#E8E2D8] hover:bg-[#2A2A24] border border-[#E8E2D8] text-xs font-bold text-[#5C544C] transition-colors cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-[#172448] border border-[#22345E] hover:bg-[#22345E] text-xs font-bold text-slate-300 transition-colors cursor-pointer"
                     >
                       Clear Selection
                     </button>
                     <button
                       onClick={handleBulkDeleteProducts}
-                      className="px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-[#2D241E] text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <Trash2 size={13} /> Delete Selected
                     </button>
@@ -1878,80 +1878,80 @@ export default function AdminPage() {
               )}
 
               {/* Seed Products card */}
-              <div className="bg-gradient-to-r from-[var(--color-coral)]/5 via-transparent to-transparent border border-[#FF8A6B]/20 rounded-2xl p-6">
+              <div className="bg-gradient-to-r from-[#F7B733]/5 via-transparent to-transparent border border-[#F7B733]/20 rounded-2xl p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div>
-                    <h3 className="font-bold text-sm flex items-center gap-2 text-[#2D241E]">
-                      <Zap size={16} className="text-[#8C1D1D]" /> Populate Default Product Line
+                    <h3 className="font-bold text-sm flex items-center gap-2 text-white">
+                      <Zap size={16} className="text-[#F7B733]" /> Populate Default Product Line
                     </h3>
-                    <p className="text-xs text-[#5C544C] mt-1">Insert all default safety-certified Sivakasi products from JSON templates directly into database catalog</p>
+                    <p className="text-xs text-slate-350 mt-1">Insert all default safety-certified Sivakasi products from JSON templates directly into database catalog</p>
                   </div>
                   <button 
                     onClick={seedProducts} 
                     disabled={seeding} 
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs disabled:opacity-50 flex items-center gap-2 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all shrink-0"
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-[#101A36] font-bold text-xs disabled:opacity-50 flex items-center gap-2 hover:shadow-[0_0_15px_rgba(247,183,51,0.25)] transition-all shrink-0"
                   >
                     {seeding ? <RefreshCw size={13} className="animate-spin" /> : <Database size={13} />}
                     {seeding ? 'Seeding...' : 'Seed Default Catalog'}
                   </button>
                 </div>
                 {seedStatus && (
-                  <p className="mt-3 text-xs font-semibold text-[#8C1D1D]">{seedStatus}</p>
+                  <p className="mt-3 text-xs font-semibold text-[#F7B733]">{seedStatus}</p>
                 )}
               </div>
 
               {/* Spreadsheet / CSV upload */}
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-display font-bold text-sm text-[#2D241E]">Import Inventory Spreadsheet / CSV</h3>
+                  <h3 className="font-display font-bold text-sm text-white">Import Inventory Spreadsheet / CSV</h3>
                   <div className="flex flex-col items-end gap-1">
                     <a 
                       href="/templates/product_import_template.csv" 
                       download="product_import_template.csv"
-                      className="text-[10px] text-[#8C1D1D] hover:underline font-bold flex items-center gap-1"
+                      className="text-[10px] text-[#F7B733] hover:underline font-bold flex items-center gap-1"
                     >
                       <Download size={11} /> Download CSV Template
                     </a>
                     <a 
                       href="/templates/product_import_template.xlsx" 
                       download="product_import_template.xlsx"
-                      className="text-[10px] text-[#8C1D1D]/75 hover:underline font-bold flex items-center gap-1"
+                      className="text-[10px] text-[#F7B733]/75 hover:underline font-bold flex items-center gap-1"
                     >
                       <Download size={11} /> Download Excel Template (.xlsx)
                     </a>
                   </div>
                 </div>
-                <p className="text-xs text-[#5C544C] mb-5">Upload an Excel `.xlsx` or CSV `.csv` spreadsheet matching the price list format to add/update pricing tables in bulk.</p>
+                <p className="text-xs text-slate-300 mb-5">Upload an Excel `.xlsx` or CSV `.csv` spreadsheet matching the price list format to add/update pricing tables in bulk.</p>
                 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                  <label className="flex-grow flex items-center justify-center gap-3 px-6 py-5 border-2 border-dashed border-[#E8E2D8] hover:border-[#FF8A6B]/40 rounded-xl cursor-pointer bg-white/70 border-[#E8E2D8]/25 transition-all">
-                    <Upload size={18} className="text-[#5C544C]" />
-                    <span className="text-xs font-bold text-[#5C544C]">{file ? file.name : 'Select spreadsheet file (.xlsx, .csv)'}</span>
+                  <label className="flex-grow flex items-center justify-center gap-3 px-6 py-5 border-2 border-dashed border-[#172448] hover:border-[#F7B733]/40 rounded-xl cursor-pointer bg-[#172448]/60/25 transition-all">
+                    <Upload size={18} className="text-slate-300" />
+                    <span className="text-xs font-bold text-slate-300">{file ? file.name : 'Select spreadsheet file (.xlsx, .csv)'}</span>
                     <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
                   </label>
                   <button 
                     onClick={handleUpload} 
                     disabled={!file} 
-                    className="px-6 py-4 rounded-xl bg-[var(--color-coral)] text-white font-bold text-xs hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all disabled:opacity-40 disabled:hover:shadow-none shrink-0 cursor-pointer"
+                    className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all disabled:opacity-40 disabled:hover:shadow-none shrink-0 cursor-pointer"
                   >
                     Import Products
                   </button>
                 </div>
                 {uploadStatus && (
-                  <p className="mt-3 text-xs font-semibold text-[#8C1D1D]">{uploadStatus}</p>
+                  <p className="mt-3 text-xs font-semibold text-[#F7B733]">{uploadStatus}</p>
                 )}
               </div>
 
               {/* Products Catalog Table */}
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
-                      <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                      <tr className="border-b border-[#172448] bg-[#172448]/50 text-slate-300 font-bold uppercase tracking-wider text-[10px]">
                         <th className="p-4 w-10 text-center">
                           <input 
                             type="checkbox"
-                            className="accent-[var(--color-coral)] cursor-pointer rounded border-[#E8E2D8]"
+                            className="accent-[#F7B733] cursor-pointer rounded border-[#172448]"
                             checked={filteredProducts.length > 0 && filteredProducts.every(p => selectedProductIds.includes(p.id))}
                             onChange={(e) => {
                               if (e.target.checked) {
@@ -1975,13 +1975,13 @@ export default function AdminPage() {
                         <th className="p-4 text-center">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2A2A24]/40">
+                    <tbody className="divide-y divide-[#172448]/40">
                       {filteredProducts.map((p: any) => (
-                        <tr key={p.id} className={`hover:bg-white/70 border-[#E8E2D8]/20 transition-colors ${selectedProductIds.includes(p.id) ? 'bg-[var(--color-coral)]/5' : ''}`}>
+                        <tr key={p.id} className={`hover:bg-[#172448]/60/20 transition-colors ${selectedProductIds.includes(p.id) ? 'bg-gradient-to-r from-[#F7B733] to-[#D49619]/5' : ''}`}>
                           <td className="p-4 text-center">
                             <input 
                               type="checkbox"
-                              className="accent-[var(--color-coral)] cursor-pointer rounded border-[#E8E2D8]"
+                              className="accent-[#F7B733] cursor-pointer rounded border-[#172448]"
                               checked={selectedProductIds.includes(p.id)}
                               onChange={(e) => {
                                 if (e.target.checked) {
@@ -1993,12 +1993,12 @@ export default function AdminPage() {
                             />
                           </td>
                           <td className="p-4">
-                            <div className="font-bold text-[#2D241E]">{p.name_en}</div>
-                            {p.name_ta && <div className="text-[10px] text-[#5C544C] mt-0.5">{p.name_ta}</div>}
+                            <div className="font-bold text-white">{p.name_en}</div>
+                            {p.name_ta && <div className="text-[10px] text-slate-300 mt-0.5">{p.name_ta}</div>}
                           </td>
-                          <td className="p-4 text-[#5C544C] font-medium capitalize">{p.category}</td>
-                          <td className="p-4 text-right line-through text-[#5C544C]">₹{p.mrp}</td>
-                          <td className="p-4 text-right font-bold text-[#8C1D1D]">₹{p.price}</td>
+                          <td className="p-4 text-slate-300 font-medium capitalize">{p.category}</td>
+                          <td className="p-4 text-right line-through text-slate-300">₹{p.mrp}</td>
+                          <td className="p-4 text-right font-bold text-[#F7B733]">₹{p.price}</td>
                           <td className="p-4 text-center text-emerald-400 font-bold">{p.discount_percent || 0}% OFF</td>
                           <td className="p-4 text-center">
                             <button
@@ -2019,7 +2019,7 @@ export default function AdminPage() {
                                 setCurrentProduct(p);
                                 setProductFormOpen(true);
                               }}
-                              className="p-2 text-[#8C1D1D] hover:bg-white/70 border-[#E8E2D8] rounded-lg"
+                              className="p-2 text-[#F7B733] hover:bg-[#172448]/60 rounded-lg"
                               title="Edit Product"
                             >
                               <Edit size={13} />
@@ -2037,7 +2037,7 @@ export default function AdminPage() {
                     </tbody>
                   </table>
                   {filteredProducts.length === 0 && (
-                    <div className="text-center py-16 text-[#5C544C]">No products found matching the query list</div>
+                    <div className="text-center py-16 text-slate-300">No products found matching the query list</div>
                   )}
                 </div>
               </div>
@@ -2049,8 +2049,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Combo Packages</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Manage budget combo giftboxes and featured assortment packs</p>
+                  <h2 className="text-xl font-bold font-display text-white">Combo Packages</h2>
+                  <p className="text-xs text-slate-300 mt-1">Manage budget combo giftboxes and featured assortment packs</p>
                 </div>
                 
                 <button 
@@ -2062,41 +2062,41 @@ export default function AdminPage() {
                     });
                     setComboFormOpen(true);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all shrink-0"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all shrink-0"
                 >
                   <Plus size={14} /> Add Combo
                 </button>
               </div>
 
               {/* Seed Combos card */}
-              <div className="bg-gradient-to-r from-[var(--color-coral)]/5 via-transparent to-transparent border border-[#FF8A6B]/20 rounded-2xl p-6">
+              <div className="bg-gradient-to-r from-[#F7B733]/5 via-transparent to-transparent border border-[#F7B733]/20 rounded-2xl p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div>
-                    <h3 className="font-bold text-sm flex items-center gap-2 text-[#2D241E]">
-                      <Gift size={16} className="text-[#8C1D1D]" /> Populate Initial Assortment Combos
+                    <h3 className="font-bold text-sm flex items-center gap-2 text-white">
+                      <Gift size={16} className="text-[#F7B733]" /> Populate Initial Assortment Combos
                     </h3>
-                    <p className="text-xs text-[#5C544C] mt-1">Load the young kids, young couple, and premium family combos to seed the database catalog</p>
+                    <p className="text-xs text-slate-300 mt-1">Load the young kids, young couple, and premium family combos to seed the database catalog</p>
                   </div>
                   <button 
                     onClick={seedCombos} 
                     disabled={seedingCombos} 
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs disabled:opacity-50 flex items-center gap-2 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all shrink-0"
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs disabled:opacity-50 flex items-center gap-2 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all shrink-0"
                   >
                     {seedingCombos ? <RefreshCw size={13} className="animate-spin" /> : <Database size={13} />}
                     {seedingCombos ? 'Seeding Database...' : 'Seed Default Combos'}
                   </button>
                 </div>
                 {seedComboStatus && (
-                  <p className="mt-3 text-xs font-semibold text-[#8C1D1D]">{seedComboStatus}</p>
+                  <p className="mt-3 text-xs font-semibold text-[#F7B733]">{seedComboStatus}</p>
                 )}
               </div>
 
               {/* Combo table */}
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
-                      <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                      <tr className="border-b border-[#172448] bg-[#172448]/50 text-slate-300 font-bold uppercase tracking-wider text-[10px]">
                         <th className="p-4">Combo Identifier Name</th>
                         <th className="p-4 text-center">Items Included</th>
                         <th className="p-4 text-right">Standard MRP</th>
@@ -2105,18 +2105,18 @@ export default function AdminPage() {
                         <th className="p-4 text-center">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#2A2A24]/40">
+                    <tbody className="divide-y divide-[#172448]/40">
                       {combos.map((c: any) => (
-                        <tr key={c.id} className="hover:bg-white/70 border-[#E8E2D8]/20 transition-colors">
-                          <td className="p-4 font-bold text-[#2D241E]">{c.combo_name}</td>
-                          <td className="p-4 text-center text-[#5C544C] font-bold">{c.total_items} items</td>
-                          <td className="p-4 text-right line-through text-[#5C544C]">₹{c.original_price}</td>
-                          <td className="p-4 text-right font-bold text-[#8C1D1D]">₹{c.offer_price}</td>
+                        <tr key={c.id} className="hover:bg-[#172448]/60/20 transition-colors">
+                          <td className="p-4 font-bold text-white">{c.combo_name}</td>
+                          <td className="p-4 text-center text-slate-300 font-bold">{c.total_items} items</td>
+                          <td className="p-4 text-right line-through text-slate-300">₹{c.original_price}</td>
+                          <td className="p-4 text-right font-bold text-[#F7B733]">₹{c.offer_price}</td>
                           <td className="p-4 text-center">
                             {c.featured ? (
                               <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/15">Featured</span>
                             ) : (
-                              <span className="text-[#5C544C]">-</span>
+                              <span className="text-slate-300">-</span>
                             )}
                           </td>
                           <td className="p-4 text-center flex items-center justify-center gap-1">
@@ -2125,7 +2125,7 @@ export default function AdminPage() {
                                 setCurrentCombo(c);
                                 setComboFormOpen(true);
                               }}
-                              className="p-2 text-[#8C1D1D] hover:bg-white/70 border-[#E8E2D8] rounded-lg"
+                              className="p-2 text-[#F7B733] hover:bg-[#172448]/60 rounded-lg"
                               title="Edit Combo"
                             >
                               <Edit size={13} />
@@ -2143,7 +2143,7 @@ export default function AdminPage() {
                     </tbody>
                   </table>
                   {combos.length === 0 && (
-                    <div className="text-center py-16 text-[#5C544C]">No combo packs found. Initialize by clicking &quot;Seed Default Combos&quot; above.</div>
+                    <div className="text-center py-16 text-slate-300">No combo packs found. Initialize by clicking &quot;Seed Default Combos&quot; above.</div>
                   )}
                 </div>
               </div>
@@ -2155,8 +2155,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Product Categories</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Manage catalog filters and sections displayed to customers</p>
+                  <h2 className="text-xl font-bold font-display text-white">Product Categories</h2>
+                  <p className="text-xs text-slate-300 mt-1">Manage catalog filters and sections displayed to customers</p>
                 </div>
                 
                 <button 
@@ -2164,58 +2164,58 @@ export default function AdminPage() {
                     setCurrentCategory({ id: '', label: '', emoji: '🎆', sort_order: 0, isNew: true });
                     setCategoryFormOpen(true);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all"
                 >
                   <Plus size={14} /> Add Category
                 </button>
               </div>
 
               {/* Spreadsheet / CSV upload */}
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-display font-bold text-sm text-[#2D241E]">Import Products to Categories via Spreadsheet / CSV</h3>
+                  <h3 className="font-display font-bold text-sm text-white">Import Products to Categories via Spreadsheet / CSV</h3>
                   <div className="flex flex-col items-end gap-1">
                     <a 
                       href="/templates/product_import_template.csv" 
                       download="product_import_template.csv"
-                      className="text-[10px] text-[#8C1D1D] hover:underline font-bold flex items-center gap-1"
+                      className="text-[10px] text-[#F7B733] hover:underline font-bold flex items-center gap-1"
                     >
                       <Download size={11} /> Download CSV Template
                     </a>
                     <a 
                       href="/templates/product_import_template.xlsx" 
                       download="product_import_template.xlsx"
-                      className="text-[10px] text-[#8C1D1D]/75 hover:underline font-bold flex items-center gap-1"
+                      className="text-[10px] text-[#F7B733]/75 hover:underline font-bold flex items-center gap-1"
                     >
                       <Download size={11} /> Download Excel Template (.xlsx)
                     </a>
                   </div>
                 </div>
-                <p className="text-xs text-[#5C544C] mb-5">Seeding new items? Upload a spreadsheet to populate products. Missing categories listed in the spreadsheet will be automatically created.</p>
+                <p className="text-xs text-slate-300 mb-5">Seeding new items? Upload a spreadsheet to populate products. Missing categories listed in the spreadsheet will be automatically created.</p>
                 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                  <label className="flex-grow flex items-center justify-center gap-3 px-6 py-5 border-2 border-dashed border-[#E8E2D8] hover:border-[#FF8A6B]/40 rounded-xl cursor-pointer bg-white/70 border-[#E8E2D8]/25 transition-all">
-                    <Upload size={18} className="text-[#5C544C]" />
-                    <span className="text-xs font-bold text-[#5C544C]">{file ? file.name : 'Select spreadsheet file (.xlsx, .csv)'}</span>
+                  <label className="flex-grow flex items-center justify-center gap-3 px-6 py-5 border-2 border-dashed border-[#172448] hover:border-[#F7B733]/40 rounded-xl cursor-pointer bg-[#172448]/60/25 transition-all">
+                    <Upload size={18} className="text-slate-300" />
+                    <span className="text-xs font-bold text-slate-300">{file ? file.name : 'Select spreadsheet file (.xlsx, .csv)'}</span>
                     <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
                   </label>
                   <button 
                     onClick={handleUpload} 
                     disabled={!file} 
-                    className="px-6 py-4 rounded-xl bg-[var(--color-coral)] text-white font-bold text-xs hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all disabled:opacity-40 disabled:hover:shadow-none shrink-0 cursor-pointer"
+                    className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all disabled:opacity-40 disabled:hover:shadow-none shrink-0 cursor-pointer"
                   >
                     Import Products
                   </button>
                 </div>
                 {uploadStatus && (
-                  <p className="mt-3 text-xs font-semibold text-[#8C1D1D]">{uploadStatus}</p>
+                  <p className="mt-3 text-xs font-semibold text-[#F7B733]">{uploadStatus}</p>
                 )}
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                    <tr className="border-b border-[#172448] bg-[#172448]/50 text-slate-300 font-bold uppercase tracking-wider text-[10px]">
                       <th className="p-4">Emoji</th>
                       <th className="p-4">Category Identifier</th>
                       <th className="p-4">Display Label Name</th>
@@ -2223,20 +2223,20 @@ export default function AdminPage() {
                       <th className="p-4 text-center">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#2A2A24]/40">
+                  <tbody className="divide-y divide-[#172448]/40">
                     {categories.map((cat) => (
-                      <tr key={cat.id} className="hover:bg-white/70 border-[#E8E2D8]/20 transition-colors">
+                      <tr key={cat.id} className="hover:bg-[#172448]/60/20 transition-colors">
                         <td className="p-4 text-lg">{cat.emoji || '🎆'}</td>
-                        <td className="p-4 font-mono font-bold text-[#5C544C]">{cat.id}</td>
-                        <td className="p-4 font-bold text-[#2D241E]">{cat.label}</td>
-                        <td className="p-4 text-center font-bold text-[#8C1D1D]">{cat.sort_order}</td>
+                        <td className="p-4 font-mono font-bold text-slate-300">{cat.id}</td>
+                        <td className="p-4 font-bold text-white">{cat.label}</td>
+                        <td className="p-4 text-center font-bold text-[#F7B733]">{cat.sort_order}</td>
                         <td className="p-4 text-center flex items-center justify-center gap-1">
                           <button 
                             onClick={() => {
                               setCurrentCategory({ ...cat, isNew: false });
                               setCategoryFormOpen(true);
                             }}
-                            className="p-2 text-[#8C1D1D] hover:bg-white/70 border-[#E8E2D8] rounded-lg"
+                            className="p-2 text-[#F7B733] hover:bg-[#172448]/60 rounded-lg"
                             title="Edit Category"
                           >
                             <Edit size={13} />
@@ -2262,8 +2262,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Order Enquiries</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Review enquiries submitted by potential customers listing items cart summary</p>
+                  <h2 className="text-xl font-bold font-display text-white">Order Enquiries</h2>
+                  <p className="text-xs text-slate-300 mt-1">Review enquiries submitted by potential customers listing items cart summary</p>
                 </div>
                 
                 <div className="flex items-center gap-2">
@@ -2277,7 +2277,7 @@ export default function AdminPage() {
                       ];
                       downloadCSV(enquiries, cols, 'enquiries_log');
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/60 hover:bg-[#172448] border border-[#172448] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-[#F7B733] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Download CSV"
                   >
                     <Download size={14} /> <span className="hidden sm:inline">CSV</span>
@@ -2294,7 +2294,7 @@ export default function AdminPage() {
                       ]);
                       printLog('Order Enquiries Log', headers, rows);
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/60 hover:bg-[#172448] border border-[#172448] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-[#F7B733] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Print Log"
                   >
                     <Printer size={14} /> <span className="hidden sm:inline">Print</span>
@@ -2302,25 +2302,25 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
-                <div className="divide-y divide-[#2A2A24]/40">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
+                <div className="divide-y divide-[#172448]/40">
                   {enquiries.map((e: any) => (
-                    <div key={e.id} className="p-5 hover:bg-white/70 border-[#E8E2D8]/10 transition-colors">
+                    <div key={e.id} className="p-5 hover:bg-[#172448]/60/10 transition-colors">
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-3">
                         <div>
-                          <span className="font-bold text-sm text-[#2D241E]">{e.customer_name || 'Enquirer Customer'}</span>
-                          <span className="text-[10px] text-[#5C544C] font-semibold bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] px-2 py-0.5 rounded-full ml-2">Phone: {e.customer_phone}</span>
+                          <span className="font-bold text-sm text-white">{e.customer_name || 'Enquirer Customer'}</span>
+                          <span className="text-[10px] text-slate-300 font-semibold bg-[#172448]/60 border border-[#172448] px-2 py-0.5 rounded-full ml-2">Phone: {e.customer_phone}</span>
                         </div>
-                        <span className="text-[10px] text-[#5C544C] font-semibold">{new Date(e.created_at).toLocaleString()}</span>
+                        <span className="text-[10px] text-slate-300 font-semibold">{new Date(e.created_at).toLocaleString()}</span>
                       </div>
-                      <div className="text-xs text-[#5C544C] flex items-center gap-4">
-                        <span>Items: <strong className="text-[#2D241E]">{Array.isArray(e.items) ? e.items.length : 0} types</strong></span>
-                        <span>Estimated Order: <strong className="text-[#8C1D1D]">₹{e.total_amount?.toLocaleString('en-IN')}</strong></span>
+                      <div className="text-xs text-slate-300 flex items-center gap-4">
+                        <span>Items: <strong className="text-white">{Array.isArray(e.items) ? e.items.length : 0} types</strong></span>
+                        <span>Estimated Order: <strong className="text-[#F7B733]">₹{e.total_amount?.toLocaleString('en-IN')}</strong></span>
                       </div>
                     </div>
                   ))}
                   {enquiries.length === 0 && (
-                    <div className="text-center py-16 text-[#5C544C]">No enquiries logged in database</div>
+                    <div className="text-center py-16 text-slate-300">No enquiries logged in database</div>
                   )}
                 </div>
               </div>
@@ -2332,8 +2332,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Inbox Messages</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Review details from customers submitted through the web contact support forms</p>
+                  <h2 className="text-xl font-bold font-display text-white">Inbox Messages</h2>
+                  <p className="text-xs text-slate-300 mt-1">Review details from customers submitted through the web contact support forms</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button 
@@ -2347,7 +2347,7 @@ export default function AdminPage() {
                       ];
                       downloadCSV(messages, cols, 'inbox_messages');
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/60 hover:bg-[#172448] border border-[#172448] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-[#F7B733] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Download CSV"
                   >
                     <Download size={14} /> <span className="hidden sm:inline">CSV</span>
@@ -2364,7 +2364,7 @@ export default function AdminPage() {
                       ]);
                       printLog('Inbox Messages Log', headers, rows);
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/60 hover:bg-[#172448] border border-[#172448] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-[#F7B733] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Print Log"
                   >
                     <Printer size={14} /> <span className="hidden sm:inline">Print</span>
@@ -2380,32 +2380,32 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
-                <div className="divide-y divide-[#2A2A24]/40">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
+                <div className="divide-y divide-[#172448]/40">
                   {messages.map((m: any) => (
-                    <div key={m.id} className="p-6 hover:bg-white/70 border-[#E8E2D8]/10 transition-colors">
+                    <div key={m.id} className="p-6 hover:bg-[#172448]/60/10 transition-colors">
                       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-3">
                         <div>
-                          <span className="font-bold text-sm text-[#2D241E]">{m.name}</span>
-                          <span className="text-xs text-[#5C544C] ml-2">Email: {m.email}</span>
+                          <span className="font-bold text-sm text-white">{m.name}</span>
+                          <span className="text-xs text-slate-300 ml-2">Email: {m.email}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="text-[10px] text-[#5C544C] font-semibold">{new Date(m.created_at).toLocaleString()}</span>
+                          <span className="text-[10px] text-slate-300 font-semibold">{new Date(m.created_at).toLocaleString()}</span>
                           <button 
                             onClick={() => handleDeleteMessage(m.id, m.name)}
-                            className="p-1.5 text-[#5C544C] hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+                            className="p-1.5 text-slate-300 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
                             title="Delete Message"
                           >
                             <Trash2 size={13} />
                           </button>
                         </div>
                       </div>
-                      <div className="text-sm font-bold text-[#8C1D1D] mb-2">{m.subject}</div>
-                      <p className="text-xs text-[#5C544C] leading-relaxed bg-white/70 border-[#E8E2D8]/40 border border-[#E8E2D8]/60 p-4 rounded-xl">{m.message}</p>
+                      <div className="text-sm font-bold text-[#F7B733] mb-2">{m.subject}</div>
+                      <p className="text-xs text-slate-300 leading-relaxed bg-[#172448]/50 border border-[#172448]/60 p-4 rounded-xl">{m.message}</p>
                     </div>
                   ))}
                   {messages.length === 0 && (
-                    <div className="text-center py-16 text-[#5C544C]">No contact messages recorded</div>
+                    <div className="text-center py-16 text-slate-300">No contact messages recorded</div>
                   )}
                 </div>
               </div>
@@ -2417,8 +2417,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Customer Profiles</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Profiles compiled from orders logs</p>
+                  <h2 className="text-xl font-bold font-display text-white">Customer Profiles</h2>
+                  <p className="text-xs text-slate-300 mt-1">Profiles compiled from orders logs</p>
                 </div>
                 
                 <div className="flex items-center gap-2">
@@ -2433,7 +2433,7 @@ export default function AdminPage() {
                       ];
                       downloadCSV(customersList, cols, 'customer_profiles');
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/60 hover:bg-[#172448] border border-[#172448] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-[#F7B733] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Download CSV"
                   >
                     <Download size={14} /> <span className="hidden sm:inline">CSV</span>
@@ -2450,7 +2450,7 @@ export default function AdminPage() {
                       ]);
                       printLog('Customer Profiles Base', headers, rows);
                     }}
-                    className="p-2.5 bg-white/30 backdrop-blur-md hover:bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] hover:border-[#FF8A6B] rounded-xl text-[#5C544C] hover:text-[#8C1D1D] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
+                    className="p-2.5 bg-[#172448]/60 hover:bg-[#172448] border border-[#172448] hover:border-[#F7B733] rounded-xl text-slate-300 hover:text-[#F7B733] transition-colors flex items-center justify-center gap-1.5 text-xs font-bold"
                     title="Print Log"
                   >
                     <Printer size={14} /> <span className="hidden sm:inline">Print</span>
@@ -2458,10 +2458,10 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                    <tr className="border-b border-[#172448] bg-[#172448]/50 text-slate-300 font-bold uppercase tracking-wider text-[10px]">
                       <th className="p-4">Customer Name</th>
                       <th className="p-4">Phone Number</th>
                       <th className="p-4">Email Address</th>
@@ -2469,19 +2469,19 @@ export default function AdminPage() {
                       <th className="p-4 text-right">Total Net Worth</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#2A2A24]/40">
+                  <tbody className="divide-y divide-[#172448]/40">
                     {customersList.map((c: any) => (
-                      <tr key={c.phone} className="hover:bg-white/70 border-[#E8E2D8]/20 transition-colors">
-                        <td className="p-4 font-bold text-[#2D241E]">{c.name}</td>
+                      <tr key={c.phone} className="hover:bg-[#172448]/60/20 transition-colors">
+                        <td className="p-4 font-bold text-white">{c.name}</td>
                         <td className="p-4 font-mono font-semibold">{c.phone}</td>
-                        <td className="p-4 text-[#5C544C]">{c.email}</td>
-                        <td className="p-4 text-center font-bold text-[#8C1D1D]">{c.ordersCount} orders</td>
+                        <td className="p-4 text-slate-300">{c.email}</td>
+                        <td className="p-4 text-center font-bold text-[#F7B733]">{c.ordersCount} orders</td>
                         <td className="p-4 text-right font-bold text-emerald-400">₹{c.totalSpent.toLocaleString('en-IN')}</td>
                       </tr>
                     ))}
                     {customersList.length === 0 && (
                       <tr>
-                        <td colSpan={5} className="text-center py-16 text-[#5C544C]">No customers recorded yet</td>
+                        <td colSpan={5} className="text-center py-16 text-slate-300">No customers recorded yet</td>
                       </tr>
                     )}
                   </tbody>
@@ -2495,8 +2495,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Bank Accounts</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Manage payment transfer options shown during client checkouts</p>
+                  <h2 className="text-xl font-bold font-display text-white">Bank Accounts</h2>
+                  <p className="text-xs text-slate-300 mt-1">Manage payment transfer options shown during client checkouts</p>
                 </div>
                 
                 <button 
@@ -2504,16 +2504,16 @@ export default function AdminPage() {
                     setCurrentBank({ bank_name: '', branch: '', holder_name: '', account_number: '', ifsc_code: '', gpay_number: '', phonepe_number: '' });
                     setBankFormOpen(true);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all"
                 >
                   <Plus size={14} /> Add Bank Details
                 </button>
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                    <tr className="border-b border-[#172448] bg-[#172448]/50 text-slate-300 font-bold uppercase tracking-wider text-[10px]">
                       <th className="p-4">Bank Name</th>
                       <th className="p-4">Branch</th>
                       <th className="p-4">Holder Name</th>
@@ -2523,22 +2523,22 @@ export default function AdminPage() {
                       <th className="p-4 text-center">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#2A2A24]/40">
+                  <tbody className="divide-y divide-[#172448]/40">
                     {bankAccounts.map((b) => (
-                      <tr key={b.id} className="hover:bg-white/70 border-[#E8E2D8]/20 transition-colors">
-                        <td className="p-4 font-bold text-[#2D241E]">{b.bank_name}</td>
-                        <td className="p-4 text-[#5C544C] font-medium">{b.branch}</td>
+                      <tr key={b.id} className="hover:bg-[#172448]/60/20 transition-colors">
+                        <td className="p-4 font-bold text-white">{b.bank_name}</td>
+                        <td className="p-4 text-slate-300 font-medium">{b.branch}</td>
                         <td className="p-4 font-bold">{b.holder_name}</td>
                         <td className="p-4 font-mono font-semibold">{b.account_number}</td>
-                        <td className="p-4 font-mono font-semibold text-[#8C1D1D]">{b.ifsc_code}</td>
-                        <td className="p-4 text-[#5C544C]">{b.gpay_number || '-'}</td>
+                        <td className="p-4 font-mono font-semibold text-[#F7B733]">{b.ifsc_code}</td>
+                        <td className="p-4 text-slate-300">{b.gpay_number || '-'}</td>
                         <td className="p-4 text-center flex items-center justify-center gap-1">
                           <button 
                             onClick={() => {
                               setCurrentBank(b);
                               setBankFormOpen(true);
                             }}
-                            className="p-2 text-[#8C1D1D] hover:bg-white/70 border-[#E8E2D8] rounded-lg"
+                            className="p-2 text-[#F7B733] hover:bg-[#172448]/60 rounded-lg"
                             title="Edit Bank Details"
                           >
                             <Edit size={13} />
@@ -2564,8 +2564,8 @@ export default function AdminPage() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="text-xl font-bold font-display text-[#2D241E]">Homepage Slider Banners</h2>
-                  <p className="text-xs text-[#5C544C] mt-1">Manage glowing visual sliders featured on the client web pages</p>
+                  <h2 className="text-xl font-bold font-display text-white">Homepage Slider Banners</h2>
+                  <p className="text-xs text-slate-300 mt-1">Manage glowing visual sliders featured on the client web pages</p>
                 </div>
                 
                 <button 
@@ -2573,16 +2573,16 @@ export default function AdminPage() {
                     setCurrentSlider({ image_url: '', link_url: '', title: '', sort_order: 0 });
                     setSliderFormOpen(true);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] transition-all"
                 >
                   <Plus size={14} /> Add Banner
                 </button>
               </div>
 
-              <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl overflow-hidden">
+              <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-[#E8E2D8] bg-white/70 border-[#E8E2D8]/40 text-[#5C544C] font-bold uppercase tracking-wider text-[10px]">
+                    <tr className="border-b border-[#172448] bg-[#172448]/50 text-slate-300 font-bold uppercase tracking-wider text-[10px]">
                       <th className="p-4">Sort Order</th>
                       <th className="p-4">Banner Graphic</th>
                       <th className="p-4">Header Title</th>
@@ -2590,24 +2590,24 @@ export default function AdminPage() {
                       <th className="p-4 text-center">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#2A2A24]/40">
+                  <tbody className="divide-y divide-[#172448]/40">
                     {sliders.map((s) => (
-                      <tr key={s.id} className="hover:bg-white/70 border-[#E8E2D8]/20 transition-colors">
-                        <td className="p-4 text-center font-bold text-[#8C1D1D]">{s.sort_order}</td>
+                      <tr key={s.id} className="hover:bg-[#172448]/60/20 transition-colors">
+                        <td className="p-4 text-center font-bold text-[#F7B733]">{s.sort_order}</td>
                         <td className="p-4">
-                          <div className="relative w-28 h-12 bg-black rounded-lg overflow-hidden border border-[#E8E2D8]">
+                          <div className="relative w-28 h-12 bg-black rounded-lg overflow-hidden border border-[#172448]">
                             <img src={s.image_url} alt="" className="object-cover w-full h-full" />
                           </div>
                         </td>
-                        <td className="p-4 font-bold text-[#2D241E]">{s.title || '-'}</td>
-                        <td className="p-4 text-xs font-mono text-[#5C544C]">{s.link_url || '-'}</td>
+                        <td className="p-4 font-bold text-white">{s.title || '-'}</td>
+                        <td className="p-4 text-xs font-mono text-slate-300">{s.link_url || '-'}</td>
                         <td className="p-4 text-center flex items-center justify-center gap-1">
                           <button 
                             onClick={() => {
                               setCurrentSlider(s);
                               setSliderFormOpen(true);
                             }}
-                            className="p-2 text-[#8C1D1D] hover:bg-white/70 border-[#E8E2D8] rounded-lg"
+                            className="p-2 text-[#F7B733] hover:bg-[#172448]/60 rounded-lg"
                             title="Edit Banner"
                           >
                             <Edit size={13} />
@@ -2624,7 +2624,7 @@ export default function AdminPage() {
                     ))}
                     {sliders.length === 0 && (
                       <tr>
-                        <td colSpan={5} className="text-center py-16 text-[#5C544C]">No homepage banners uploaded yet</td>
+                        <td colSpan={5} className="text-center py-16 text-slate-300">No homepage banners uploaded yet</td>
                       </tr>
                     )}
                   </tbody>
@@ -2637,107 +2637,107 @@ export default function AdminPage() {
           {activeTab === 'settings' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
               <div>
-                <h2 className="text-xl font-bold font-display text-[#2D241E]">Global System Configurations</h2>
-                <p className="text-xs text-[#5C544C] mt-1">Manage global discount rates, minimum orders, WhatsApp parameters, and company addresses</p>
+                <h2 className="text-xl font-bold font-display text-white">Global System Configurations</h2>
+                <p className="text-xs text-slate-300 mt-1">Manage global discount rates, minimum orders, WhatsApp parameters, and company addresses</p>
               </div>
 
-              <form onSubmit={handleSaveSettings} className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-8 space-y-6 max-w-3xl">
+              <form onSubmit={handleSaveSettings} className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-8 space-y-6 max-w-3xl">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Global Discount (%) *</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Global Discount (%) *</label>
                     <input 
                       required 
                       type="number" 
                       min="0" max="100" 
                       value={settings.global_discount} 
                       onChange={(e) => setSettings({...settings, global_discount: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
-                    <span className="text-[9px] text-[#5C544C] mt-1.5 block leading-normal">
+                    <span className="text-[9px] text-slate-300 mt-1.5 block leading-normal">
                       ⚠️ Updates prices for ALL catalog items off MRP dynamically upon save.
                     </span>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Minimum Order Value (₹) *</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Minimum Order Value (₹) *</label>
                     <input 
                       required 
                       type="number" 
                       min="0" 
                       value={settings.min_order_value} 
                       onChange={(e) => setSettings({...settings, min_order_value: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Company Registered Name *</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Company Registered Name *</label>
                     <input 
                       required 
                       value={settings.company_name} 
                       onChange={(e) => setSettings({...settings, company_name: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Support/Enquiry Email Address *</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Support/Enquiry Email Address *</label>
                     <input 
                       required 
                       type="email" 
                       value={settings.email_address} 
                       onChange={(e) => setSettings({...settings, email_address: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">WhatsApp Contact Number *</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">WhatsApp Contact Number *</label>
                     <input 
                       required 
                       value={settings.whatsapp_number} 
                       onChange={(e) => setSettings({...settings, whatsapp_number: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Mobile Number Line 1 *</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Mobile Number Line 1 *</label>
                     <input 
                       required 
                       value={settings.mobile_number_1} 
                       onChange={(e) => setSettings({...settings, mobile_number_1: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Mobile Number Line 2</label>
+                    <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Mobile Number Line 2</label>
                     <input 
                       value={settings.mobile_number_2} 
                       onChange={(e) => setSettings({...settings, mobile_number_2: e.target.value})} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Company Physical Address *</label>
+                  <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Company Physical Address *</label>
                   <textarea 
                     required 
                     rows={2} 
                     value={settings.company_address} 
                     onChange={(e) => setSettings({...settings, company_address: e.target.value})} 
-                    className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors resize-none" 
+                    className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors resize-none" 
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-[#5C544C] mb-2 uppercase tracking-wider">Header Alert Marquee Text</label>
+                  <label className="block text-[10px] font-bold text-slate-300 mb-2 uppercase tracking-wider">Header Alert Marquee Text</label>
                   <input 
                     value={settings.marquee} 
                     onChange={(e) => setSettings({...settings, marquee: e.target.value})} 
-                    className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-4 py-3 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none transition-colors" 
+                    className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-4 py-3 text-xs text-white focus:border-[#F7B733] focus:outline-none transition-colors" 
                     placeholder="E.g., Grand Diwali festival booking open! Place your order soon."
                   />
                 </div>
@@ -2745,11 +2745,11 @@ export default function AdminPage() {
 
 
                 <div className="flex items-center justify-between pt-4">
-                  <span className="text-xs text-[#8C1D1D] font-bold">{settingsStatus}</span>
+                  <span className="text-xs text-[#F7B733] font-bold">{settingsStatus}</span>
                   <button 
                     type="submit" 
                     disabled={savingSettings}
-                    className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold text-xs hover:shadow-[0_8px_24px_rgba(255,107,74,0.25)] disabled:opacity-50 shrink-0"
+                    className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold text-xs hover:shadow-[0_8px_24px_rgba(255,107,74,0.25)] disabled:opacity-50 shrink-0"
                   >
                     {savingSettings ? 'Saving Settings...' : 'Save Configuration'}
                   </button>
@@ -2762,15 +2762,15 @@ export default function AdminPage() {
           {activeTab === 'diagnostics' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
               <div>
-                <h2 className="text-xl font-bold font-display text-[#2D241E]">System Diagnostics & Tracking Logs</h2>
-                <p className="text-xs text-[#5C544C] mt-1">Review live application error logs, tracking information, and system event triggers</p>
+                <h2 className="text-xl font-bold font-display text-white">System Diagnostics & Tracking Logs</h2>
+                <p className="text-xs text-slate-300 mt-1">Review live application error logs, tracking information, and system event triggers</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Error Logs Card */}
-                <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 flex flex-col h-[500px]">
+                <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 flex flex-col h-[500px]">
                   <div className="flex items-center justify-between mb-5 shrink-0">
-                    <h3 className="font-display font-bold text-xs text-[#2D241E] flex items-center gap-2">
+                    <h3 className="font-display font-bold text-xs text-white flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
                       Trapped Error Logs ({errorLogs.length})
                     </h3>
@@ -2792,33 +2792,33 @@ export default function AdminPage() {
                             {log.error_type}
                           </span>
                           <div className="flex items-center gap-2">
-                            <span className="text-[8px] text-[#5C544C] font-semibold">
+                            <span className="text-[8px] text-slate-300 font-semibold">
                               {new Date(log.created_at).toLocaleString()}
                             </span>
                             <button 
                               onClick={() => handleDeleteErrorLog(log.id)}
-                              className="text-[#5C544C] hover:text-rose-400 p-0.5 rounded transition-colors"
+                              className="text-slate-300 hover:text-rose-400 p-0.5 rounded transition-colors"
                               title="Delete log"
                             >
                               <Trash2 size={10} />
                             </button>
                           </div>
                         </div>
-                        <p className="text-[11px] text-[#2D241E] font-medium leading-normal">
+                        <p className="text-[11px] text-white font-medium leading-normal">
                           {log.message}
                         </p>
                       </div>
                     ))}
                     {errorLogs.length === 0 && (
-                      <div className="text-[#5C544C] text-xs text-center py-24">No errors trapped in logs yet</div>
+                      <div className="text-slate-300 text-xs text-center py-24">No errors trapped in logs yet</div>
                     )}
                   </div>
                 </div>
 
                 {/* Analytics Events Card */}
-                <div className="bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-2xl p-6 flex flex-col h-[500px]">
+                <div className="bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-2xl p-6 flex flex-col h-[500px]">
                   <div className="flex items-center justify-between mb-5 shrink-0">
-                    <h3 className="font-display font-bold text-xs text-[#2D241E] flex items-center gap-2">
+                    <h3 className="font-display font-bold text-xs text-white flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                       Live Event Activity Stream ({analyticsEvents.length})
                     </h3>
@@ -2839,17 +2839,17 @@ export default function AdminPage() {
                           <span className="font-mono text-[9px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">
                             {event.event_name}
                           </span>
-                          <span className="text-[8px] text-[#5C544C] font-semibold">
+                          <span className="text-[8px] text-slate-300 font-semibold">
                             {new Date(event.created_at).toLocaleString()}
                           </span>
                         </div>
-                        <p className="text-[11px] text-[#5C544C]">
+                        <p className="text-[11px] text-slate-300">
                           Context: {JSON.stringify(event.metadata || event.event_data)}
                         </p>
                       </div>
                     ))}
                     {analyticsEvents.length === 0 && (
-                      <div className="text-[#5C544C] text-xs text-center py-24">No live event signals detected</div>
+                      <div className="text-slate-300 text-xs text-center py-24">No live event signals detected</div>
                     )}
                   </div>
                 </div>
@@ -2868,27 +2868,27 @@ export default function AdminPage() {
             <motion.div 
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} 
               transition={{ type: 'spring', damping: 25 }}
-              className="fixed top-0 right-0 bottom-0 w-full sm:w-[500px] bg-white/30 backdrop-blur-md border-l border-[#E8E2D8] shadow-2xl z-50 p-8 flex flex-col justify-between overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-full sm:w-[500px] bg-[#0B132B]/95 backdrop-blur-xl border-l border-[#172448] shadow-2xl z-50 p-8 flex flex-col justify-between overflow-y-auto"
             >
               <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-[#E8E2D8] pb-4">
+                <div className="flex items-center justify-between border-b border-[#172448] pb-4">
                   <div>
-                    <h3 className="font-display font-bold text-sm text-[#8C1D1D]">{inspectedOrder.order_number}</h3>
-                    <p className="text-[9px] text-[#5C544C] uppercase tracking-wider font-bold">Placed on {new Date(inspectedOrder.created_at).toLocaleDateString()}</p>
+                    <h3 className="font-display font-bold text-sm text-[#F7B733]">{inspectedOrder.order_number}</h3>
+                    <p className="text-[9px] text-slate-300 uppercase tracking-wider font-bold">Placed on {new Date(inspectedOrder.created_at).toLocaleDateString()}</p>
                   </div>
-                  <button onClick={() => setInspectedOrder(null)} className="p-2 hover:bg-white/70 border-[#E8E2D8] rounded-xl text-[#5C544C] hover:text-[#2D241E]"><X size={16} /></button>
+                  <button onClick={() => setInspectedOrder(null)} className="p-2 hover:bg-[#172448]/60 rounded-xl text-slate-300 hover:text-white"><X size={16} /></button>
                 </div>
 
                 <div className="space-y-4 text-xs">
                   {/* Customer Block */}
                   <div>
-                    <div className="text-[10px] text-[#5C544C] font-bold uppercase tracking-wider mb-2">Customer Profile</div>
-                    <div className="bg-white/70 border-[#E8E2D8]/60 border border-[#E8E2D8] rounded-xl p-4 space-y-2">
-                      <div className="font-bold text-[#2D241E]">{inspectedOrder.customer_name}</div>
+                    <div className="text-[10px] text-slate-300 font-bold uppercase tracking-wider mb-2">Customer Profile</div>
+                    <div className="bg-[#172448]/60/60 border border-[#172448] rounded-xl p-4 space-y-2">
+                      <div className="font-bold text-white">{inspectedOrder.customer_name}</div>
                       <div>📞 {inspectedOrder.customer_phone}</div>
                       <div>✉️ {inspectedOrder.customer_email || 'N/A'}</div>
-                      <div className="pt-2 border-t border-[#E8E2D8]/40 mt-1 flex gap-2 items-start text-[#5C544C]">
-                        <MapPin size={12} className="shrink-0 mt-0.5 text-[#8C1D1D]" />
+                      <div className="pt-2 border-t border-[#172448]/40 mt-1 flex gap-2 items-start text-slate-300">
+                        <MapPin size={12} className="shrink-0 mt-0.5 text-[#F7B733]" />
                         <span>{[inspectedOrder.customer_address, inspectedOrder.customer_city, inspectedOrder.customer_pincode].filter(Boolean).join(', ')}</span>
                       </div>
                     </div>
@@ -2896,8 +2896,8 @@ export default function AdminPage() {
 
                   {/* Items list */}
                   <div>
-                    <div className="text-[10px] text-[#5C544C] font-bold uppercase tracking-wider mb-2">Ordered Assortment ({Array.isArray(inspectedOrder.items) ? inspectedOrder.items.length : 0})</div>
-                    <div className="bg-white/70 border-[#E8E2D8]/60 border border-[#E8E2D8] rounded-xl p-4 divide-y divide-[#2A2A24]/40 max-h-48 overflow-y-auto scrollbar-thin">
+                    <div className="text-[10px] text-slate-300 font-bold uppercase tracking-wider mb-2">Ordered Assortment ({Array.isArray(inspectedOrder.items) ? inspectedOrder.items.length : 0})</div>
+                    <div className="bg-[#172448]/60/60 border border-[#172448] rounded-xl p-4 divide-y divide-[#172448]/40 max-h-48 overflow-y-auto scrollbar-thin">
                       {Array.isArray(inspectedOrder.items) && inspectedOrder.items.map((i: any, idx: number) => (
                         <div key={idx} className="flex justify-between py-2 text-[11px] first:pt-0 last:pb-0">
                           <span>{i.quantity}x {i.name || i.product_name}</span>
@@ -2909,17 +2909,17 @@ export default function AdminPage() {
 
                   {/* Summary */}
                   <div className="pt-2">
-                    <div className="bg-white/70 border-[#E8E2D8]/40 border border-[#E8E2D8]/60 rounded-xl p-4 space-y-2">
-                      <div className="flex justify-between text-[#5C544C]"><span>Subtotal</span><span>₹{(inspectedOrder.subtotal || inspectedOrder.total_amount).toLocaleString('en-IN')}</span></div>
+                    <div className="bg-[#172448]/50 border border-[#172448]/60 rounded-xl p-4 space-y-2">
+                      <div className="flex justify-between text-slate-300"><span>Subtotal</span><span>₹{(inspectedOrder.subtotal || inspectedOrder.total_amount).toLocaleString('en-IN')}</span></div>
                       <div className="flex justify-between text-emerald-400"><span>Savings discount</span><span>-₹{(inspectedOrder.discount_total || 0).toLocaleString('en-IN')}</span></div>
-                      <div className="flex justify-between font-bold text-sm pt-2 border-t border-[#E8E2D8]/60"><span>Grand Total</span><span className="text-[#8C1D1D]">₹{inspectedOrder.total_amount?.toLocaleString('en-IN')}</span></div>
+                      <div className="flex justify-between font-bold text-sm pt-2 border-t border-[#172448]/60"><span>Grand Total</span><span className="text-[#F7B733]">₹{inspectedOrder.total_amount?.toLocaleString('en-IN')}</span></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Status selection */}
                 <div>
-                  <div className="text-[10px] text-[#5C544C] font-bold uppercase tracking-wider mb-2.5">Progress Stage Status</div>
+                  <div className="text-[10px] text-slate-300 font-bold uppercase tracking-wider mb-2.5">Progress Stage Status</div>
                   <div className="grid grid-cols-3 gap-2">
                     {['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'].map(s => (
                       <button 
@@ -2937,8 +2937,8 @@ export default function AdminPage() {
                         }}
                         className={`py-2 rounded-lg font-bold text-[10px] uppercase border transition-all ${
                           inspectedOrder.status === s 
-                            ? 'bg-[var(--color-coral)] text-white border-[#FF8A6B]' 
-                            : 'bg-white/70 border-[#E8E2D8] border-[#E8E2D8] text-[#5C544C] hover:text-[#2D241E]'
+                            ? 'bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white border-[#F7B733]' 
+                            : 'bg-[#172448]/60 border-[#172448] text-slate-300 hover:text-white'
                         }`}
                       >
                         {s}
@@ -2948,12 +2948,12 @@ export default function AdminPage() {
                 </div>
 
                 {/* WhatsApp & Email Status Notification Card */}
-                <div className="bg-white/70 border-[#E8E2D8]/60 border border-[#E8E2D8] rounded-xl p-4 mt-4 space-y-4">
+                <div className="bg-[#172448]/60/60 border border-[#172448] rounded-xl p-4 mt-4 space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] text-[#5C544C] font-bold uppercase tracking-wider">Status Notification</span>
+                    <span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider">Status Notification</span>
                     <span className="text-[9px] bg-green-wa/10 text-green-wa border border-green-wa/20 px-2 py-0.5 rounded-md uppercase font-bold">Automatic</span>
                   </div>
-                  <p className="text-[10px] text-[#5C544C] leading-relaxed">
+                  <p className="text-[10px] text-slate-300 leading-relaxed">
                     Notifications are automatically sent to both WhatsApp & Email when the order status changes. You can also customize or resend messages below manually.
                   </p>
 
@@ -2964,7 +2964,7 @@ export default function AdminPage() {
                         type="checkbox" 
                         checked={notifyWhatsApp} 
                         onChange={(e) => setNotifyWhatsApp(e.target.checked)} 
-                        className="rounded bg-white/70 border-[#E8E2D8] border-[#E8E2D8] text-[#8C1D1D] focus:ring-[var(--color-coral)]"
+                        className="rounded bg-[#172448]/60 border-[#172448] text-[#F7B733] focus:ring-[#F7B733]"
                       />
                       WhatsApp Update
                     </label>
@@ -2973,7 +2973,7 @@ export default function AdminPage() {
                         type="checkbox" 
                         checked={notifyEmail} 
                         onChange={(e) => setNotifyEmail(e.target.checked)} 
-                        className="rounded bg-white/70 border-[#E8E2D8] border-[#E8E2D8] text-[#8C1D1D] focus:ring-[var(--color-coral)]"
+                        className="rounded bg-[#172448]/60 border-[#172448] text-[#F7B733] focus:ring-[#F7B733]"
                       />
                       Email Update
                     </label>
@@ -2982,11 +2982,11 @@ export default function AdminPage() {
                   {/* Tracking details (shown only if status is shipped) */}
                   {inspectedOrder.status === 'shipped' && (
                     <div>
-                      <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Transport / Lorry Tracking Info</label>
+                      <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Transport / Lorry Tracking Info</label>
                       <input 
                         value={trackingInfo} 
                         onChange={(e) => setTrackingInfo(e.target.value)} 
-                        className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none" 
+                        className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2 text-xs text-white focus:border-[#F7B733] focus:outline-none" 
                         placeholder="e.g. VRL Logistics, LR No: 48291"
                       />
                     </div>
@@ -2994,12 +2994,12 @@ export default function AdminPage() {
 
                   {/* Message Preview */}
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Message Preview (Editable)</label>
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Message Preview (Editable)</label>
                     <textarea 
                       rows={3} 
                       value={customMessageText} 
                       onChange={(e) => setCustomMessageText(e.target.value)} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-xs text-[#2D241E] focus:border-[#FF8A6B] focus:outline-none resize-none font-medium" 
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2 text-xs text-white focus:border-[#F7B733] focus:outline-none resize-none font-medium" 
                     />
                   </div>
 
@@ -3009,7 +3009,7 @@ export default function AdminPage() {
                       type="button"
                       onClick={() => handleSendStatusNotification(inspectedOrder)}
                       disabled={sendingNotificationId === inspectedOrder.id || (!notifyWhatsApp && !notifyEmail)}
-                      className="w-full py-2.5 bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] disabled:from-[#2A2A24] disabled:to-[#2A2A24] text-white disabled:text-[#5C544C] font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-md"
+                      className="w-full py-2.5 bg-gradient-to-r from-[#F7B733] to-[#D49619] disabled:from-[#2A2A24] disabled:to-[#2A2A24] text-white disabled:text-slate-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-md"
                     >
                       <Send size={13} /> {sendingNotificationId === inspectedOrder.id ? 'Sending...' : 'Send Status Notification'}
                     </button>
@@ -3022,7 +3022,7 @@ export default function AdminPage() {
                           const phone = cleanPhone.length === 10 ? `91${cleanPhone}` : cleanPhone;
                           window.open(`https://wa.me/${phone}?text=${encodeURIComponent(customMessageText)}`, '_blank');
                         }}
-                        className="w-full py-2 bg-transparent hover:bg-white/5 border border-[#E8E2D8] hover:border-[#A0A090] text-[#2D241E] font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all"
+                        className="w-full py-2 bg-transparent hover:bg-white/5 border border-[#172448] hover:border-[#F7B733] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all"
                       >
                         <MessageCircle size={12} /> Open in WhatsApp Web
                       </button>
@@ -3031,7 +3031,7 @@ export default function AdminPage() {
 
                   {/* Status indicator */}
                   {notificationStatus && (
-                    <p className={`text-[10px] font-bold text-center mt-1.5 ${notificationStatus.startsWith('❌') ? 'text-rose-400' : 'text-[#8C1D1D]'}`}>
+                    <p className={`text-[10px] font-bold text-center mt-1.5 ${notificationStatus.startsWith('❌') ? 'text-rose-400' : 'text-[#F7B733]'}`}>
                       {notificationStatus}
                     </p>
                   )}
@@ -3039,18 +3039,18 @@ export default function AdminPage() {
               </div>
 
               {/* PDF Receipts Actions */}
-              <div className="pt-6 border-t border-[#E8E2D8] space-y-3">
+              <div className="pt-6 border-t border-[#172448] space-y-3">
                 <div className="flex gap-2">
                   <button 
                     onClick={() => handleManualReceiptDownload(inspectedOrder)}
-                    className="flex-1 py-3 bg-white/70 border-[#E8E2D8] hover:bg-[#FF8A6B]/5 border border-[#E8E2D8] hover:border-[#FF8A6B] text-[#2D241E] font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all"
+                    className="flex-1 py-3 bg-[#172448]/60 hover:bg-[#F7B733]/5 border border-[#172448] hover:border-[#F7B733] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all"
                   >
                     <Download size={13} /> PDF Invoice
                   </button>
                   <button 
                     onClick={() => handleResendReceiptEmail(inspectedOrder)}
                     disabled={resendingEmailId === inspectedOrder.id}
-                    className="flex-1 py-3 bg-[var(--color-coral)] hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-40"
+                    className="flex-1 py-3 bg-gradient-to-r from-[#F7B733] to-[#D49619] hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-40"
                   >
                     <Send size={13} /> {resendingEmailId === inspectedOrder.id ? 'Resending...' : 'Resend Receipt'}
                   </button>
@@ -3070,36 +3070,36 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-              className="relative z-10 w-full max-w-lg bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
+              className="relative z-10 w-full max-w-lg bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
             >
-              <div className="flex justify-between items-center border-b border-[#E8E2D8] pb-4 mb-6">
-                <h3 className="font-display font-bold text-sm text-[#8C1D1D]">{currentProduct.id ? 'Edit Fireworks Product' : 'Add New Fireworks Product'}</h3>
-                <button onClick={() => setProductFormOpen(false)} className="p-1.5 text-[#5C544C] hover:text-[#2D241E] rounded-lg"><X size={15} /></button>
+              <div className="flex justify-between items-center border-b border-[#172448] pb-4 mb-6">
+                <h3 className="font-display font-bold text-sm text-[#F7B733]">{currentProduct.id ? 'Edit Fireworks Product' : 'Add New Fireworks Product'}</h3>
+                <button onClick={() => setProductFormOpen(false)} className="p-1.5 text-slate-300 hover:text-white rounded-lg"><X size={15} /></button>
               </div>
 
               <form onSubmit={handleSaveProduct} className="space-y-4 text-xs">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Product Name (EN) *</label>
-                    <input required value={currentProduct.name_en} onChange={(e) => setCurrentProduct({...currentProduct, name_en: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Product Name (EN) *</label>
+                    <input required value={currentProduct.name_en} onChange={(e) => setCurrentProduct({...currentProduct, name_en: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Product Name (Tamil)</label>
-                    <input value={currentProduct.name_ta} onChange={(e) => setCurrentProduct({...currentProduct, name_ta: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Product Name (Tamil)</label>
+                    <input value={currentProduct.name_ta} onChange={(e) => setCurrentProduct({...currentProduct, name_ta: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Category *</label>
-                    <select value={currentProduct.category} onChange={(e) => setCurrentProduct({...currentProduct, category: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none cursor-pointer">
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Category *</label>
+                    <select value={currentProduct.category} onChange={(e) => setCurrentProduct({...currentProduct, category: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none cursor-pointer">
                       {categories.map((c) => (
                         <option key={c.id} value={c.id}>{c.label}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Selling Price (₹) *</label>
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Selling Price (₹) *</label>
                     <input required type="number" value={currentProduct.price} 
                       onChange={(e) => {
                         const priceVal = parseInt(e.target.value) || 0;
@@ -3107,10 +3107,10 @@ export default function AdminPage() {
                         const mrpVal = disc < 100 ? Math.round(priceVal / (1 - disc / 100)) : priceVal;
                         setCurrentProduct({...currentProduct, price: priceVal, mrp: mrpVal});
                       }} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Discount Percent (%)</label>
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Discount Percent (%)</label>
                     <input type="number" min="0" max="99" value={currentProduct.discount_percent || 0} 
                       onChange={(e) => {
                         const discVal = Math.min(99, Math.max(0, parseInt(e.target.value) || 0));
@@ -3124,10 +3124,10 @@ export default function AdminPage() {
                           setCurrentProduct({...currentProduct, discount_percent: discVal, mrp: calculatedMrp});
                         }
                       }} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Standard MRP (₹) *</label>
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Standard MRP (₹) *</label>
                     <input required type="number" value={currentProduct.mrp} 
                       onChange={(e) => {
                         const mrpVal = parseInt(e.target.value) || 0;
@@ -3144,17 +3144,17 @@ export default function AdminPage() {
                           setCurrentProduct({...currentProduct, mrp: mrpVal, discount_percent: discVal});
                         }
                       }} 
-                      className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                      className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Product Image</label>
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Product Image</label>
                   <div className="flex gap-3 items-start">
                     <div className="flex-1 space-y-2">
                       <div 
                         onClick={() => fileInputRef.current?.click()} 
-                        className="w-full bg-white/70 border-[#E8E2D8] border-2 border-dashed border-[#E8E2D8] hover:border-[#FF8A6B]/50 rounded-xl px-3 py-4 text-xs text-center cursor-pointer transition-colors group"
+                        className="w-full bg-[#172448]/60 border-2 border-dashed border-[#172448] hover:border-[#F7B733]/50 rounded-xl px-3 py-4 text-xs text-center cursor-pointer transition-colors group"
                       >
                         <input 
                           ref={fileInputRef}
@@ -3167,9 +3167,9 @@ export default function AdminPage() {
                           }} 
                         />
                         {uploading ? (
-                          <span className="text-[#8C1D1D] animate-pulse">⏳ Uploading...</span>
+                          <span className="text-[#F7B733] animate-pulse">⏳ Uploading...</span>
                         ) : (
-                          <span className="text-[#5C544C] group-hover:text-[#8C1D1D] transition-colors">
+                          <span className="text-slate-300 group-hover:text-[#F7B733] transition-colors">
                             <Upload size={16} className="inline mr-1.5 -mt-0.5" />Click to upload image
                           </span>
                         )}
@@ -3177,12 +3177,12 @@ export default function AdminPage() {
                       <input 
                         value={currentProduct.image_url || ''} 
                         onChange={(e) => setCurrentProduct({...currentProduct, image_url: e.target.value})} 
-                        className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2 text-[10px] focus:border-[#FF8A6B] focus:outline-none text-[#5C544C]" 
+                        className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2 text-[10px] focus:border-[#F7B733] focus:outline-none text-slate-300" 
                         placeholder="Or paste image URL here..." 
                       />
                     </div>
                     {currentProduct.image_url && (
-                      <div className="w-16 h-16 rounded-xl overflow-hidden border border-[#E8E2D8] flex-shrink-0 bg-white/70 border-[#E8E2D8]">
+                      <div className="w-16 h-16 rounded-xl overflow-hidden border border-[#172448] flex-shrink-0 bg-[#172448]/60">
                         <img src={currentProduct.image_url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       </div>
                     )}
@@ -3191,18 +3191,18 @@ export default function AdminPage() {
 
                 <div className="flex gap-6 pt-2">
                   <label className="flex items-center gap-2.5 cursor-pointer font-bold">
-                    <input type="checkbox" checked={currentProduct.in_stock} onChange={(e) => setCurrentProduct({...currentProduct, in_stock: e.target.checked})} className="rounded bg-white/70 border-[#E8E2D8] border-[#E8E2D8]" />
+                    <input type="checkbox" checked={currentProduct.in_stock} onChange={(e) => setCurrentProduct({...currentProduct, in_stock: e.target.checked})} className="rounded bg-[#172448]/60 border-[#172448]" />
                     In Stock
                   </label>
                   <label className="flex items-center gap-2.5 cursor-pointer font-bold">
-                    <input type="checkbox" checked={currentProduct.is_featured} onChange={(e) => setCurrentProduct({...currentProduct, is_featured: e.target.checked})} className="rounded bg-white/70 border-[#E8E2D8] border-[#E8E2D8]" />
+                    <input type="checkbox" checked={currentProduct.is_featured} onChange={(e) => setCurrentProduct({...currentProduct, is_featured: e.target.checked})} className="rounded bg-[#172448]/60 border-[#172448]" />
                     Featured item
                   </label>
                 </div>
 
-                <div className="flex gap-3 pt-6 border-t border-[#E8E2D8] mt-6">
-                  <button type="button" onClick={() => setProductFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#E8E2D8] text-[#2D241E] hover:bg-white/70 border-[#E8E2D8]">Cancel</button>
-                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold shadow-lg">Save Crackers</button>
+                <div className="flex gap-3 pt-6 border-t border-[#172448] mt-6">
+                  <button type="button" onClick={() => setProductFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#172448] text-white hover:bg-[#172448]/60">Cancel</button>
+                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold shadow-lg">Save Crackers</button>
                 </div>
               </form>
             </motion.div>
@@ -3219,60 +3219,60 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-              className="relative z-10 w-full max-w-lg bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
+              className="relative z-10 w-full max-w-lg bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
             >
-              <div className="flex justify-between items-center border-b border-[#E8E2D8] pb-4 mb-6">
-                <h3 className="font-display font-bold text-sm text-[#8C1D1D]">{currentCombo.id ? 'Edit Combo Pack' : 'Add New Combo Pack'}</h3>
-                <button onClick={() => setComboFormOpen(false)} className="p-1.5 text-[#5C544C] hover:text-[#2D241E] rounded-lg"><X size={15} /></button>
+              <div className="flex justify-between items-center border-b border-[#172448] pb-4 mb-6">
+                <h3 className="font-display font-bold text-sm text-[#F7B733]">{currentCombo.id ? 'Edit Combo Pack' : 'Add New Combo Pack'}</h3>
+                <button onClick={() => setComboFormOpen(false)} className="p-1.5 text-slate-300 hover:text-white rounded-lg"><X size={15} /></button>
               </div>
 
               <form onSubmit={handleSaveCombo} className="space-y-4 text-xs">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Combo Name *</label>
-                    <input required value={currentCombo.combo_name} onChange={(e) => setCurrentCombo({...currentCombo, combo_name: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Combo Name *</label>
+                    <input required value={currentCombo.combo_name} onChange={(e) => setCurrentCombo({...currentCombo, combo_name: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Combo Type (Tag)</label>
-                    <input value={currentCombo.combo_type} onChange={(e) => setCurrentCombo({...currentCombo, combo_type: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" placeholder="e.g. Special Box, Kids Pack" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Combo Type (Tag)</label>
+                    <input value={currentCombo.combo_type} onChange={(e) => setCurrentCombo({...currentCombo, combo_type: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" placeholder="e.g. Special Box, Kids Pack" />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Total Items count *</label>
-                    <input required type="number" value={currentCombo.total_items} onChange={(e) => setCurrentCombo({...currentCombo, total_items: parseInt(e.target.value) || 0})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Total Items count *</label>
+                    <input required type="number" value={currentCombo.total_items} onChange={(e) => setCurrentCombo({...currentCombo, total_items: parseInt(e.target.value) || 0})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Standard MRP (₹) *</label>
-                    <input required type="number" value={currentCombo.original_price} onChange={(e) => setCurrentCombo({...currentCombo, original_price: parseInt(e.target.value) || 0})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Standard MRP (₹) *</label>
+                    <input required type="number" value={currentCombo.original_price} onChange={(e) => setCurrentCombo({...currentCombo, original_price: parseInt(e.target.value) || 0})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Offer Sale Price (₹) *</label>
-                    <input required type="number" value={currentCombo.offer_price} onChange={(e) => setCurrentCombo({...currentCombo, offer_price: parseInt(e.target.value) || 0})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Offer Sale Price (₹) *</label>
+                    <input required type="number" value={currentCombo.offer_price} onChange={(e) => setCurrentCombo({...currentCombo, offer_price: parseInt(e.target.value) || 0})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Description</label>
-                  <textarea rows={2} value={currentCombo.description || ''} onChange={(e) => setCurrentCombo({...currentCombo, description: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none resize-none" />
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Description</label>
+                  <textarea rows={2} value={currentCombo.description || ''} onChange={(e) => setCurrentCombo({...currentCombo, description: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none resize-none" />
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Image Link URL</label>
-                  <input value={currentCombo.image_url || ''} onChange={(e) => setCurrentCombo({...currentCombo, image_url: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Image Link URL</label>
+                  <input value={currentCombo.image_url || ''} onChange={(e) => setCurrentCombo({...currentCombo, image_url: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                 </div>
 
                 <div className="flex pt-2">
                   <label className="flex items-center gap-2.5 cursor-pointer font-bold">
-                    <input type="checkbox" checked={currentCombo.featured} onChange={(e) => setCurrentCombo({...currentCombo, featured: e.target.checked})} className="rounded bg-white/70 border-[#E8E2D8] border-[#E8E2D8]" />
+                    <input type="checkbox" checked={currentCombo.featured} onChange={(e) => setCurrentCombo({...currentCombo, featured: e.target.checked})} className="rounded bg-[#172448]/60 border-[#172448]" />
                     Featured Combo
                   </label>
                 </div>
 
-                <div className="flex gap-3 pt-6 border-t border-[#E8E2D8] mt-6">
-                  <button type="button" onClick={() => setComboFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#E8E2D8] text-[#2D241E] hover:bg-white/70 border-[#E8E2D8]">Cancel</button>
-                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold shadow-lg">Save Combo</button>
+                <div className="flex gap-3 pt-6 border-t border-[#172448] mt-6">
+                  <button type="button" onClick={() => setComboFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#172448] text-white hover:bg-[#172448]/60">Cancel</button>
+                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold shadow-lg">Save Combo</button>
                 </div>
               </form>
             </motion.div>
@@ -3289,55 +3289,55 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-              className="relative z-10 w-full max-w-md bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
+              className="relative z-10 w-full max-w-md bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
             >
-              <div className="flex justify-between items-center border-b border-[#E8E2D8] pb-4 mb-6">
-                <h3 className="font-display font-bold text-sm text-[#8C1D1D]">{currentBank.id ? 'Edit Bank Account' : 'Add Bank Account'}</h3>
-                <button onClick={() => setBankFormOpen(false)} className="p-1.5 text-[#5C544C] hover:text-[#2D241E] rounded-lg"><X size={15} /></button>
+              <div className="flex justify-between items-center border-b border-[#172448] pb-4 mb-6">
+                <h3 className="font-display font-bold text-sm text-[#F7B733]">{currentBank.id ? 'Edit Bank Account' : 'Add Bank Account'}</h3>
+                <button onClick={() => setBankFormOpen(false)} className="p-1.5 text-slate-300 hover:text-white rounded-lg"><X size={15} /></button>
               </div>
 
               <form onSubmit={handleSaveBank} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Bank Name *</label>
-                  <input required value={currentBank.bank_name} onChange={(e) => setCurrentBank({...currentBank, bank_name: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Bank Name *</label>
+                  <input required value={currentBank.bank_name} onChange={(e) => setCurrentBank({...currentBank, bank_name: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Branch Office *</label>
-                    <input required value={currentBank.branch} onChange={(e) => setCurrentBank({...currentBank, branch: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Branch Office *</label>
+                    <input required value={currentBank.branch} onChange={(e) => setCurrentBank({...currentBank, branch: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Holder Name *</label>
-                    <input required value={currentBank.holder_name} onChange={(e) => setCurrentBank({...currentBank, holder_name: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Holder Name *</label>
+                    <input required value={currentBank.holder_name} onChange={(e) => setCurrentBank({...currentBank, holder_name: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Account Number *</label>
-                    <input required value={currentBank.account_number} onChange={(e) => setCurrentBank({...currentBank, account_number: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Account Number *</label>
+                    <input required value={currentBank.account_number} onChange={(e) => setCurrentBank({...currentBank, account_number: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">IFSC Code *</label>
-                    <input required value={currentBank.ifsc_code} onChange={(e) => setCurrentBank({...currentBank, ifsc_code: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">IFSC Code *</label>
+                    <input required value={currentBank.ifsc_code} onChange={(e) => setCurrentBank({...currentBank, ifsc_code: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">GPay Number (Optional)</label>
-                    <input value={currentBank.gpay_number || ''} onChange={(e) => setCurrentBank({...currentBank, gpay_number: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">GPay Number (Optional)</label>
+                    <input value={currentBank.gpay_number || ''} onChange={(e) => setCurrentBank({...currentBank, gpay_number: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">PhonePe Number (Optional)</label>
-                    <input value={currentBank.phonepe_number || ''} onChange={(e) => setCurrentBank({...currentBank, phonepe_number: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">PhonePe Number (Optional)</label>
+                    <input value={currentBank.phonepe_number || ''} onChange={(e) => setCurrentBank({...currentBank, phonepe_number: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
-                <div className="flex gap-3 pt-6 border-t border-[#E8E2D8] mt-6">
-                  <button type="button" onClick={() => setBankFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#E8E2D8] text-[#2D241E] hover:bg-white/70 border-[#E8E2D8]">Cancel</button>
-                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold shadow-lg">Save Bank Details</button>
+                <div className="flex gap-3 pt-6 border-t border-[#172448] mt-6">
+                  <button type="button" onClick={() => setBankFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#172448] text-white hover:bg-[#172448]/60">Cancel</button>
+                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold shadow-lg">Save Bank Details</button>
                 </div>
               </form>
             </motion.div>
@@ -3354,40 +3354,40 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-              className="relative z-10 w-full max-w-sm bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
+              className="relative z-10 w-full max-w-sm bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
             >
-              <div className="flex justify-between items-center border-b border-[#E8E2D8] pb-4 mb-6">
-                <h3 className="font-display font-bold text-sm text-[#8C1D1D]">{currentCategory.isNew ? 'Add Category' : 'Edit Category'}</h3>
-                <button onClick={() => setCategoryFormOpen(false)} className="p-1.5 text-[#5C544C] hover:text-[#2D241E] rounded-lg"><X size={15} /></button>
+              <div className="flex justify-between items-center border-b border-[#172448] pb-4 mb-6">
+                <h3 className="font-display font-bold text-sm text-[#F7B733]">{currentCategory.isNew ? 'Add Category' : 'Edit Category'}</h3>
+                <button onClick={() => setCategoryFormOpen(false)} className="p-1.5 text-slate-300 hover:text-white rounded-lg"><X size={15} /></button>
               </div>
 
               <form onSubmit={handleSaveCategory} className="space-y-4 text-xs">
                 {currentCategory.isNew && (
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Category URL Slug/ID *</label>
-                    <input required value={currentCategory.id} onChange={(e) => setCurrentCategory({...currentCategory, id: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" placeholder="e.g. single-sound" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Category URL Slug/ID *</label>
+                    <input required value={currentCategory.id} onChange={(e) => setCurrentCategory({...currentCategory, id: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" placeholder="e.g. single-sound" />
                   </div>
                 )}
                 
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Display Label Name *</label>
-                  <input required value={currentCategory.label} onChange={(e) => setCurrentCategory({...currentCategory, label: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" placeholder="e.g. Single Sound" />
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Display Label Name *</label>
+                  <input required value={currentCategory.label} onChange={(e) => setCurrentCategory({...currentCategory, label: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" placeholder="e.g. Single Sound" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Emoji Icon</label>
-                    <input value={currentCategory.emoji} onChange={(e) => setCurrentCategory({...currentCategory, emoji: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none text-center text-lg" placeholder="💥" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Emoji Icon</label>
+                    <input value={currentCategory.emoji} onChange={(e) => setCurrentCategory({...currentCategory, emoji: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none text-center text-lg" placeholder="💥" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Sort Order (number)</label>
-                    <input type="number" value={currentCategory.sort_order} onChange={(e) => setCurrentCategory({...currentCategory, sort_order: parseInt(e.target.value) || 0})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Sort Order (number)</label>
+                    <input type="number" value={currentCategory.sort_order} onChange={(e) => setCurrentCategory({...currentCategory, sort_order: parseInt(e.target.value) || 0})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
-                <div className="flex gap-3 pt-6 border-t border-[#E8E2D8] mt-6">
-                  <button type="button" onClick={() => setCategoryFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#E8E2D8] text-[#2D241E] hover:bg-white/70 border-[#E8E2D8]">Cancel</button>
-                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold shadow-lg">Save Category</button>
+                <div className="flex gap-3 pt-6 border-t border-[#172448] mt-6">
+                  <button type="button" onClick={() => setCategoryFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#172448] text-white hover:bg-[#172448]/60">Cancel</button>
+                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold shadow-lg">Save Category</button>
                 </div>
               </form>
             </motion.div>
@@ -3404,38 +3404,38 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               exit={{ opacity: 0, scale: 0.95, y: 20 }} 
-              className="relative z-10 w-full max-w-md bg-white/30 backdrop-blur-md border border-[#E8E2D8] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
+              className="relative z-10 w-full max-w-md bg-[#101A36]/85 backdrop-blur-md border border-[#172448] rounded-3xl p-8 shadow-2xl my-auto max-h-[90vh] overflow-y-auto scrollbar-thin"
             >
-              <div className="flex justify-between items-center border-b border-[#E8E2D8] pb-4 mb-6">
-                <h3 className="font-display font-bold text-sm text-[#8C1D1D]">{currentSlider.id ? 'Edit Slider Banner' : 'Add Slider Banner'}</h3>
-                <button onClick={() => setSliderFormOpen(false)} className="p-1.5 text-[#5C544C] hover:text-[#2D241E] rounded-lg"><X size={15} /></button>
+              <div className="flex justify-between items-center border-b border-[#172448] pb-4 mb-6">
+                <h3 className="font-display font-bold text-sm text-[#F7B733]">{currentSlider.id ? 'Edit Slider Banner' : 'Add Slider Banner'}</h3>
+                <button onClick={() => setSliderFormOpen(false)} className="p-1.5 text-slate-300 hover:text-white rounded-lg"><X size={15} /></button>
               </div>
 
               <form onSubmit={handleSaveSlider} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Banner Image Link URL</label>
-                  <input value={currentSlider.image_url || ''} onChange={(e) => setCurrentSlider({...currentSlider, image_url: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" placeholder="https://domain/banner.jpg" />
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Banner Image Link URL</label>
+                  <input value={currentSlider.image_url || ''} onChange={(e) => setCurrentSlider({...currentSlider, image_url: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" placeholder="https://domain/banner.jpg" />
                 </div>
                 
                 <div>
-                  <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Header Title (Optional)</label>
-                  <input value={currentSlider.title || ''} onChange={(e) => setCurrentSlider({...currentSlider, title: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" placeholder="e.g. Grand Diwali Sale 2026" />
+                  <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Header Title (Optional)</label>
+                  <input value={currentSlider.title || ''} onChange={(e) => setCurrentSlider({...currentSlider, title: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" placeholder="e.g. Grand Diwali Sale 2026" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Action redirect URL</label>
-                    <input value={currentSlider.link_url || ''} onChange={(e) => setCurrentSlider({...currentSlider, link_url: e.target.value})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" placeholder="e.g. /products" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Action redirect URL</label>
+                    <input value={currentSlider.link_url || ''} onChange={(e) => setCurrentSlider({...currentSlider, link_url: e.target.value})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" placeholder="e.g. /products" />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[#5C544C] mb-1.5 uppercase tracking-wider">Sort Order (number)</label>
-                    <input type="number" value={currentSlider.sort_order} onChange={(e) => setCurrentSlider({...currentSlider, sort_order: parseInt(e.target.value) || 0})} className="w-full bg-white/70 border-[#E8E2D8] border border-[#E8E2D8] rounded-xl px-3 py-2.5 text-xs focus:border-[#FF8A6B] focus:outline-none" />
+                    <label className="block text-[9px] font-bold text-slate-300 mb-1.5 uppercase tracking-wider">Sort Order (number)</label>
+                    <input type="number" value={currentSlider.sort_order} onChange={(e) => setCurrentSlider({...currentSlider, sort_order: parseInt(e.target.value) || 0})} className="w-full bg-[#172448]/60 border border-[#172448] rounded-xl px-3 py-2.5 text-xs focus:border-[#F7B733] focus:outline-none" />
                   </div>
                 </div>
 
-                <div className="flex gap-3 pt-6 border-t border-[#E8E2D8] mt-6">
-                  <button type="button" onClick={() => setSliderFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#E8E2D8] text-[#2D241E] hover:bg-white/70 border-[#E8E2D8]">Cancel</button>
-                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#FF8A6B] to-[#FF5C7A] text-white font-bold shadow-lg">Save Banner</button>
+                <div className="flex gap-3 pt-6 border-t border-[#172448] mt-6">
+                  <button type="button" onClick={() => setSliderFormOpen(false)} className="flex-1 py-3 rounded-xl border border-[#172448] text-white hover:bg-[#172448]/60">Cancel</button>
+                  <button type="submit" className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F7B733] to-[#D49619] text-white font-bold shadow-lg">Save Banner</button>
                 </div>
               </form>
             </motion.div>

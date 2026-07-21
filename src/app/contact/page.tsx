@@ -78,6 +78,8 @@ export default function ContactPage() {
         setSubmitted(true);
         setFormData({ name: '', email: '', phone: '', subject: '', message: '', website: '' });
         generateChallenge();
+        // Auto-reset success state after 8 seconds so user can send another message
+        setTimeout(() => setSubmitted(false), 8000);
       } else {
         const errorData = await res.json().catch(() => ({}));
         setSecurityError(errorData.error || 'Failed to submit form. Please try again.');

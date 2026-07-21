@@ -130,15 +130,15 @@ export async function POST(req: Request) {
         if (products && products.length > 0) {
           // Build updates with only the fields we want to change
           const updates = products.map(p => {
-            const price = p.price || 0;
-            const mrp = discountVal < 100 ? Math.round(price / (1 - discountVal / 100)) : price;
+            const mrp = p.mrp || p.price || 0;
+            const price = Math.round(mrp * (1 - discountVal / 100));
             return {
               id: p.id,
               name_en: p.name_en,
               name_ta: p.name_ta,
               slug: p.slug,
               category: p.category,
-              price: p.price,
+              price,
               mrp,
               discount_percent: discountVal,
               badge_text: discountVal > 0 ? `🔥 ${discountVal}% OFF` : null,

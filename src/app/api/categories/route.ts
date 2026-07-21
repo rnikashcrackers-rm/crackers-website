@@ -32,24 +32,38 @@ export async function GET(req: Request) {
       return NextResponse.json(DEFAULT_CATEGORIES);
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase
-      .from('categories')
-      .select('id,label,emoji,sort_order')
-      .order('sort_order', { ascending: true });
+    try {
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      const fetchWithTimeout = async () => {
+        const { data, error } = await supabase
+          .from('categories')
+          .select('id,label,emoji,sort_order')
+          .order('sort_order', { ascending: true });
+        if (error) throw error;
+        return data || [];
+      };
 
-    if (error) throw error;
+      const timeout = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Categories fetch timeout')), 1500)
+      );
 
-    const responseHeaders: Record<string, string> = {};
-    if (isAdmin) {
-      responseHeaders['Cache-Control'] = 'no-store, max-age=0, must-revalidate';
-    } else {
-      responseHeaders['Cache-Control'] = 'public, s-maxage=30, stale-while-revalidate=300';
+      const data = await Promise.race([fetchWithTimeout(), timeout]);
+
+      const responseHeaders: Record<string, string> = {};
+      if (isAdmin) {
+        responseHeaders['Cache-Control'] = 'no-store, max-age=0, must-revalidate';
+      } else {
+        responseHeaders['Cache-Control'] = 'public, s-maxage=30, stale-while-revalidate=300';
+      }
+
+      return NextResponse.json(data && data.length > 0 ? data : DEFAULT_CATEGORIES, {
+        headers: responseHeaders
+      });
+    } catch (dbErr) {
+      console.warn('Supabase categories fetch failed/timed out. Returning fallback:', dbErr instanceof Error ? dbErr.message : String(dbErr));
+      return NextResponse.json(DEFAULT_CATEGORIES);
     }
-
-    return NextResponse.json(data && data.length > 0 ? data : DEFAULT_CATEGORIES, {
-      headers: responseHeaders
-    });
   } catch (error: any) {
     console.error('Error getting categories:', error);
     return NextResponse.json(DEFAULT_CATEGORIES);
