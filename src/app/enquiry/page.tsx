@@ -672,15 +672,31 @@ export default function EnquiryPage() {
             <div className="w-full lg:w-[380px] sticky top-28">
               <div className="glass-card rounded-2xl p-6">
                 <h3 className="text-lg font-bold font-display mb-5 border-b border-[var(--border)] pb-3 flex items-center gap-2"><ShoppingCart size={16} className="text-[var(--color-coral)]" /> Order Summary</h3>
-                <div className="space-y-3 mb-5 text-sm">
-                  <div className="flex justify-between"><span className="text-[var(--text-muted)]">Gross Total</span><span className="font-bold">₹{(getTotal() + getSavings()).toLocaleString('en-IN')}</span></div>
-                  <div className="flex justify-between text-emerald-500 font-bold"><span>Discount</span><span>- ₹{getSavings().toLocaleString('en-IN')}</span></div>
-                  <div className="flex justify-between text-[var(--text-muted)] border-t border-[var(--border)]/30 pt-2"><span>Total Value (Net)</span><span className="font-bold">₹{getTotal().toLocaleString('en-IN')}</span></div>
-                  <div className="flex justify-between text-[var(--text-muted)]"><span>Packing Charges (3%)</span><span className="font-bold">₹{Math.round(getTotal() * 0.03).toLocaleString('en-IN')}</span></div>
-                </div>
-                <div className="flex justify-between items-end border-t border-[var(--border)] pt-4 mb-6">
-                  <span className="font-bold">Net Payable</span><span className="text-2xl font-bold text-[var(--color-coral)]">₹{(getTotal() + Math.round(getTotal() * 0.03)).toLocaleString('en-IN')}</span>
-                </div>
+                {(() => {
+                  const grossAmount = items.reduce((sum, item) => sum + (item.product.mrp || item.product.price || 0) * item.quantity, 0);
+                  const discountTotal = items.reduce((sum, item) => sum + ((item.product.mrp || item.product.price || 0) - (item.product.price || 0)) * item.quantity, 0);
+                  const subtotal = getTotal();
+                  const packingCharges = Math.round(subtotal * 0.03);
+                  const totalAmount = subtotal + packingCharges;
+                  const savingsPercent = grossAmount > 0 ? Math.round((discountTotal / grossAmount) * 100) : 0;
+
+                  return (
+                    <>
+                      <div className="space-y-3 mb-5 text-sm">
+                        <div className="flex justify-between"><span className="text-[var(--text-muted)]">Gross MRP Total</span><span className="font-bold">₹{grossAmount.toLocaleString('en-IN')}</span></div>
+                        <div className="flex justify-between text-emerald-400 font-bold">
+                          <span>Savings Highlight</span>
+                          <span>You Save ₹{discountTotal.toLocaleString('en-IN')} ({savingsPercent}%)</span>
+                        </div>
+                        <div className="flex justify-between text-[var(--text-muted)] border-t border-[var(--border)]/30 pt-2"><span>Net Product Subtotal</span><span className="font-bold">₹{subtotal.toLocaleString('en-IN')}</span></div>
+                        <div className="flex justify-between text-[var(--text-muted)]"><span>Packing Charges (3%)</span><span className="font-bold">₹{packingCharges.toLocaleString('en-IN')}</span></div>
+                      </div>
+                      <div className="flex justify-between items-end border-t border-[var(--border)] pt-4 mb-6">
+                        <span className="font-bold">Net Payable Amount</span><span className="text-2xl font-bold text-[#F7B733]">₹{totalAmount.toLocaleString('en-IN')}</span>
+                      </div>
+                    </>
+                  );
+                })()}
 
                 {getTotal() < minOrderValue && (
                   <div className="flex items-start gap-2.5 text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl p-3 mb-5 text-xs text-left">

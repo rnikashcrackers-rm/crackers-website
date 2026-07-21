@@ -11,7 +11,7 @@ import { DeepamFlameIcon, MarigoldGarlandBanner } from '@/components/ui/Traditio
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/products', label: 'Shop' },
+  { href: '/products', label: 'Products' },
   { href: '/combos', label: 'Combos' },
   { href: '/about', label: 'About Us' },
   { href: '/safety', label: 'Safety' },

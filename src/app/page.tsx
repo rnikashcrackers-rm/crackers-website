@@ -105,7 +105,7 @@ export default async function HomePage() {
                   href="/products"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#F7B733] px-6 py-3.5 text-xs sm:text-sm font-extrabold text-[#101A36] transition hover:bg-[#FFD05C] active:scale-95 shadow-lg min-h-[48px]"
                 >
-                  Explore Catalogue <ArrowRight size={18} />
+                  Buy Now <ArrowRight size={18} />
                 </Link>
                 <Link
                   href="/contact"
@@ -118,16 +118,16 @@ export default async function HomePage() {
               {/* Trust Highlights Grid */}
               <div className="grid grid-cols-3 gap-3 border-t border-[#172448] pt-5 text-left">
                 <div>
-                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Up to {discount}% Off</p>
-                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Factory rates</p>
+                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Direct Dispatch</p>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Sivakasi Hub</p>
                 </div>
                 <div>
-                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">100% Eco Green</p>
-                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">CSIR Certified</p>
+                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Eco Friendly</p>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Green Crackers</p>
                 </div>
                 <div>
-                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Safe Freight</p>
-                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Pan-India delivery</p>
+                  <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#F7B733]">Pan-India</p>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] text-slate-300">Fast Shipping</p>
                 </div>
               </div>
             </div>
@@ -145,15 +145,14 @@ export default async function HomePage() {
                     sizes="(max-width: 1024px) 100vw, 45vw"
                   />
                   <div className="absolute bottom-3 left-3 bg-[#0B132B]/90 backdrop-blur-md border border-[#F7B733]/40 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#F7B733]">
-                    ⚡ NIKASH CRACKERS WHOLESALE
+                    ⚡ NIKASH CRACKERS
                   </div>
                 </div>
 
                 <div className="p-3 pt-2 flex items-center justify-between text-xs font-bold text-white">
-                  <span className="flex items-center gap-2 text-xs">
-                    <DeepamFlameIcon className="w-4 h-4" /> Nikash Crackers Factory
+                  <span className="flex items-center gap-2 text-xs font-black text-[#F7B733]">
+                    <DeepamFlameIcon className="w-4 h-4" /> Certified
                   </span>
-                  <span className="text-[#F7B733] font-black">🔥 {discount}% OFF</span>
                 </div>
               </div>
             </div>
@@ -218,10 +217,10 @@ export default async function HomePage() {
       <section className="py-10 bg-[#101A36]/80 border-y border-[#172448]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           {[
-            { icon: Factory, title: 'Direct Factory', desc: 'No middlemen markup' },
-            { icon: ShieldCheck, title: 'CSIR Certified', desc: 'Eco-friendly green crackers' },
+            { icon: Factory, title: 'Direct Dispatch', desc: 'Sivakasi manufacturing hub' },
+            { icon: ShieldCheck, title: 'Certified Quality', desc: 'Eco-friendly green crackers' },
             { icon: PackageCheck, title: 'Safe Packing', desc: 'Damage-proof transport boxes' },
-            { icon: Headphones, title: 'Desk Support', desc: 'WhatsApp & phone updates' },
+            { icon: Headphones, title: 'Desk Support', desc: 'Phone & email assistance' },
           ].map((item) => (
             <div key={item.title} className="p-3 sm:p-4 rounded-2xl bg-[#0B132B]/60 border border-[#172448]">
               <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-[#172448] text-[#F7B733] flex items-center justify-center mx-auto mb-2">

@@ -71,25 +71,19 @@ export const useEnquiryStore = create<EnquiryState>()(
       },
 
       checkCartExpiry: () => {
-        const { lastActive, items } = get();
-        if (lastActive && items.length > 0) {
-          const diff = Date.now() - lastActive;
-          if (diff > 5 * 60 * 1000) { // 5 minutes in ms
-            set({ items: [], lastActive: null });
-          }
-        }
+        // Kept for interface compatibility; cart items persist without 5-minute auto-clearing
       },
 
       getTotal: () => {
-        return get().items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+        return get().items.reduce((sum, item) => sum + (item.product.price || 0) * item.quantity, 0);
       },
 
       getSavings: () => {
-        return get().items.reduce((sum, item) => sum + ((item.product.mrp || item.product.price) - item.product.price) * item.quantity, 0);
+        return get().items.reduce((sum, item) => sum + ((item.product.mrp || item.product.price || 0) - (item.product.price || 0)) * item.quantity, 0);
       },
 
       getItemCount: () => {
-        return get().items.length;
+        return get().items.reduce((sum, item) => sum + item.quantity, 0);
       },
     }),
     {

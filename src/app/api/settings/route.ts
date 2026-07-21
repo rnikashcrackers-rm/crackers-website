@@ -128,18 +128,18 @@ export async function POST(req: Request) {
         if (fetchError) throw fetchError;
         
         if (products && products.length > 0) {
-          // Build updates with only the fields we want to change
+          // Build updates according to Section 4 specifications
           const updates = products.map(p => {
-            const mrp = p.mrp || p.price || 0;
-            const price = Math.round(mrp * (1 - discountVal / 100));
+            const price = p.price || 0;
+            const mrp = discountVal < 100 ? Math.round(price / (1 - discountVal / 100)) : price;
             return {
               id: p.id,
               name_en: p.name_en,
               name_ta: p.name_ta,
               slug: p.slug,
               category: p.category,
-              price,
-              mrp,
+              price: price,
+              mrp: mrp,
               discount_percent: discountVal,
               badge_text: discountVal > 0 ? `🔥 ${discountVal}% OFF` : null,
               image_url: p.image_url,
