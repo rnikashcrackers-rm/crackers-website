@@ -50,8 +50,6 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
-import { MarqueeBanner } from '@/components/layout/MarqueeBanner';
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -67,9 +65,8 @@ export default function RootLayout({
           <div className="fixed inset-0 pointer-events-none -z-50 bg-[#0B132B]" />
           <MarketingHead />
           <ClientEffects />
-          <MarqueeBanner />
           <Navbar />
-          <div className="pt-[110px] sm:pt-[120px]">
+          <div className="pt-[84px] sm:pt-[92px]">
             <main className="min-h-screen bg-[#0B132B]">
               {children}
             </main>

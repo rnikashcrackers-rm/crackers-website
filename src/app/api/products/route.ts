@@ -5,6 +5,10 @@ import { requireAdmin } from '@/lib/admin-auth';
 
 export const dynamic = 'force-dynamic';
 
+// In-memory cache for ultra-fast response under high traffic (100+ concurrent users)
+let cachedProductsRaw: { data: any[]; timestamp: number } | null = null;
+const CACHE_TTL_MS = 30000; // 30 seconds
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -13,6 +17,7 @@ export async function GET(req: Request) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '200');
     const sortBy = searchParams.get('sort') || 'default';
+    const forceRefresh = searchParams.get('admin') === 'true' || searchParams.get('refresh') === 'true';
 
     const { getSiteSettings } = await import('@/lib/settings');
     const settings = await getSiteSettings();
@@ -24,10 +29,14 @@ export async function GET(req: Request) {
     let productsList: any[] = [];
     let isFallback = false;
 
-    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('your_supabase')) {
+    const now = Date.now();
+    if (!forceRefresh && cachedProductsRaw && (now - cachedProductsRaw.timestamp) < CACHE_TTL_MS && cachedProductsRaw.data.length > 0) {
+      productsList = cachedProductsRaw.data;
+    } else if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('your_supabase')) {
       const { getLocalProducts } = await import('@/lib/local-db');
       productsList = getLocalProducts();
       isFallback = true;
+      cachedProductsRaw = { data: productsList, timestamp: now };
     } else {
       try {
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -41,24 +50,34 @@ export async function GET(req: Request) {
         };
 
         const timeout = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Supabase fetch products timeout')), 8000)
+          setTimeout(() => reject(new Error('Supabase fetch products timeout')), 5000)
         );
 
         productsList = await Promise.race([fetchWithTimeout(), timeout]);
-        // Note: empty DB is valid (user hasn't seeded yet) — don't fall back
+        if (productsList.length > 0) {
+          cachedProductsRaw = { data: productsList, timestamp: now };
+        } else if (cachedProductsRaw && cachedProductsRaw.data.length > 0) {
+          productsList = cachedProductsRaw.data;
+        }
       } catch (err) {
-        console.warn('Supabase products fetch failed or timed out. Falling back to local static products:', err instanceof Error ? err.message : String(err));
-        const { getLocalProducts } = await import('@/lib/local-db');
-        productsList = getLocalProducts();
-        isFallback = true;
+        console.warn('Supabase products fetch failed or timed out. Falling back to cached or local static products:', err instanceof Error ? err.message : String(err));
+        if (cachedProductsRaw && cachedProductsRaw.data.length > 0) {
+          productsList = cachedProductsRaw.data;
+        } else {
+          const { getLocalProducts } = await import('@/lib/local-db');
+          productsList = getLocalProducts();
+          isFallback = true;
+        }
       }
     }
 
-    // Apply dynamic global discount on the fly to ALL products (whether from DB or static fallback)
+    // Apply dynamic global discount on the fly with robust MRP/price fallback
     const processed = productsList.map((p: any) => {
-      const price = Math.round(p.mrp * (1 - globalDiscount / 100));
+      const mrp = p.mrp || (globalDiscount < 100 ? Math.round((p.price || 0) / (1 - globalDiscount / 100)) : (p.price || 0));
+      const price = Math.round(mrp * (1 - globalDiscount / 100));
       return {
         ...p,
+        mrp,
         price,
         discount_percent: globalDiscount,
         badge_text: globalDiscount > 0 ? `🔥 ${globalDiscount}% OFF` : null,
@@ -192,6 +211,7 @@ export async function POST(req: Request) {
       .single();
 
     if (error) throw error;
+    cachedProductsRaw = null;
     return NextResponse.json(data, { status: 201 });
   } catch (error: any) {
     console.error('Error creating product:', error);
@@ -234,6 +254,7 @@ export async function DELETE(req: Request) {
       .select();
 
     if (error) throw error;
+    cachedProductsRaw = null;
     return NextResponse.json({ success: true, count: data?.length || 0 });
   } catch (error: any) {
     console.error('Error deleting products:', error);

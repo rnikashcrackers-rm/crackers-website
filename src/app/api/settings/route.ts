@@ -28,18 +28,30 @@ const DEFAULT_SETTINGS = {
   whatsapp_msg_cancelled: 'Hello {{customer_name}}, your order {{order_number}} has been cancelled. Please contact support if you have questions.',
 };
 
+let cachedSettingsRaw: { data: Record<string, string>; timestamp: number } | null = null;
+const SETTINGS_TTL_MS = 60000; // 60 seconds
+
 // GET — Retrieve all settings
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const isAdmin = searchParams.get('admin') === 'true';
 
+    const now = Date.now();
+    if (!isAdmin && cachedSettingsRaw && (now - cachedSettingsRaw.timestamp) < SETTINGS_TTL_MS) {
+      return NextResponse.json(cachedSettingsRaw.data, {
+        headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=600' }
+      });
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
     if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
       const { getLocalSettings } = await import('@/lib/local-db');
-      return NextResponse.json(getLocalSettings(DEFAULT_SETTINGS));
+      const local = getLocalSettings(DEFAULT_SETTINGS);
+      cachedSettingsRaw = { data: local, timestamp: now };
+      return NextResponse.json(local);
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -54,11 +66,13 @@ export async function GET(req: Request) {
       });
     }
 
+    cachedSettingsRaw = { data: settings, timestamp: now };
+
     const responseHeaders: Record<string, string> = {};
     if (isAdmin) {
       responseHeaders['Cache-Control'] = 'no-store, max-age=0, must-revalidate';
     } else {
-      responseHeaders['Cache-Control'] = 'public, s-maxage=30, stale-while-revalidate=300';
+      responseHeaders['Cache-Control'] = 'public, s-maxage=60, stale-while-revalidate=600';
     }
 
     return NextResponse.json(settings, {
@@ -66,6 +80,7 @@ export async function GET(req: Request) {
     });
   } catch (error: any) {
     console.error('Error getting settings:', error);
+    if (cachedSettingsRaw) return NextResponse.json(cachedSettingsRaw.data);
     const { getLocalSettings } = await import('@/lib/local-db');
     return NextResponse.json(getLocalSettings(DEFAULT_SETTINGS));
   }
@@ -162,6 +177,7 @@ export async function POST(req: Request) {
       }
     }
 
+    cachedSettingsRaw = null;
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error('Error updating settings:', error);

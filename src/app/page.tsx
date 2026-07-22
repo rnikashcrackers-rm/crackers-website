@@ -12,6 +12,7 @@ import {
 import { getSiteSettings } from '@/lib/settings';
 import { AnimatedKolam } from '@/components/ui/AnimatedKolam';
 import { DeepamFlameIcon } from '@/components/ui/TraditionalDeepamGarland';
+import { MarqueeBanner } from '@/components/layout/MarqueeBanner';
 
 const categories = [
   {
@@ -282,6 +283,9 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* Dynamic Running Yellow Line — Placed under CTA Section on Home Page */}
+        <MarqueeBanner initialText={settings.marquee} initialDiscount={discount} />
       </section>
     </div>
   );
