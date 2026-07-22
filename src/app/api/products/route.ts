@@ -73,12 +73,12 @@ export async function GET(req: Request) {
 
     // Apply dynamic global discount on the fly with robust MRP/price fallback
     const processed = productsList.map((p: any) => {
-      const mrp = p.mrp || (globalDiscount < 100 ? Math.round((p.price || 0) / (1 - globalDiscount / 100)) : (p.price || 0));
-      const price = Math.round(mrp * (1 - globalDiscount / 100));
+      const price = Number(p.price) || 0;
+      const mrp = globalDiscount < 100 && globalDiscount >= 0 ? Math.round(price / (1 - globalDiscount / 100)) : price;
       return {
         ...p,
-        mrp,
         price,
+        mrp,
         discount_percent: globalDiscount,
         badge_text: globalDiscount > 0 ? `🔥 ${globalDiscount}% OFF` : null,
       };

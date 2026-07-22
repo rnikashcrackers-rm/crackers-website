@@ -14,20 +14,26 @@ export async function getCategories() {
 
   try {
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase
-      .from('categories')
-      .select('id,label,emoji,sort_order')
-      .order('sort_order', { ascending: true });
-    if (error) throw error;
+    
+    // Fetch products count per category dynamically to enforce Phase 4 rule
+    const [{ data: catData, error: catError }, { data: prodData, error: prodError }] = await Promise.all([
+      supabase.from('categories').select('id,label,emoji,sort_order').order('sort_order', { ascending: true }),
+      supabase.from('products').select('category'),
+    ]);
 
-    if (data && data.length > 0) {
-      const hasAll = data.some((c: any) => c.id === 'all');
+    if (catError) throw catError;
+
+    const activeCatIds = new Set((prodData || []).map((p: any) => p.category));
+
+    if (catData && catData.length > 0) {
+      const validCategories = catData.filter((c: any) => c.id === 'all' || activeCatIds.has(c.id));
+      const hasAll = validCategories.some((c: any) => c.id === 'all');
       if (hasAll) {
-        return data;
+        return validCategories;
       } else {
         return [
           { id: 'all', label: 'All Products', emoji: '🎆' },
-          ...data.map((c: any) => ({
+          ...validCategories.map((c: any) => ({
             id: c.id,
             label: c.label,
             emoji: c.emoji || '✨'
@@ -54,12 +60,12 @@ export async function getProducts() {
     const globalDiscount = parseInt(settings.global_discount) || 80;
 
     return productsList.map((p: any) => {
-      const mrp = p.mrp || (globalDiscount < 100 ? Math.round((p.price || 0) / (1 - globalDiscount / 100)) : (p.price || 0));
-      const price = Math.round(mrp * (1 - globalDiscount / 100));
+      const price = Number(p.price) || 0;
+      const mrp = globalDiscount < 100 && globalDiscount >= 0 ? Math.round(price / (1 - globalDiscount / 100)) : price;
       return {
         ...p,
-        mrp,
         price,
+        mrp,
         discount_percent: globalDiscount,
         badge_text: globalDiscount > 0 ? `🔥 ${globalDiscount}% OFF` : null,
       };
