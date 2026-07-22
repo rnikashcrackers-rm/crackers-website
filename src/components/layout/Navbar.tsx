@@ -27,7 +27,7 @@ export function Navbar() {
   const items = useEnquiryStore((state) => state.items);
   const getTotal = useEnquiryStore((state) => state.getTotal);
 
-  const totalQty = items.reduce((total, item) => total + item.quantity, 0);
+  const itemCount = items.length;
   const totalPrice = getTotal();
 
   useEffect(() => {
@@ -138,8 +138,8 @@ export function Navbar() {
               >
                 <ShoppingCart size={14} className="text-[#101A36]" />
                 <span>
-                  {mounted && totalQty > 0
-                    ? `Cart (${totalQty}) • ₹${totalPrice.toLocaleString('en-IN')}`
+                  {mounted && itemCount > 0
+                    ? `Cart (${itemCount}) • ₹${totalPrice.toLocaleString('en-IN')}`
                     : 'Cart'}
                 </span>
               </motion.button>
@@ -214,7 +214,7 @@ export function Navbar() {
                 </a>
                 <Link href="/enquiry" onClick={() => setMobileMenuOpen(false)} className="block">
                   <button className="w-full py-3.5 rounded-xl bg-[#F7B733] text-[#101A36] font-extrabold text-sm shadow-md flex items-center justify-center gap-2 min-h-[48px]">
-                    <ShoppingCart size={16} /> View Cart {mounted && totalQty > 0 && <span>({totalQty}) • ₹{totalPrice.toLocaleString('en-IN')}</span>}
+                    <ShoppingCart size={16} /> View Cart {mounted && itemCount > 0 && <span>({itemCount}) • ₹{totalPrice.toLocaleString('en-IN')}</span>}
                   </button>
                 </Link>
               </div>

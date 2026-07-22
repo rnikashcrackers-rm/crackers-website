@@ -17,6 +17,7 @@ interface EnquiryState {
   getTotal: () => number;
   getSavings: () => number;
   getItemCount: () => number;
+  getTotalQuantity: () => number;
   setLastActive: (timestamp: number) => void;
   checkCartExpiry: () => void;
 }
@@ -76,7 +77,13 @@ export const useEnquiryStore = create<EnquiryState>()(
       },
 
       checkCartExpiry: () => {
-        // Kept for interface compatibility; cart items persist without 5-minute auto-clearing
+        const { lastActive, items } = get();
+        if (lastActive && items.length > 0) {
+          const diff = Date.now() - lastActive;
+          if (diff > 5 * 60 * 1000) {
+            set({ items: [], lastActive: null });
+          }
+        }
       },
 
       getTotal: () => {
@@ -88,6 +95,10 @@ export const useEnquiryStore = create<EnquiryState>()(
       },
 
       getItemCount: () => {
+        return get().items.length;
+      },
+
+      getTotalQuantity: () => {
         return get().items.reduce((sum, item) => sum + item.quantity, 0);
       },
     }),

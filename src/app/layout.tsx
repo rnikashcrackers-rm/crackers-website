@@ -6,6 +6,8 @@ import { Footer } from '@/components/layout/Footer';
 import { ToastContainer } from '@/components/ui/Toast';
 import { MarketingHead } from '@/components/layout/MarketingHead';
 
+import { MobileStickyCartBar } from '@/components/layout/MobileStickyCartBar';
+
 import "./globals.css";
 
 import { ClientEffects } from '@/components/effects/ClientEffects';
@@ -72,7 +74,9 @@ export default function RootLayout({
             </main>
           </div>
           <Footer />
-
+          {/* Bottom padding to prevent content from being hidden behind mobile sticky cart bar */}
+          <div className="h-20 lg:hidden" />
+          <MobileStickyCartBar />
           <ToastContainer />
         </ThemeProvider>
       </body>
