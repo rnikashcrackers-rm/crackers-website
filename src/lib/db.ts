@@ -1,25 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Product } from './supabase/types';
+import { ALL_CATEGORIES } from './data/products';
 
 export async function getCategories() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-  const DEFAULT_CATEGORIES = [
-    { id: 'all', label: 'All Products', emoji: '🎆' },
-    { id: 'single-sound', label: 'Single Sound', emoji: '💥' },
-    { id: 'sparklers', label: 'Sparklers', emoji: '✨' },
-    { id: 'chakkars', label: 'Chakkars', emoji: '🌀' },
-    { id: 'flowerpots', label: 'Flower Pots', emoji: '🌸' },
-    { id: 'rockets', label: 'Rockets', emoji: '🚀' },
-    { id: 'bombs', label: 'Bombs', emoji: '💣' },
-    { id: 'bijili', label: 'Bijili', emoji: '⚡' },
-    { id: 'chain', label: 'Chain Crackers', emoji: '🔗' },
-    { id: 'fountains', label: 'Fountains', emoji: '⛲' },
-    { id: 'novelties', label: 'Novelties', emoji: '🎭' },
-    { id: 'multishots', label: 'Multi Shots', emoji: '🎇' },
-    { id: 'giftbox', label: 'Gift Boxes', emoji: '🎁' },
-  ];
+  const DEFAULT_CATEGORIES = ALL_CATEGORIES;
 
   if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
     return DEFAULT_CATEGORIES;
@@ -67,9 +54,11 @@ export async function getProducts() {
     const globalDiscount = parseInt(settings.global_discount) || 80;
 
     return productsList.map((p: any) => {
-      const price = Math.round(p.mrp * (1 - globalDiscount / 100));
+      const mrp = p.mrp || (globalDiscount < 100 ? Math.round((p.price || 0) / (1 - globalDiscount / 100)) : (p.price || 0));
+      const price = Math.round(mrp * (1 - globalDiscount / 100));
       return {
         ...p,
+        mrp,
         price,
         discount_percent: globalDiscount,
         badge_text: globalDiscount > 0 ? `🔥 ${globalDiscount}% OFF` : null,
@@ -82,8 +71,7 @@ export async function getProducts() {
     const { data, error } = await supabase
       .from('products')
       .select('id,name_en,name_ta,slug,category,price,mrp,discount_percent,badge_text,image_url,in_stock,is_featured,is_eco_friendly,sort_order,images,description_en,description_ta,created_at')
-      .order('category', { ascending: true })
-      .order('price', { ascending: true });
+      .order('sort_order', { ascending: true });
     if (error) throw error;
 
     // Filter out combo packs right on the server for consistency
