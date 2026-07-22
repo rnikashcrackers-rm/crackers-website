@@ -32,7 +32,7 @@ export function MarqueeBanner({ initialText, initialDiscount }: MarqueeBannerPro
     : rawText;
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#F7B733] via-[#FFD05C] to-[#F7B733] text-[#101A36] py-2.5 px-4 overflow-hidden relative shadow-lg my-6 border-y border-[#F7B733]/50">
+    <div className="w-full bg-gradient-to-r from-[#F7B733] via-[#FFD05C] to-[#F7B733] text-[#101A36] py-2.5 px-4 overflow-hidden relative shadow-lg border-b border-[#F7B733]/50">
       <div className="flex whitespace-nowrap animate-marquee items-center gap-10 font-black text-xs sm:text-sm tracking-wider uppercase select-none">
         <span className="flex items-center gap-2">
           <Sparkles size={16} className="shrink-0 text-[#101A36]" /> {formattedText}

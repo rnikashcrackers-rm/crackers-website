@@ -41,14 +41,8 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
         if (cachedStr) {
           const { data } = JSON.parse(cachedStr);
           if (Array.isArray(data)) {
-            const filtered = data.filter((p: any) => {
-              if (p.category === 'giftbox' && (p.name_en || '').toLowerCase().includes('pack')) {
-                return false;
-              }
-              return true;
-            });
-            setAllProducts(filtered);
-            setTotalProducts(filtered.length);
+            setAllProducts(data);
+            setTotalProducts(data.length);
           }
         }
       } catch (e) {
@@ -84,16 +78,8 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
           console.error('Error writing to cache:', e);
         }
 
-        // Filter out combo packs immediately for consistency
-        const filteredList = fetchedList.filter((p: any) => {
-          if (p.category === 'giftbox' && (p.name_en || '').toLowerCase().includes('pack')) {
-            return false;
-          }
-          return true;
-        });
-
-        setAllProducts(filteredList);
-        setTotalProducts(filteredList.length);
+        setAllProducts(fetchedList);
+        setTotalProducts(fetchedList.length);
       } catch (err) {
         console.error('Failed to update products in background:', err);
       }

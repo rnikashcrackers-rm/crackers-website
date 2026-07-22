@@ -19,33 +19,33 @@ const categories = [
     title: 'Gift Boxes',
     subtitle: 'Ready-made family celebration boxes',
     image: '/hero_gift_box.png',
-    href: '/products?category=giftbox',
+    href: '/products?category=gift-box-no-discound',
     badge: 'Popular',
-    count: '15+ Packs'
+    count: '4 Packs'
   },
   {
-    title: 'Sparklers & Fountains',
+    title: 'Electric Sparklers',
     subtitle: 'Classic metallic, color & electric sparklers',
     image: '/product-assets/sparklers_brand.png',
-    href: '/products?category=sparklers',
+    href: '/products?category=electric-sparklers',
     badge: 'Traditional',
-    count: '30+ Varieties'
+    count: '25 Varieties'
   },
   {
     title: 'Flower Pots',
     subtitle: 'Golden & multicolor ground fountains',
     image: '/product-assets/flower_pots_brand.png',
-    href: '/products?category=flowerpots',
+    href: '/products?category=flower-pots',
     badge: 'Festive',
-    count: '25+ Sizes'
+    count: '6 Sizes'
   },
   {
-    title: 'Aerial Multi-Shots',
+    title: 'Multi-Colour Shots',
     subtitle: 'Sky fireworks & repeater shots',
     image: '/product-assets/aerial_shots_brand.png',
-    href: '/products?category=multishots',
+    href: '/products?category=multi-colour-shots-with-crackling',
     badge: 'Sky Display',
-    count: '40+ Shots'
+    count: '10 Shots'
   },
 ];
 
@@ -160,6 +160,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic Running Yellow Marquee Line — Immediately below hero section */}
+      <MarqueeBanner initialText={settings.marquee} initialDiscount={discount} />
 
       {/* Category Section */}
       <section className="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -283,9 +286,6 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-
-        {/* Dynamic Running Yellow Line — Placed under CTA Section on Home Page */}
-        <MarqueeBanner initialText={settings.marquee} initialDiscount={discount} />
       </section>
     </div>
   );

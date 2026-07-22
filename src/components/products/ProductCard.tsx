@@ -14,15 +14,20 @@ interface ProductCardProps {
 
 export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
   const items = useEnquiryStore((state) => state.items);
+  const addItem = useEnquiryStore((state) => state.addItem);
+  const updateQuantity = useEnquiryStore((state) => state.updateQuantity);
   const [isAdded, setIsAdded] = useState(false);
-
-  const { addItem, updateQuantity } = useEnquiryStore.getState();
 
   const cartItem = useMemo(() => items.find(i => String(i.product.id) === String(product.id)), [items, product.id]);
   const inCartQty = cartItem ? cartItem.quantity : 0;
 
   const handleAdd = () => {
-    addItem({ product, quantity: 1 });
+    // Guard: if already in cart (race condition safety), just increment qty
+    if (cartItem) {
+      updateQuantity(product.id, cartItem.quantity + 1);
+    } else {
+      addItem({ product, quantity: 1 });
+    }
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
   };

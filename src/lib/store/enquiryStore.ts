@@ -29,23 +29,28 @@ export const useEnquiryStore = create<EnquiryState>()(
 
       addItem: ({ product, quantity }) => {
         set((state) => {
-          const existing = state.items.find((i) => String(i.product.id) === String(product.id));
-          const updatedItems = existing
-            ? state.items.map((i) =>
-                String(i.product.id) === String(product.id) ? { ...i, quantity: i.quantity + quantity } : i
-              )
-            : [...state.items, { product, quantity }];
-          return { 
+          const pid = String(product.id);
+          const idx = state.items.findIndex((i) => String(i.product.id) === pid);
+          let updatedItems: EnquiryItem[];
+          if (idx !== -1) {
+            // Already in cart — increment quantity, never add a duplicate entry
+            updatedItems = state.items.map((item, i) =>
+              i === idx ? { ...item, quantity: item.quantity + quantity } : item
+            );
+          } else {
+            updatedItems = [...state.items, { product, quantity }];
+          }
+          return {
             items: updatedItems,
-            lastActive: Date.now()
+            lastActive: Date.now(),
           };
         });
       },
 
       removeItem: (id) => {
         set((state) => ({
-          items: state.items.filter((i) => i.product.id !== id),
-          lastActive: Date.now()
+          items: state.items.filter((i) => String(i.product.id) !== String(id)),
+          lastActive: Date.now(),
         }));
       },
 
@@ -56,9 +61,9 @@ export const useEnquiryStore = create<EnquiryState>()(
         }
         set((state) => ({
           items: state.items.map((i) =>
-            i.product.id === id ? { ...i, quantity: Math.min(quantity, 100) } : i
+            String(i.product.id) === String(id) ? { ...i, quantity: Math.min(quantity, 100) } : i
           ),
-          lastActive: Date.now()
+          lastActive: Date.now(),
         }));
       },
 

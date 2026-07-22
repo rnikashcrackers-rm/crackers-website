@@ -74,15 +74,7 @@ export async function getProducts() {
       .order('sort_order', { ascending: true });
     if (error) throw error;
 
-    // Filter out combo packs right on the server for consistency
-    const filtered = (data || []).filter((p: any) => {
-      if (p.category === 'giftbox' && (p.name_en || '').toLowerCase().includes('pack')) {
-        return false;
-      }
-      return true;
-    });
-
-    return filtered;
+    return data || [];
   } catch (err) {
     console.error('Failed to fetch products directly on server:', err);
     return [];

@@ -84,13 +84,7 @@ export async function GET(req: Request) {
       };
     });
 
-    // Filter out combo packs for products view consistency
-    let filtered = processed.filter((p: any) => {
-      if (p.category === 'giftbox' && (p.name_en || '').toLowerCase().includes('pack')) {
-        return false;
-      }
-      return true;
-    });
+    let filtered = processed;
 
     // Category filter
     if (category && category !== 'all') {
