@@ -185,10 +185,12 @@ export async function POST(req: Request) {
 
     const supabase = createClient(supabaseUrl, supabaseKey);
     const slug = body.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Math.random().toString(36).substring(2, 6);
+    const productId = body.id ? String(body.id) : String(Date.now() + Math.floor(Math.random() * 1000));
 
     const { data, error } = await supabase
       .from('products')
       .insert({
+        id: productId,
         name_en: body.name_en || body.product_name,
         name_ta: body.name_ta || body.name_en || body.product_name || '',
         slug,

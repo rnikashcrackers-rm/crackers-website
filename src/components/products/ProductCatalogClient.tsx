@@ -31,27 +31,11 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
   const [searchDebounce, setSearchDebounce] = useState('');
   const [highlightedCategory, setHighlightedCategory] = useState('all');
 
-  // Check sessionStorage cache for newer background-fetched data
   useEffect(() => {
     setMounted(true);
-
-    if (typeof window !== 'undefined') {
-      try {
-        const cachedStr = sessionStorage.getItem('nc_products_catalog_cache');
-        if (cachedStr) {
-          const { data } = JSON.parse(cachedStr);
-          if (Array.isArray(data)) {
-            setAllProducts(data);
-            setTotalProducts(data.length);
-          }
-        }
-      } catch (e) {
-        console.error('Error reading sessionStorage cache:', e);
-      }
-    }
   }, []);
 
-  // background stale-while-revalidate fetch to keep client fresh
+  // Background refresh to keep catalog updated without jarring jumps
   useEffect(() => {
     if (!mounted) return;
 
@@ -68,27 +52,33 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
           fetchedList = data.products || [];
         }
 
-        // Save raw data to cache
-        try {
-          sessionStorage.setItem('nc_products_catalog_cache', JSON.stringify({
-            data: fetchedList,
-            timestamp: Date.now()
-          }));
-        } catch (e) {
-          console.error('Error writing to cache:', e);
-        }
+        if (fetchedList.length > 0) {
+          try {
+            sessionStorage.setItem('nc_products_catalog_cache', JSON.stringify({
+              data: fetchedList,
+              timestamp: Date.now()
+            }));
+          } catch (e) {
+            console.error('Error writing to cache:', e);
+          }
 
-        setAllProducts(fetchedList);
-        setTotalProducts(fetchedList.length);
+          // Only update if product count or items changed to prevent count jumping
+          setAllProducts((prev) => {
+            if (prev.length === 0 || prev.length !== fetchedList.length) {
+              setTotalProducts(fetchedList.length);
+              return fetchedList;
+            }
+            return prev;
+          });
+        }
       } catch (err) {
         console.error('Failed to update products in background:', err);
       }
     };
 
-    // Delay slightly to let initial paint happen first
     const timer = setTimeout(() => {
       fetchLatest();
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [mounted]);

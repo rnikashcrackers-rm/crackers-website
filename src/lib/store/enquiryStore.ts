@@ -104,6 +104,11 @@ export const useEnquiryStore = create<EnquiryState>()(
     }),
     {
       name: 'nikash-enquiry-cart',
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.checkCartExpiry();
+        }
+      },
     }
   )
 );

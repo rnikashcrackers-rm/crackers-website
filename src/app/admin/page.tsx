@@ -1209,6 +1209,8 @@ export default function AdminPage() {
   const customersList = Array.from(customerMap.values());
 
   const tabs = [
+    { id: 'overview', label: 'Command Hub', icon: LayoutDashboard },
+    { id: 'analytics', label: 'AI Analytics', icon: Cpu },
     { id: 'orders', label: 'Orders Log', icon: ShoppingCart },
     { id: 'products', label: 'Inventory Desk', icon: Package },
     { id: 'categories', label: 'Categories Desk', icon: Tags },

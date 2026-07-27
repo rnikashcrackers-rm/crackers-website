@@ -13,14 +13,14 @@ interface AdminState {
 export const useAdminStore = create<AdminState>((set, get) => ({
   isAuthenticated: false,
   token: null,
-  activeTab: 'orders',
+  activeTab: 'overview',
 
   login: (token: string) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('nc-admin-token', token);
       localStorage.setItem('nc-admin-login-time', Date.now().toString());
     }
-    set({ isAuthenticated: true, token });
+    set({ isAuthenticated: true, token, activeTab: 'overview' });
   },
 
   logout: () => {
@@ -28,7 +28,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
       localStorage.removeItem('nc-admin-token');
       localStorage.removeItem('nc-admin-login-time');
     }
-    set({ isAuthenticated: false, token: null, activeTab: 'orders' });
+    set({ isAuthenticated: false, token: null, activeTab: 'overview' });
   },
 
   setActiveTab: (tab: string) => {

@@ -22,7 +22,7 @@ export function ClientEffects() {
   const [entryBursting, setEntryBursting] = useState(true);
 
   useEffect(() => {
-    const { checkCartExpiry, setLastActive } = useEnquiryStore.getState();
+    const { checkCartExpiry } = useEnquiryStore.getState();
 
     // Suppress THREE.Clock deprecation warnings
     const originalWarn = console.warn;
@@ -33,27 +33,21 @@ export function ClientEffects() {
       originalWarn(...args);
     };
 
+    // Initial check on mount
     checkCartExpiry();
 
+    // Periodic check every 5 seconds for 5-minute inactivity timeout
     const interval = setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        setLastActive(Date.now());
-      }
-    }, 10000);
+      checkCartExpiry();
+    }, 5000);
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         checkCartExpiry();
       }
-      setLastActive(Date.now());
-    };
-
-    const handleBeforeUnload = () => {
-      setLastActive(Date.now());
     };
 
     window.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('beforeunload', handleBeforeUnload);
 
     const entryTimer = setTimeout(() => {
       setEntryBursting(false);
@@ -64,7 +58,6 @@ export function ClientEffects() {
       clearInterval(interval);
       clearTimeout(entryTimer);
       window.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
 
