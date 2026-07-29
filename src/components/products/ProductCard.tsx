@@ -142,112 +142,112 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
     <motion.div
       whileHover={product.in_stock ? { y: -4 } : {}}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-3xl overflow-hidden flex flex-col justify-between h-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
+      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between h-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
     >
       {/* Promotional Discount Badge */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
-        <span className="bg-[#F7B733] text-[#101A36] text-[10px] font-black px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
+      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 flex flex-col gap-1">
+        <span className="bg-[#F7B733] text-[#101A36] text-[8px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-md uppercase tracking-wider">
           {effectiveDiscount}% OFF
         </span>
         {product.is_eco_friendly && (
-          <span className="bg-emerald-500/20 text-emerald-400 text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 backdrop-blur-md border border-emerald-500/30">
+          <span className="bg-emerald-500/20 text-emerald-400 text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5 sm:gap-1 backdrop-blur-md border border-emerald-500/30">
             <Leaf size={10} /> Eco
           </span>
         )}
       </div>
 
       {/* Right Cart Status Badge */}
-      <div className="absolute top-3 right-3 z-10">
+      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10">
         {inCartQty > 0 && !isAdded && (
-          <div className="bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+          <div className="bg-emerald-600 text-white text-[8px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-md flex items-center gap-1">
             <Check size={10} /> {inCartQty} in cart
           </div>
         )}
       </div>
 
       {/* Image Deck */}
-      <div className="p-3">
-        <div className="relative w-full aspect-square rounded-2xl bg-[#0B132B] overflow-hidden border border-[#172448] flex items-center justify-center p-3">
+      <div className="p-1.5 sm:p-3">
+        <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl bg-[#0B132B] overflow-hidden border border-[#172448] flex items-center justify-center p-1.5 sm:p-3">
           {product.image_url ? (
             <Image
               src={product.image_url}
               alt={product.name_en}
               fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className={`object-contain p-2.5 transition-transform duration-500 ${product.in_stock ? 'group-hover:scale-105' : 'opacity-40'}`}
+              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
+              className={`object-contain p-1.5 sm:p-2.5 transition-transform duration-500 ${product.in_stock ? 'group-hover:scale-105' : 'opacity-40'}`}
               loading="lazy"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-4xl opacity-30">🎇</span>
+              <span className="text-2xl sm:text-4xl opacity-30">🎇</span>
             </div>
           )}
 
           {/* Brand Watermark Overlay */}
-          <div className="absolute bottom-2 left-2 z-10 flex items-center gap-1 bg-[#0B132B]/95 backdrop-blur-md px-2 py-0.5 rounded-md border border-[#F7B733]/40 text-[8px] font-black text-[#F7B733] tracking-widest shadow-sm uppercase select-none pointer-events-none">
-            NIKASH CRACKERS
+          <div className="absolute bottom-1 left-1 sm:bottom-2 sm:left-2 z-10 flex items-center gap-0.5 bg-[#0B132B]/95 backdrop-blur-md px-1.5 py-0.5 rounded border border-[#F7B733]/40 text-[7px] sm:text-[8px] font-black text-[#F7B733] tracking-wider sm:tracking-widest shadow-sm uppercase select-none pointer-events-none">
+            NIKASH
           </div>
         </div>
       </div>
 
       {/* Content Body */}
-      <div className="p-4 pt-0 flex flex-col flex-1 justify-between">
+      <div className="p-2 sm:p-4 pt-0 flex flex-col flex-1 justify-between">
         <div>
-          <div className="text-[10px] text-[#F7B733] font-black mb-1 uppercase tracking-widest truncate">
+          <div className="text-[8px] sm:text-[10px] text-[#F7B733] font-black mb-0.5 sm:mb-1 uppercase tracking-wider truncate">
             {product.category}
           </div>
-          <div className="h-[2.6rem] flex items-center mb-2">
-            <h3 className="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2 group-hover:text-[#F7B733] transition-colors">
+          <div className="h-[2.2rem] sm:h-[2.6rem] flex items-center mb-1.5 sm:mb-2">
+            <h3 className="text-[10px] sm:text-xs md:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 group-hover:text-[#F7B733] transition-colors">
               {product.name_en}
             </h3>
           </div>
         </div>
 
-        <div className="mt-auto pt-2">
-          <div className="flex items-baseline gap-2 mb-3">
-            <span className="text-base sm:text-xl font-black text-[#F7B733]">₹{product.price}</span>
-            <span className="text-xs text-slate-400 line-through">₹{product.mrp}</span>
+        <div className="mt-auto pt-1 sm:pt-2">
+          <div className="flex items-baseline gap-1 sm:gap-2 mb-2 sm:mb-3">
+            <span className="text-xs sm:text-base md:text-xl font-black text-[#F7B733]">₹{product.price}</span>
+            <span className="text-[9px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
           </div>
 
           <div className="flex items-center w-full">
             {!product.in_stock ? (
-              <span className="w-full min-h-[44px] h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-xs font-bold opacity-60">
+              <span className="w-full min-h-[36px] sm:min-h-[44px] h-9 sm:h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-[10px] sm:text-xs font-bold opacity-60">
                 Out of Stock
               </span>
             ) : inCartQty > 0 ? (
-              <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[44px] h-11 w-full shadow-sm">
+              <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[36px] sm:min-h-[44px] h-9 sm:h-11 w-full shadow-sm">
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                  className="w-11 min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-8 sm:w-11 min-h-[36px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Decrease quantity"
                 >
-                  <Minus size={14} />
+                  <Minus size={12} className="sm:w-3.5 sm:h-3.5" />
                 </button>
-                <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
+                <div className="flex-grow text-center text-[10px] sm:text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
                   {inCartQty}
                 </div>
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                  className="w-11 min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-8 sm:w-11 min-h-[36px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Increase quantity"
                 >
-                  <Plus size={14} />
+                  <Plus size={12} className="sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
             ) : (
               <motion.button
                 onClick={handleAdd}
                 whileTap={{ scale: 0.95 }}
-                className={`w-full min-h-[44px] h-11 rounded-xl flex items-center justify-center gap-1.5 text-xs sm:text-sm font-black transition-all cursor-pointer whitespace-nowrap ${
+                className={`w-full min-h-[36px] sm:min-h-[44px] h-9 sm:h-11 rounded-xl flex items-center justify-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
                   isAdded
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
                 }`}
               >
                 {isAdded ? (
-                  <><Check size={14} /> Added</>
+                  <><Check size={12} className="sm:w-3.5 sm:h-3.5" /> Added</>
                 ) : (
-                  <><ShoppingCart size={14} /> Add to Cart</>
+                  <><ShoppingCart size={12} className="sm:w-3.5 sm:h-3.5" /> Add</>
                 )}
               </motion.button>
             )}
