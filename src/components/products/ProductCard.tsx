@@ -91,45 +91,45 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
         </div>
 
         {/* Action Button Area */}
-        <div className="shrink-0 w-20 sm:w-32">
+        <div className="shrink-0 w-24 sm:w-36">
           {!product.in_stock ? (
-            <span className="w-full min-h-[36px] sm:min-h-[44px] h-9 sm:h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-[9px] sm:text-xs font-bold opacity-60">
+            <span className="w-full min-h-[40px] sm:min-h-[44px] h-10 sm:h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-[10px] sm:text-xs font-bold opacity-60">
               Out of Stock
             </span>
           ) : inCartQty > 0 ? (
-            <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[36px] sm:min-h-[44px] h-9 sm:h-11 w-full shadow-sm">
+            <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[40px] sm:min-h-[44px] h-10 sm:h-11 w-full shadow-sm">
               <button
                 onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                className="w-7 sm:w-10 min-h-[36px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-8 sm:w-10 min-h-[40px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Decrease quantity"
               >
-                <Minus size={12} className="sm:w-3.5 sm:h-3.5" />
+                <Minus size={13} className="sm:w-3.5 sm:h-3.5" />
               </button>
-              <div className="flex-grow text-center text-[10px] sm:text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
+              <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
                 {inCartQty}
               </div>
               <button
                 onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                className="w-7 sm:w-10 min-h-[36px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-8 sm:w-10 min-h-[40px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Increase quantity"
               >
-                <Plus size={12} className="sm:w-3.5 sm:h-3.5" />
+                <Plus size={13} className="sm:w-3.5 sm:h-3.5" />
               </button>
             </div>
           ) : (
             <motion.button
               onClick={handleAdd}
               whileTap={{ scale: 0.95 }}
-              className={`w-full min-h-[36px] sm:min-h-[44px] h-9 sm:h-11 rounded-xl flex items-center justify-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+              className={`w-full min-h-[40px] sm:min-h-[44px] h-10 sm:h-11 rounded-xl flex items-center justify-center gap-1 sm:gap-1.5 text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
                 isAdded
                   ? 'bg-emerald-600 text-white shadow-md'
                   : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
               }`}
             >
               {isAdded ? (
-                <><Check size={12} className="sm:w-3.5 sm:h-3.5" /> Added</>
+                <><Check size={13} className="sm:w-3.5 sm:h-3.5" /> Added</>
               ) : (
-                <><ShoppingCart size={12} className="sm:w-3.5 sm:h-3.5" /> Add</>
+                <><ShoppingCart size={13} className="sm:w-3.5 sm:h-3.5" /> Add to Cart</>
               )}
             </motion.button>
           )}

@@ -272,14 +272,52 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
         </div>
       </motion.div>
 
-      <div className="flex flex-row gap-2 sm:gap-4 md:gap-8">
-        {/* Left Side Vertical Category Sidebar (Sticky on all viewports) */}
-        <aside className="w-[84px] sm:w-48 lg:w-60 flex-shrink-0">
-          <div className="glass-card rounded-xl sm:rounded-2xl p-1 sm:p-3 sticky top-20 md:top-28 max-h-[82vh] overflow-y-auto scrollbar-none">
-            <div className="hidden md:flex items-center gap-2 font-bold text-sm mb-3 border-b border-[var(--border)] pb-2.5 text-[var(--text)]">
+      {/* Mobile Sticky Top Category Pill Navigation Bar (< md) */}
+      <div className="md:hidden sticky top-16 z-30 bg-[#0B132B]/95 backdrop-blur-md py-2 border-y border-[var(--border)] shadow-md mb-4 -mx-2 px-2">
+        <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-none w-full pl-1 pr-3">
+          {initialCategories.map((cat) => {
+            const count = getCategoryCount(cat.id);
+            const isActive = highlightedCategory === cat.id;
+            return (
+              <button
+                key={`mobile-${cat.id}`}
+                id={`cat-btn-mobile-${cat.id}`}
+                onClick={() => {
+                  setActiveCategory(cat.id);
+                  const mobileEl = document.getElementById(`cat-btn-mobile-${cat.id}`);
+                  if (mobileEl) mobileEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }}
+                className={`shrink-0 flex-none flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border min-h-[44px] ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-coral-dark)] text-[#1a1400] border-[var(--color-coral)] shadow-md'
+                    : 'bg-[var(--surface-high)] text-[var(--text-muted)] border-[var(--border)] hover:text-[var(--text)]'
+                }`}
+              >
+                <span className="text-base shrink-0">{cat.emoji}</span>
+                <span className="whitespace-nowrap font-bold text-xs">
+                  {cat.label.replace(' Products', '')}
+                </span>
+                {count !== null && count > 0 && (
+                  <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${
+                    isActive ? 'bg-[#1a1400]/20 text-[#1a1400]' : 'bg-[var(--surface)] text-[var(--text-muted)]'
+                  }`}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+        {/* Desktop Left Side Vertical Category Sidebar (Visible on desktop ≥ md) */}
+        <aside className="hidden md:block w-52 lg:w-64 flex-shrink-0">
+          <div className="glass-card rounded-2xl p-4 sticky top-28 max-h-[78vh] overflow-y-auto scrollbar-none">
+            <div className="flex items-center gap-2 font-bold text-sm mb-3 border-b border-[var(--border)] pb-2.5 text-[var(--text)]">
               <SlidersHorizontal size={15} className="shrink-0 text-[var(--color-coral)]" /> Categories
             </div>
-            <div className="flex flex-col gap-1 sm:gap-1.5">
+            <div className="flex flex-col gap-1.5">
               {initialCategories.map((cat) => {
                 const count = getCategoryCount(cat.id);
                 const isActive = highlightedCategory === cat.id;
@@ -288,20 +326,20 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
                     key={cat.id}
                     id={`cat-btn-${cat.id}`}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`w-full p-1.5 sm:px-3 sm:py-2.5 rounded-xl transition-all flex flex-col md:flex-row items-center justify-center md:justify-between cursor-pointer min-h-[44px] gap-0.5 sm:gap-2 ${
+                    className={`w-full px-3 py-2.5 rounded-xl text-sm transition-all flex items-center justify-between cursor-pointer min-h-[44px] gap-2 ${
                       isActive
                         ? 'bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-coral-dark)] text-[#1a1400] font-bold shadow-md'
                         : 'text-[var(--text-muted)] hover:bg-[var(--surface-high)] hover:text-[var(--text)]'
                     }`}
                   >
-                    <span className="flex flex-col md:flex-row items-center gap-0.5 sm:gap-2 min-w-0 flex-1 text-center md:text-left">
-                      <span className="text-sm sm:text-base shrink-0">{cat.emoji}</span>
-                      <span className="whitespace-normal line-clamp-2 text-[9px] sm:text-xs md:text-sm leading-tight md:leading-snug break-words font-semibold">
+                    <span className="flex items-center gap-2 min-w-0 flex-1">
+                      <span className="text-base shrink-0">{cat.emoji}</span>
+                      <span className="whitespace-normal line-clamp-2 text-xs lg:text-sm leading-snug text-left break-words font-semibold">
                         {cat.label.replace(' Products', '')}
                       </span>
                     </span>
                     {count !== null && count > 0 && (
-                      <span className={`text-[8px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${
+                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full shrink-0 ${
                         isActive ? 'bg-[#1a1400]/20 text-[#1a1400]' : 'bg-[var(--surface-high)] text-[var(--text-muted)]'
                       }`}>
                         {count}
