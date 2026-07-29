@@ -39,7 +39,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       <motion.div
         whileHover={product.in_stock ? { x: 4 } : {}}
         transition={{ duration: 0.2 }}
-        className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl p-1.5 sm:p-3.5 flex gap-1.5 sm:gap-4 items-center relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
+        className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl p-1.5 sm:p-3.5 flex gap-1.5 sm:gap-4 items-center relative transition-all duration-300 shadow-xl min-w-0 w-full overflow-hidden ${!product.in_stock ? 'opacity-75' : ''}`}
       >
         {/* Promotional Discount Badge */}
         <div className="absolute top-1 left-1 z-10 pointer-events-none">
@@ -67,11 +67,11 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
         </div>
 
         {/* Content Details */}
-        <div className="flex-grow min-w-0 pr-0.5">
+        <div className="flex-1 min-w-0 w-0 pr-0.5">
           <span className="text-[7.5px] sm:text-[9.5px] text-[#F7B733] font-black uppercase tracking-wider block mb-0.5 truncate">
             {product.category}
           </span>
-          <h3 className="text-[10px] sm:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 hover:text-[#F7B733] transition-colors">
+          <h3 className="text-[10px] sm:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 hover:text-[#F7B733] transition-colors break-words">
             {product.name_en}
           </h3>
 
@@ -82,16 +82,16 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
         </div>
 
         {/* Action Button Area */}
-        <div className="shrink-0 w-[80px] sm:w-32">
+        <div className="shrink-0 w-[76px] sm:w-32 flex items-center justify-end">
           {!product.in_stock ? (
-            <span className="w-full min-h-[34px] sm:min-h-[40px] h-8 sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg flex items-center justify-center text-[9px] sm:text-xs font-bold opacity-60">
+            <span className="w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg flex items-center justify-center text-[9px] sm:text-xs font-bold opacity-60">
               Out
             </span>
           ) : inCartQty > 0 ? (
-            <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[34px] sm:min-h-[40px] h-8 sm:h-10 w-full shadow-sm">
+            <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 w-full shadow-sm">
               <button
                 onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                className="w-6 sm:w-9 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-6 sm:w-9 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Decrease quantity"
               >
                 <Minus size={11} className="sm:w-3.5 sm:h-3.5" />
@@ -101,7 +101,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               </div>
               <button
                 onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                className="w-6 sm:w-9 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-6 sm:w-9 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Increase quantity"
               >
                 <Plus size={11} className="sm:w-3.5 sm:h-3.5" />
@@ -111,7 +111,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
             <motion.button
               onClick={handleAdd}
               whileTap={{ scale: 0.95 }}
-              className={`w-full min-h-[34px] sm:min-h-[40px] h-8 sm:h-10 rounded-lg flex items-center justify-center gap-0.5 sm:gap-1 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+              className={`w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 rounded-lg flex items-center justify-center gap-0.5 sm:gap-1 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap shrink-0 shadow-md ${
                 isAdded
                   ? 'bg-emerald-600 text-white shadow-md'
                   : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
@@ -133,7 +133,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
     <motion.div
       whileHover={product.in_stock ? { y: -4 } : {}}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl sm:rounded-2xl overflow-hidden flex flex-col justify-between h-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
+      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl sm:rounded-2xl overflow-hidden flex flex-col justify-between h-full min-w-0 w-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
     >
       {/* Promotional Discount Badge */}
       <div className="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 flex flex-col gap-1">
@@ -177,34 +177,34 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       </div>
 
       {/* Content Body */}
-      <div className="p-1.5 sm:p-3 pt-0 flex flex-col flex-1 justify-between">
+      <div className="p-1.5 sm:p-3 pt-0 flex flex-col flex-1 justify-between min-w-0 w-full">
         <div>
           <div className="text-[7.5px] sm:text-[9.5px] text-[#F7B733] font-black mb-0.5 uppercase tracking-wider truncate">
             {product.category}
           </div>
-          <div className="h-[2rem] sm:h-[2.4rem] flex items-center mb-1">
-            <h3 className="text-[9.5px] sm:text-xs md:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 group-hover:text-[#F7B733] transition-colors">
+          <div className="h-[2rem] sm:h-[2.4rem] flex items-center mb-1 min-w-0 w-full">
+            <h3 className="text-[9.5px] sm:text-xs md:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 group-hover:text-[#F7B733] transition-colors break-words">
               {product.name_en}
             </h3>
           </div>
         </div>
 
-        <div className="mt-auto pt-1">
+        <div className="mt-auto pt-1 w-full shrink-0 min-w-0">
           <div className="flex items-baseline gap-1 sm:gap-1.5 mb-1.5">
             <span className="text-xs sm:text-base md:text-lg font-black text-[#F7B733]">₹{product.price}</span>
             <span className="text-[8.5px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
           </div>
 
-          <div className="flex items-center w-full">
+          <div className="flex items-center w-full min-w-0 shrink-0">
             {!product.in_stock ? (
-              <span className="w-full min-h-[34px] sm:min-h-[40px] h-8 sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg sm:rounded-xl flex items-center justify-center text-[9.5px] sm:text-xs font-bold opacity-60">
+              <span className="w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg sm:rounded-xl flex items-center justify-center text-[9.5px] sm:text-xs font-bold opacity-60">
                 Out of Stock
               </span>
             ) : inCartQty > 0 ? (
-              <div className="flex items-center justify-between bg-[#0B132B] rounded-lg sm:rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[34px] sm:min-h-[40px] h-8 sm:h-10 w-full shadow-sm">
+              <div className="flex items-center justify-between bg-[#0B132B] rounded-lg sm:rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 w-full shadow-sm">
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                  className="w-7 sm:w-10 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-7 sm:w-10 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={11} className="sm:w-3.5 sm:h-3.5" />
@@ -214,7 +214,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
                 </div>
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                  className="w-7 sm:w-10 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-7 sm:w-10 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   <Plus size={11} className="sm:w-3.5 sm:h-3.5" />
@@ -224,7 +224,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               <motion.button
                 onClick={handleAdd}
                 whileTap={{ scale: 0.95 }}
-                className={`w-full min-h-[34px] sm:min-h-[40px] h-8 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center gap-1 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+                className={`w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center gap-1 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap shrink-0 shadow-md ${
                   isAdded
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
