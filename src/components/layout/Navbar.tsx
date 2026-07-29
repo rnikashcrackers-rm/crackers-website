@@ -134,13 +134,18 @@ export function Navbar() {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="relative flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full bg-[#F7B733] text-[#101A36] text-xs font-extrabold shadow-md hover:bg-[#FFD05C] transition-colors border border-[#FFF0BF] min-h-[38px]"
+                className="relative flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-2 rounded-full bg-[#F7B733] text-[#101A36] text-xs font-extrabold shadow-md hover:bg-[#FFD05C] transition-colors border border-[#FFF0BF] min-h-[38px] cursor-pointer"
               >
-                <ShoppingCart size={14} className="text-[#101A36]" />
-                <span>
-                  {mounted && itemCount > 0
-                    ? `Cart (${itemCount}) • ₹${totalPrice.toLocaleString('en-IN')}`
-                    : 'Cart'}
+                <ShoppingCart size={14} className="text-[#101A36] shrink-0" />
+                <span className="whitespace-nowrap">
+                  {mounted && itemCount > 0 ? (
+                    <>
+                      <span className="sm:hidden">Cart ({itemCount})</span>
+                      <span className="hidden sm:inline">Cart ({itemCount}) • ₹{totalPrice.toLocaleString('en-IN')}</span>
+                    </>
+                  ) : (
+                    'Cart'
+                  )}
                 </span>
               </motion.button>
             </Link>

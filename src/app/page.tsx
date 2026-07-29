@@ -200,8 +200,8 @@ export default async function HomePage() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-xs sm:text-base text-white group-hover:text-[#F7B733] transition-colors truncate">
+                <div className="flex items-center justify-between gap-1">
+                  <h3 className="font-bold text-xs sm:text-base text-white group-hover:text-[#F7B733] transition-colors line-clamp-2 leading-tight whitespace-normal break-words">
                     {cat.title}
                   </h3>
                   <span className="text-[9px] sm:text-[10px] font-black bg-[#172448] text-[#F7B733] px-2 py-0.5 rounded-md shrink-0 ml-1">

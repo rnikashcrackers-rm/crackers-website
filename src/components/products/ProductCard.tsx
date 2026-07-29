@@ -91,43 +91,45 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
         </div>
 
         {/* Action Button Area */}
-        <div className="shrink-0 w-24 sm:w-32">
+        <div className="shrink-0 w-28 sm:w-36">
           {!product.in_stock ? (
-            <span className="w-full h-9 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-[10px] font-bold opacity-60">
+            <span className="w-full min-h-[44px] h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-[10px] sm:text-xs font-bold opacity-60">
               Out of Stock
             </span>
           ) : inCartQty > 0 ? (
-            <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden h-9 w-full shadow-sm">
+            <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[44px] h-11 w-full shadow-sm">
               <button
                 onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                className="w-8 flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448]"
+                className="w-10 min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                aria-label="Decrease quantity"
               >
-                <Minus size={12} />
+                <Minus size={14} />
               </button>
-              <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
+              <div className="flex-grow text-center text-xs sm:text-sm font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
                 {inCartQty}
               </div>
               <button
                 onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                className="w-8 flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448]"
+                className="w-10 min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                aria-label="Increase quantity"
               >
-                <Plus size={12} />
+                <Plus size={14} />
               </button>
             </div>
           ) : (
             <motion.button
               onClick={handleAdd}
               whileTap={{ scale: 0.95 }}
-              className={`w-full h-9 rounded-xl flex items-center justify-center gap-1 text-xs font-black transition-all ${
+              className={`w-full min-h-[44px] h-11 rounded-xl flex items-center justify-center gap-1.5 text-xs sm:text-sm font-black transition-all cursor-pointer whitespace-nowrap ${
                 isAdded
                   ? 'bg-emerald-600 text-white shadow-md'
                   : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
               }`}
             >
               {isAdded ? (
-                <><Check size={12} /> Added</>
+                <><Check size={14} /> Added</>
               ) : (
-                <><ShoppingCart size={12} /> Add</>
+                <><ShoppingCart size={14} /> Add to Cart</>
               )}
             </motion.button>
           )}
@@ -138,9 +140,9 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
 
   return (
     <motion.div
-      whileHover={product.in_stock ? { y: -6 } : {}}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-3xl overflow-hidden flex flex-col group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
+      whileHover={product.in_stock ? { y: -4 } : {}}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-3xl overflow-hidden flex flex-col justify-between h-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
     >
       {/* Promotional Discount Badge */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
@@ -157,7 +159,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       {/* Right Cart Status Badge */}
       <div className="absolute top-3 right-3 z-10">
         {inCartQty > 0 && !isAdded && (
-          <div className="bg-emerald-600 text-white text-[10px] font-black px-2 py-1 rounded-full shadow-md flex items-center gap-1">
+          <div className="bg-emerald-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
             <Check size={10} /> {inCartQty} in cart
           </div>
         )}
@@ -171,7 +173,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               src={product.image_url}
               alt={product.name_en}
               fill
-              sizes="(max-width: 640px) 50vw, 25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className={`object-contain p-2.5 transition-transform duration-500 ${product.in_stock ? 'group-hover:scale-105' : 'opacity-40'}`}
               loading="lazy"
             />
@@ -189,48 +191,54 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       </div>
 
       {/* Content Body */}
-      <div className="p-4 pt-0 flex flex-col flex-1">
-        <div className="text-[10px] text-[#F7B733] font-black mb-1 uppercase tracking-widest">
-          {product.category}
+      <div className="p-4 pt-0 flex flex-col flex-1 justify-between">
+        <div>
+          <div className="text-[10px] text-[#F7B733] font-black mb-1 uppercase tracking-widest truncate">
+            {product.category}
+          </div>
+          <div className="h-[2.6rem] flex items-center mb-2">
+            <h3 className="text-xs sm:text-sm font-bold text-white leading-snug line-clamp-2 group-hover:text-[#F7B733] transition-colors">
+              {product.name_en}
+            </h3>
+          </div>
         </div>
-        <h3 className="text-sm font-bold text-white mb-2 leading-snug line-clamp-2 group-hover:text-[#F7B733] transition-colors">
-          {product.name_en}
-        </h3>
 
-        <div className="mt-auto">
+        <div className="mt-auto pt-2">
           <div className="flex items-baseline gap-2 mb-3">
-            <span className="text-lg sm:text-xl font-black text-[#F7B733]">₹{product.price}</span>
+            <span className="text-base sm:text-xl font-black text-[#F7B733]">₹{product.price}</span>
             <span className="text-xs text-slate-400 line-through">₹{product.mrp}</span>
           </div>
 
           <div className="flex items-center w-full">
             {!product.in_stock ? (
-              <span className="w-full h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-xs font-bold opacity-60">
+              <span className="w-full min-h-[44px] h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-xs font-bold opacity-60">
                 Out of Stock
               </span>
             ) : inCartQty > 0 ? (
-              <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden h-10 w-full shadow-sm">
+              <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[44px] h-11 w-full shadow-sm">
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                  className="w-10 flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448]"
+                  className="w-11 min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  aria-label="Decrease quantity"
                 >
-                  <Minus size={12} />
+                  <Minus size={14} />
                 </button>
                 <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
                   {inCartQty}
                 </div>
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                  className="w-10 flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448]"
+                  className="w-11 min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  aria-label="Increase quantity"
                 >
-                  <Plus size={12} />
+                  <Plus size={14} />
                 </button>
               </div>
             ) : (
               <motion.button
                 onClick={handleAdd}
                 whileTap={{ scale: 0.95 }}
-                className={`w-full h-10 rounded-xl flex items-center justify-center gap-1.5 text-xs font-black transition-all ${
+                className={`w-full min-h-[44px] h-11 rounded-xl flex items-center justify-center gap-1.5 text-xs sm:text-sm font-black transition-all cursor-pointer whitespace-nowrap ${
                   isAdded
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
@@ -239,7 +247,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
                 {isAdded ? (
                   <><Check size={14} /> Added</>
                 ) : (
-                  <><ShoppingCart size={14} /> Add</>
+                  <><ShoppingCart size={14} /> Add to Cart</>
                 )}
               </motion.button>
             )}
@@ -249,3 +257,4 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
     </motion.div>
   );
 }
+
