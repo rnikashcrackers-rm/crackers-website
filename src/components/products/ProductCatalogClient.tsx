@@ -296,8 +296,8 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
                   >
                     <span className="flex flex-col md:flex-row items-center gap-0.5 sm:gap-2 min-w-0 flex-1 text-center md:text-left">
                       <span className="text-xs sm:text-base shrink-0">{cat.emoji}</span>
-                      <span className="whitespace-normal text-[8.5px] sm:text-xs md:text-sm leading-tight md:leading-snug break-words uppercase font-bold hyphens-auto">
-                        {cat.label.replace(' Products', '')}
+                      <span className="whitespace-normal text-[8px] sm:text-xs md:text-sm leading-[1.15] md:leading-snug break-words uppercase font-bold">
+                        {cat.label.replace(/ Products$/i, '').replace(/ Crackers$/i, '')}
                       </span>
                     </span>
                     {count !== null && count > 0 && (
