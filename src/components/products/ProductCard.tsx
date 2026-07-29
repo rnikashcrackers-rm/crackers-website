@@ -39,88 +39,136 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       <motion.div
         whileHover={product.in_stock ? { x: 4 } : {}}
         transition={{ duration: 0.2 }}
-        className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl p-1.5 sm:p-3.5 flex gap-1.5 sm:gap-4 items-center relative transition-all duration-300 shadow-xl min-w-0 w-full overflow-hidden ${!product.in_stock ? 'opacity-75' : ''}`}
+        className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl p-1.5 sm:p-3.5 relative transition-all duration-300 shadow-xl min-w-0 w-full ${!product.in_stock ? 'opacity-75' : ''}`}
       >
         {/* Promotional Discount Badge */}
         <div className="absolute top-1 left-1 z-10 pointer-events-none">
-          <span className="bg-[#F7B733] text-[#101A36] text-[7.5px] sm:text-[9px] font-black px-1.5 py-0.2 rounded-full shadow-md uppercase tracking-wider">
+          <span className="bg-[#F7B733] text-[#101A36] text-[7.5px] sm:text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
             {effectiveDiscount}% OFF
           </span>
         </div>
 
-        {/* Image Frame Deck */}
-        <div className="relative w-12 h-12 sm:w-20 sm:h-20 rounded-lg bg-[#0B132B] flex items-center justify-center p-0.5 shrink-0 border border-[#172448] shadow-inner overflow-hidden">
-          {product.image_url ? (
-            <Image
-              src={product.image_url}
-              alt={product.name_en}
-              fill
-              sizes="80px"
-              className="object-contain p-0.5"
-              loading="lazy"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-base opacity-30">🎇</span>
+        {/* Top Row: Image + Content + Action (sm+) */}
+        <div className="flex gap-1.5 sm:gap-4 items-center min-w-0">
+          {/* Image Frame Deck */}
+          <div className="relative w-12 h-12 sm:w-20 sm:h-20 rounded-lg bg-[#0B132B] flex items-center justify-center p-0.5 shrink-0 border border-[#172448] shadow-inner overflow-hidden">
+            {product.image_url ? (
+              <Image
+                src={product.image_url}
+                alt={product.name_en}
+                fill
+                sizes="80px"
+                className="object-contain p-0.5"
+                loading="lazy"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-base opacity-30">🎇</span>
+              </div>
+            )}
+          </div>
+
+          {/* Content Details */}
+          <div className="flex-1 min-w-0 pr-0.5">
+            <span className="text-[7.5px] sm:text-[9.5px] text-[#F7B733] font-black uppercase tracking-wider block mb-0.5 truncate">
+              {product.category}
+            </span>
+            <h3 className="text-[10px] sm:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 hover:text-[#F7B733] transition-colors break-words">
+              {product.name_en}
+            </h3>
+
+            <div className="flex items-baseline gap-1 mt-0.5">
+              <span className="text-[11px] sm:text-base font-black text-[#F7B733]">₹{product.price}</span>
+              <span className="text-[8px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Content Details */}
-        <div className="flex-1 min-w-0 w-0 pr-0.5">
-          <span className="text-[7.5px] sm:text-[9.5px] text-[#F7B733] font-black uppercase tracking-wider block mb-0.5 truncate">
-            {product.category}
-          </span>
-          <h3 className="text-[10px] sm:text-sm font-bold text-white leading-tight sm:leading-snug line-clamp-2 hover:text-[#F7B733] transition-colors break-words">
-            {product.name_en}
-          </h3>
-
-          <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-[11px] sm:text-base font-black text-[#F7B733]">₹{product.price}</span>
-            <span className="text-[8px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
+          {/* Action Button — INLINE on sm+ screens only */}
+          <div className="hidden sm:flex shrink-0 w-32 items-center justify-end">
+            {!product.in_stock ? (
+              <span className="w-full min-h-[40px] h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg flex items-center justify-center text-xs font-bold opacity-60">
+                Out of Stock
+              </span>
+            ) : inCartQty > 0 ? (
+              <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[40px] h-10 w-full shadow-sm">
+                <button
+                  onClick={() => updateQuantity(product.id, inCartQty - 1)}
+                  className="w-9 min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  aria-label="Decrease quantity"
+                >
+                  <Minus size={14} />
+                </button>
+                <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
+                  {inCartQty}
+                </div>
+                <button
+                  onClick={() => updateQuantity(product.id, inCartQty + 1)}
+                  className="w-9 min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  aria-label="Increase quantity"
+                >
+                  <Plus size={14} />
+                </button>
+              </div>
+            ) : (
+              <motion.button
+                onClick={handleAdd}
+                whileTap={{ scale: 0.95 }}
+                className={`w-full min-h-[40px] h-10 rounded-lg flex items-center justify-center gap-1 text-xs font-black transition-all cursor-pointer whitespace-nowrap shadow-md ${
+                  isAdded
+                    ? 'bg-emerald-600 text-white shadow-md'
+                    : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
+                }`}
+              >
+                {isAdded ? (
+                  <><Check size={14} /> Added</>
+                ) : (
+                  <><ShoppingCart size={14} /> Add to Cart</>
+                )}
+              </motion.button>
+            )}
           </div>
         </div>
 
-        {/* Action Button Area */}
-        <div className="shrink-0 w-[76px] sm:w-32 flex items-center justify-end">
+        {/* Action Button — FULL-WIDTH ROW on mobile only (< sm) */}
+        <div className="flex sm:hidden mt-1.5 w-full">
           {!product.in_stock ? (
-            <span className="w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg flex items-center justify-center text-[9px] sm:text-xs font-bold opacity-60">
-              Out
+            <span className="w-full min-h-[34px] h-[34px] bg-[#172448] text-slate-400 border border-[#172448] rounded-lg flex items-center justify-center text-[10px] font-bold opacity-60">
+              Out of Stock
             </span>
           ) : inCartQty > 0 ? (
-            <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 w-full shadow-sm">
+            <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[34px] h-[34px] w-full shadow-sm">
               <button
                 onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                className="w-6 sm:w-9 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-10 min-h-[34px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Decrease quantity"
               >
-                <Minus size={11} className="sm:w-3.5 sm:h-3.5" />
+                <Minus size={12} />
               </button>
-              <div className="flex-grow text-center text-[10.5px] sm:text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
+              <div className="flex-grow text-center text-[11px] font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
                 {inCartQty}
               </div>
               <button
                 onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                className="w-6 sm:w-9 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-10 min-h-[34px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Increase quantity"
               >
-                <Plus size={11} className="sm:w-3.5 sm:h-3.5" />
+                <Plus size={12} />
               </button>
             </div>
           ) : (
             <motion.button
               onClick={handleAdd}
               whileTap={{ scale: 0.95 }}
-              className={`w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 rounded-lg flex items-center justify-center gap-0.5 sm:gap-1 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap shrink-0 shadow-md ${
+              className={`w-full min-h-[34px] h-[34px] rounded-lg flex items-center justify-center gap-1.5 text-[11px] font-black transition-all cursor-pointer shadow-md ${
                 isAdded
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C]'
               }`}
             >
               {isAdded ? (
-                <><Check size={11} className="sm:w-3.5 sm:h-3.5" /> Added</>
+                <><Check size={13} /> Added!</>
               ) : (
-                <><ShoppingCart size={11} className="sm:w-3.5 sm:h-3.5" /> Add</>
+                <><ShoppingCart size={13} /> Add to Cart</>
               )}
             </motion.button>
           )}
