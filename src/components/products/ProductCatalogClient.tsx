@@ -125,6 +125,14 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
         inline: 'nearest'
       });
     }
+    const mobileBtn = document.getElementById(`cat-btn-mobile-${highlightedCategory}`);
+    if (mobileBtn) {
+      mobileBtn.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
   }, [highlightedCategory]);
 
   // Debounce search input
@@ -265,8 +273,8 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
       </motion.div>
 
       {/* Mobile Horizontal Category Bar (Visible on mobile < md) */}
-      <div className="md:hidden mb-6 sticky top-16 z-30 bg-[#0B132B]/95 backdrop-blur-md py-2.5 border-y border-[var(--border)] shadow-md">
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none px-1">
+      <div className="md:hidden mb-5 sticky top-16 z-30 bg-[#0B132B]/95 backdrop-blur-md py-1.5 sm:py-2 border-y border-[var(--border)] shadow-md">
+        <div className="flex items-center justify-start gap-3 sm:gap-4 overflow-x-auto scrollbar-none pl-0 pr-4 w-full">
           {initialCategories.map((cat) => {
             const count = getCategoryCount(cat.id);
             const isActive = highlightedCategory === cat.id;
@@ -276,17 +284,17 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
                 id={`cat-btn-mobile-${cat.id}`}
                 onClick={() => {
                   setActiveCategory(cat.id);
-                  const targetEl = document.getElementById(`cat-btn-${cat.id}`);
-                  if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                  const mobileEl = document.getElementById(`cat-btn-mobile-${cat.id}`);
+                  if (mobileEl) mobileEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }}
-                className={`shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border min-h-[44px] ${
+                className={`shrink-0 flex-none flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all cursor-pointer border min-h-[44px] ${
                   isActive
                     ? 'bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-coral-dark)] text-[#1a1400] border-[var(--color-coral)] shadow-md'
                     : 'bg-[var(--surface-high)] text-[var(--text-muted)] border-[var(--border)] hover:text-[var(--text)]'
                 }`}
               >
-                <span className="text-base shrink-0">{cat.emoji}</span>
-                <span className="whitespace-normal line-clamp-2 max-w-[140px] leading-tight text-left break-words">
+                <span className="text-sm sm:text-base shrink-0">{cat.emoji}</span>
+                <span className="whitespace-normal line-clamp-2 leading-tight text-left break-words">
                   {cat.label.replace(' Products', '')}
                 </span>
                 {count !== null && count > 0 && (
