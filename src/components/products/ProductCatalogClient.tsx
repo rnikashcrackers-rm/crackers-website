@@ -274,7 +274,7 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
 
       <div className="flex flex-row gap-1.5 sm:gap-4 md:gap-8">
         {/* Left Side Vertical Category Sidebar (Sticky on all viewports) */}
-        <aside className="w-[76px] sm:w-48 lg:w-60 flex-shrink-0">
+        <aside className="w-[75px] sm:w-48 lg:w-60 flex-shrink-0">
           <div className="glass-card rounded-xl sm:rounded-2xl p-1 sm:p-3 sticky top-20 md:top-28 max-h-[82vh] overflow-y-auto scrollbar-none">
             <div className="hidden md:flex items-center gap-2 font-bold text-sm mb-3 border-b border-[var(--border)] pb-2.5 text-[var(--text)]">
               <SlidersHorizontal size={15} className="shrink-0 text-[var(--color-coral)]" /> Categories
@@ -288,7 +288,7 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
                     key={cat.id}
                     id={`cat-btn-${cat.id}`}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`w-full p-1 sm:px-3 sm:py-2.5 rounded-lg sm:rounded-xl transition-all flex flex-col md:flex-row items-center justify-center md:justify-between cursor-pointer min-h-[40px] gap-0.5 sm:gap-2 ${
+                    className={`w-full p-1 sm:px-3 sm:py-2.5 rounded-lg sm:rounded-xl transition-all flex flex-col md:flex-row items-center justify-center md:justify-between cursor-pointer min-h-[42px] gap-0.5 sm:gap-2 ${
                       isActive
                         ? 'bg-gradient-to-r from-[var(--color-coral)] to-[var(--color-coral-dark)] text-[#1a1400] font-bold shadow-md'
                         : 'text-[var(--text-muted)] hover:bg-[var(--surface-high)] hover:text-[var(--text)]'
@@ -296,12 +296,12 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
                   >
                     <span className="flex flex-col md:flex-row items-center gap-0.5 sm:gap-2 min-w-0 flex-1 text-center md:text-left">
                       <span className="text-xs sm:text-base shrink-0">{cat.emoji}</span>
-                      <span className="whitespace-normal line-clamp-3 text-[8.5px] sm:text-xs md:text-sm leading-tight md:leading-snug break-words font-semibold">
+                      <span className="whitespace-normal line-clamp-2 text-[9.5px] sm:text-xs md:text-sm leading-tight md:leading-snug break-words uppercase font-bold">
                         {cat.label.replace(' Products', '')}
                       </span>
                     </span>
                     {count !== null && count > 0 && (
-                      <span className={`text-[7.5px] sm:text-[10px] font-black px-1 py-0.2 rounded-full shrink-0 ${
+                      <span className={`text-[8px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${
                         isActive ? 'bg-[#1a1400]/20 text-[#1a1400]' : 'bg-[var(--surface-high)] text-[var(--text-muted)]'
                       }`}>
                         {count}
