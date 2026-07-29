@@ -33,21 +33,22 @@ export function ClientEffects() {
       originalWarn(...args);
     };
 
-    // Initial check on mount
+    // Keep cart active while customer is inside website
     checkCartExpiry();
 
-    // Periodic check every 5 seconds for 5-minute inactivity timeout
-    const interval = setInterval(() => {
-      checkCartExpiry();
-    }, 5000);
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        checkCartExpiry();
-      }
+    const handleUserActivity = () => {
+      const { setLastActive } = useEnquiryStore.getState();
+      setLastActive(Date.now());
     };
 
-    window.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('click', handleUserActivity, { passive: true });
+    window.addEventListener('touchstart', handleUserActivity, { passive: true });
+    window.addEventListener('scroll', handleUserActivity, { passive: true });
+    window.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        handleUserActivity();
+      }
+    });
 
     const entryTimer = setTimeout(() => {
       setEntryBursting(false);
@@ -55,9 +56,10 @@ export function ClientEffects() {
 
     return () => {
       console.warn = originalWarn;
-      clearInterval(interval);
       clearTimeout(entryTimer);
-      window.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('click', handleUserActivity);
+      window.removeEventListener('touchstart', handleUserActivity);
+      window.removeEventListener('scroll', handleUserActivity);
     };
   }, []);
 

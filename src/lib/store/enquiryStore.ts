@@ -76,11 +76,21 @@ export const useEnquiryStore = create<EnquiryState>()(
         set({ lastActive: timestamp });
       },
 
+      touchActive: () => {
+        set({ lastActive: Date.now() });
+      },
+
       checkCartExpiry: () => {
         const { lastActive, items } = get();
+        // If customer is inside the website, keep timestamp fresh & cart intact
+        if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+          set({ lastActive: Date.now() });
+          return;
+        }
+        // Expire cart only if customer has left/closed the site for over 24 hours
         if (lastActive && items.length > 0) {
           const diff = Date.now() - lastActive;
-          if (diff > 5 * 60 * 1000) {
+          if (diff > 24 * 60 * 60 * 1000) {
             set({ items: [], lastActive: null });
           }
         }

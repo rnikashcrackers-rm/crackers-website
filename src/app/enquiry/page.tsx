@@ -24,56 +24,40 @@ export default function EnquiryPage() {
   const [receiptStatus, setReceiptStatus] = useState<'idle' | 'generating' | 'downloaded' | 'failed'>('idle');
   const [bursts, setBursts] = useState<Array<{ id: number; x: number; y: number; type: 'burst' | 'fountain' | 'spin' | 'sparkle' }>>([]);
 
-  // Live Customer Details Validation
+  // Live Customer Details Validation (Mandatory: Name, Phone, Address)
   const formErrors = useMemo(() => {
     const errors: Record<string, string> = {};
     
-    // Customer Name: Required, non-empty after trim
+    // 1. Customer Name: Mandatory, non-empty
     const trimmedName = (customerInfo.name || '').trim();
     if (!trimmedName) {
       errors.name = 'Customer Name is required';
     }
 
-    // Phone Number: Required, numbers only, exactly 10 digits
+    // 2. Phone Number: Mandatory, exactly 10 numeric digits
     const cleanPhone = (customerInfo.phone || '').replace(/\D/g, '');
     if (!cleanPhone) {
       errors.phone = 'Phone Number is required';
     } else if (cleanPhone.length !== 10) {
-      errors.phone = 'Phone Number must be exactly 10 digits (numbers only)';
+      errors.phone = 'Phone Number must be exactly 10 digits';
     }
 
-    // Email Address: Required, valid format
+    // 3. Delivery Address: Mandatory, min 5 characters
+    const trimmedAddress = (customerInfo.address || '').trim();
+    if (!trimmedAddress) {
+      errors.address = 'Delivery Address is required';
+    } else if (trimmedAddress.length < 5) {
+      errors.address = 'Delivery Address must be at least 5 characters';
+    }
+
+    // Optional Fields (Validate format only if provided)
     const trimmedEmail = (customerInfo.email || '').trim();
-    if (!trimmedEmail) {
-      errors.email = 'Email Address is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    if (trimmedEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       errors.email = 'Please enter a valid email address';
     }
 
-    // Address: Required, non-blank, min 10 characters
-    const trimmedAddress = (customerInfo.address || '').trim();
-    if (!trimmedAddress) {
-      errors.address = 'Full delivery address is required';
-    } else if (trimmedAddress.length < 10) {
-      errors.address = 'Delivery address must be at least 10 characters long';
-    }
-
-    // Location Fields
-    if (!customerInfo.state) {
-      errors.state = 'State selection is required';
-    }
-    if (!customerInfo.district || !customerInfo.district.trim()) {
-      errors.district = 'District is required';
-    }
-    if (!customerInfo.city || !customerInfo.city.trim()) {
-      errors.city = 'City / Town is required';
-    }
-
-    // Pincode: 6 numeric digits
     const cleanPincode = (customerInfo.pincode || '').replace(/\D/g, '');
-    if (!cleanPincode) {
-      errors.pincode = 'Pincode is required';
-    } else if (cleanPincode.length !== 6) {
+    if (cleanPincode && cleanPincode.length !== 6) {
       errors.pincode = 'Pincode must be exactly 6 digits';
     }
 
@@ -894,14 +878,13 @@ export default function EnquiryPage() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-5">
-              {/* Email Address */}
+              {/* Email Address (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  Email Address <span className="text-rose-400 font-bold ml-0.5">*</span>
+                  Email Address <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
                 </label>
                 <input
                   id="input-email"
-                  required
                   type="email"
                   value={customerInfo.email}
                   onBlur={() => handleBlur('email')}
@@ -914,7 +897,7 @@ export default function EnquiryPage() {
                       ? 'border-rose-500 bg-rose-500/10 focus:border-rose-500 ring-1 ring-rose-500/30'
                       : 'border-[var(--border)] focus:border-[var(--color-coral)]'
                   }`}
-                  placeholder="you@email.com"
+                  placeholder="you@email.com (optional)"
                 />
                 {touched.email && formErrors.email && (
                   <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
@@ -923,14 +906,13 @@ export default function EnquiryPage() {
                 )}
               </div>
 
-              {/* State */}
+              {/* State (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  State <span className="text-rose-400 font-bold ml-0.5">*</span>
+                  State <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
                 </label>
                 <select
                   id="input-state"
-                  required
                   value={customerInfo.state}
                   onBlur={() => handleBlur('state')}
                   onChange={(e) => {
@@ -951,73 +933,48 @@ export default function EnquiryPage() {
                   <option value="Telangana">Telangana</option>
                   <option value="Puducherry">Puducherry</option>
                 </select>
-                {touched.state && formErrors.state && (
-                  <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
-                    <AlertCircle size={12} /> {formErrors.state}
-                  </p>
-                )}
               </div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-5">
-              {/* District */}
+              {/* District (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  District <span className="text-rose-400 font-bold ml-0.5">*</span>
+                  District <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
                 </label>
                 <input
                   id="input-district"
-                  required
                   value={customerInfo.district}
                   onBlur={() => handleBlur('district')}
                   onChange={(e) => {
                     setCustomerInfo({ ...customerInfo, district: e.target.value });
                     if (submitError) setSubmitError(null);
                   }}
-                  className={`w-full bg-[var(--surface-high)] border rounded-xl px-4 py-3 text-sm focus:outline-none transition-all ${
-                    touched.district && formErrors.district
-                      ? 'border-rose-500 bg-rose-500/10 focus:border-rose-500 ring-1 ring-rose-500/30'
-                      : 'border-[var(--border)] focus:border-[var(--color-coral)]'
-                  }`}
+                  className="w-full bg-[var(--surface-high)] border border-[var(--border)] focus:border-[var(--color-coral)] rounded-xl px-4 py-3 text-sm focus:outline-none transition-all"
                   placeholder="e.g. Theni, Madurai"
                 />
-                {touched.district && formErrors.district && (
-                  <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
-                    <AlertCircle size={12} /> {formErrors.district}
-                  </p>
-                )}
               </div>
 
-              {/* City */}
+              {/* City (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  City / Town <span className="text-rose-400 font-bold ml-0.5">*</span>
+                  City / Town <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
                 </label>
                 <input
                   id="input-city"
-                  required
                   value={customerInfo.city}
                   onBlur={() => handleBlur('city')}
                   onChange={(e) => {
                     setCustomerInfo({ ...customerInfo, city: e.target.value });
                     if (submitError) setSubmitError(null);
                   }}
-                  className={`w-full bg-[var(--surface-high)] border rounded-xl px-4 py-3 text-sm focus:outline-none transition-all ${
-                    touched.city && formErrors.city
-                      ? 'border-rose-500 bg-rose-500/10 focus:border-rose-500 ring-1 ring-rose-500/30'
-                      : 'border-[var(--border)] focus:border-[var(--color-coral)]'
-                  }`}
+                  className="w-full bg-[var(--surface-high)] border border-[var(--border)] focus:border-[var(--color-coral)] rounded-xl px-4 py-3 text-sm focus:outline-none transition-all"
                   placeholder="Your City"
                 />
-                {touched.city && formErrors.city && (
-                  <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
-                    <AlertCircle size={12} /> {formErrors.city}
-                  </p>
-                )}
               </div>
             </div>
 
-            {/* Delivery Address */}
+            {/* Delivery Address (Mandatory) */}
             <div>
               <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
                 Full Delivery Address <span className="text-rose-400 font-bold ml-0.5">*</span>
@@ -1037,7 +994,7 @@ export default function EnquiryPage() {
                     ? 'border-rose-500 bg-rose-500/10 focus:border-rose-500 ring-1 ring-rose-500/30'
                     : 'border-[var(--border)] focus:border-[var(--color-coral)]'
                 }`}
-                placeholder="House No, Street, Area, Landmark (Minimum 10 characters)"
+                placeholder="House No, Street, Area, Landmark"
               />
               {touched.address && formErrors.address && (
                 <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
@@ -1046,14 +1003,13 @@ export default function EnquiryPage() {
               )}
             </div>
 
-            {/* Pincode */}
+            {/* Pincode (Optional) */}
             <div className="w-full sm:w-1/2">
               <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                Pincode <span className="text-rose-400 font-bold ml-0.5">*</span>
+                Pincode <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
               </label>
               <input
                 id="input-pincode"
-                required
                 type="tel"
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -1070,7 +1026,7 @@ export default function EnquiryPage() {
                     ? 'border-rose-500 bg-rose-500/10 focus:border-rose-500 ring-1 ring-rose-500/30'
                     : 'border-[var(--border)] focus:border-[var(--color-coral)]'
                 }`}
-                placeholder="6-digit Pincode"
+                placeholder="6-digit Pincode (optional)"
               />
               {touched.pincode && formErrors.pincode && (
                 <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">

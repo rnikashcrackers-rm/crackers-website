@@ -25,7 +25,7 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('default');
   const [showSort, setShowSort] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [mounted, setMounted] = useState(false);
   const [totalProducts, setTotalProducts] = useState(initialProducts.length);
   const [searchDebounce, setSearchDebounce] = useState('');
