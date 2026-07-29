@@ -39,97 +39,92 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       <motion.div
         whileHover={product.in_stock ? { x: 4 } : {}}
         transition={{ duration: 0.2 }}
-        className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-2xl p-2 sm:p-4 flex gap-2 sm:gap-5 items-center relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
+        className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl p-1.5 sm:p-4 flex gap-1.5 sm:gap-5 items-center relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
       >
         {/* Promotional Discount Badge */}
-        <div className="absolute top-1.5 left-1.5 z-10 pointer-events-none">
-          <span className="bg-[#F7B733] text-[#101A36] text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-md uppercase tracking-wider">
+        <div className="absolute top-1 left-1 z-10 pointer-events-none">
+          <span className="bg-[#F7B733] text-[#101A36] text-[7.5px] sm:text-[9px] font-black px-1 py-0.2 rounded-full shadow-md uppercase tracking-wider">
             {effectiveDiscount}% OFF
           </span>
         </div>
 
         {/* Image Frame Deck */}
-        <div className="relative w-16 h-16 sm:w-24 sm:h-24 rounded-xl bg-[#0B132B] flex items-center justify-center p-1 shrink-0 border border-[#172448] shadow-inner overflow-hidden">
+        <div className="relative w-12 h-12 sm:w-24 sm:h-24 rounded-lg bg-[#0B132B] flex items-center justify-center p-0.5 shrink-0 border border-[#172448] shadow-inner overflow-hidden">
           {product.image_url ? (
             <Image
               src={product.image_url}
               alt={product.name_en}
               fill
-              sizes="100px"
-              className="object-contain p-1"
+              sizes="80px"
+              className="object-contain p-0.5"
               loading="lazy"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-lg opacity-30">🎇</span>
+              <span className="text-base opacity-30">🎇</span>
             </div>
           )}
           
-          <div className="absolute bottom-0.5 left-0.5 z-10 flex items-center gap-0.5 bg-[#0B132B]/95 px-1 py-0.2 rounded border border-[#F7B733]/40 text-[6px] font-black text-[#F7B733] tracking-wider uppercase select-none pointer-events-none shadow-sm">
+          <div className="absolute bottom-0.5 left-0.5 z-10 flex items-center gap-0.5 bg-[#0B132B]/95 px-1 py-0.2 rounded border border-[#F7B733]/40 text-[5.5px] font-black text-[#F7B733] tracking-wider uppercase select-none pointer-events-none shadow-sm">
             NIKASH
           </div>
         </div>
 
         {/* Content Details */}
-        <div className="flex-grow min-w-0 pr-1">
-          <span className="text-[8px] sm:text-[10px] text-[#F7B733] font-black uppercase tracking-wider block mb-0.5 truncate">
+        <div className="flex-grow min-w-0 pr-0.5">
+          <span className="text-[7.5px] sm:text-[10px] text-[#F7B733] font-black uppercase tracking-wider block mb-0.5 truncate">
             {product.category}
           </span>
-          <h3 className="text-[11px] sm:text-base font-bold text-white leading-tight sm:leading-snug line-clamp-2 hover:text-[#F7B733] transition-colors">
+          <h3 className="text-[10px] sm:text-base font-bold text-white leading-tight sm:leading-snug line-clamp-2 hover:text-[#F7B733] transition-colors">
             {product.name_en}
           </h3>
-          {product.name_ta && (
-            <p className="text-[9px] sm:text-xs text-slate-300 truncate mt-0.5 hidden sm:block">
-              {product.name_ta}
-            </p>
-          )}
 
-          <div className="flex items-baseline gap-1.5 mt-1">
-            <span className="text-xs sm:text-lg font-black text-[#F7B733]">₹{product.price}</span>
-            <span className="text-[9px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
+          <div className="flex items-baseline gap-1 mt-0.5">
+            <span className="text-[11px] sm:text-lg font-black text-[#F7B733]">₹{product.price}</span>
+            <span className="text-[8px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
           </div>
         </div>
 
         {/* Action Button Area */}
-        <div className="shrink-0 w-24 sm:w-36">
+        <div className="shrink-0 w-[72px] sm:w-36">
           {!product.in_stock ? (
-            <span className="w-full min-h-[40px] sm:min-h-[44px] h-10 sm:h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-xl flex items-center justify-center text-[10px] sm:text-xs font-bold opacity-60">
-              Out of Stock
+            <span className="w-full min-h-[34px] sm:min-h-[44px] h-8 sm:h-11 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg sm:rounded-xl flex items-center justify-center text-[9px] sm:text-xs font-bold opacity-60">
+              Out
             </span>
           ) : inCartQty > 0 ? (
-            <div className="flex items-center justify-between bg-[#0B132B] rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[40px] sm:min-h-[44px] h-10 sm:h-11 w-full shadow-sm">
+            <div className="flex items-center justify-between bg-[#0B132B] rounded-lg sm:rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[34px] sm:min-h-[44px] h-8 sm:h-11 w-full shadow-sm">
               <button
                 onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                className="w-8 sm:w-10 min-h-[40px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-5 sm:w-10 min-h-[34px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Decrease quantity"
               >
-                <Minus size={13} className="sm:w-3.5 sm:h-3.5" />
+                <Minus size={10} className="sm:w-3.5 sm:h-3.5" />
               </button>
-              <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
+              <div className="flex-grow text-center text-[10px] sm:text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
                 {inCartQty}
               </div>
               <button
                 onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                className="w-8 sm:w-10 min-h-[40px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-5 sm:w-10 min-h-[34px] sm:min-h-[44px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Increase quantity"
               >
-                <Plus size={13} className="sm:w-3.5 sm:h-3.5" />
+                <Plus size={10} className="sm:w-3.5 sm:h-3.5" />
               </button>
             </div>
           ) : (
             <motion.button
               onClick={handleAdd}
               whileTap={{ scale: 0.95 }}
-              className={`w-full min-h-[40px] sm:min-h-[44px] h-10 sm:h-11 rounded-xl flex items-center justify-center gap-1 sm:gap-1.5 text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+              className={`w-full min-h-[34px] sm:min-h-[44px] h-8 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center gap-0.5 sm:gap-1.5 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
                 isAdded
                   ? 'bg-emerald-600 text-white shadow-md'
                   : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
               }`}
             >
               {isAdded ? (
-                <><Check size={13} className="sm:w-3.5 sm:h-3.5" /> Added</>
+                <><Check size={11} className="sm:w-3.5 sm:h-3.5" /> Added</>
               ) : (
-                <><ShoppingCart size={13} className="sm:w-3.5 sm:h-3.5" /> Add to Cart</>
+                <><ShoppingCart size={11} className="sm:w-3.5 sm:h-3.5" /> Add</>
               )}
             </motion.button>
           )}
