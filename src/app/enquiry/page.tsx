@@ -881,7 +881,7 @@ export default function EnquiryPage() {
               {/* Email Address (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  Email Address <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
+                  Email Address
                 </label>
                 <input
                   id="input-email"
@@ -909,7 +909,7 @@ export default function EnquiryPage() {
               {/* State (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  State <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
+                  State
                 </label>
                 <select
                   id="input-state"
@@ -940,7 +940,7 @@ export default function EnquiryPage() {
               {/* District (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  District <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
+                  District
                 </label>
                 <input
                   id="input-district"
@@ -958,7 +958,7 @@ export default function EnquiryPage() {
               {/* City (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  City / Town <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
+                  City / Town
                 </label>
                 <input
                   id="input-city"
@@ -1006,7 +1006,7 @@ export default function EnquiryPage() {
             {/* Pincode (Optional) */}
             <div className="w-full sm:w-1/2">
               <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                Pincode <span className="text-[var(--text-muted)] text-[10px] font-normal lowercase">(optional)</span>
+                Pincode
               </label>
               <input
                 id="input-pincode"
