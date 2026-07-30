@@ -55,6 +55,22 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+
+    // === Server-side validation: Only name, phone, address are MANDATORY ===
+    const customerName = (body.customer_name || '').trim();
+    const customerPhone = (body.customer_phone || '').replace(/\D/g, '');
+    const customerAddress = (body.customer_address || '').trim();
+
+    if (!customerName) {
+      return NextResponse.json({ error: 'Customer Name is required' }, { status: 400 });
+    }
+    if (!customerPhone || customerPhone.length !== 10) {
+      return NextResponse.json({ error: 'A valid 10-digit Phone Number is required' }, { status: 400 });
+    }
+    if (!customerAddress || customerAddress.length < 5) {
+      return NextResponse.json({ error: 'Full Delivery Address is required (min 5 characters)' }, { status: 400 });
+    }
+
     const orderNumber = generateOrderNumber();
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -81,10 +97,10 @@ export async function POST(req: Request) {
           .from('orders')
           .insert({
             order_number: orderNumber,
-            customer_name: body.customer_name,
-            customer_email: body.customer_email,
-            customer_phone: body.customer_phone,
-            customer_address: body.customer_address || null,
+            customer_name: customerName,
+            customer_email: (body.customer_email || '').trim() || null,
+            customer_phone: customerPhone,
+            customer_address: customerAddress,
             customer_city: body.customer_city || null,
             customer_pincode: body.customer_pincode || null,
             customer_state: body.customer_state || null,

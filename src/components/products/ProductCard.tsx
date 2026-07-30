@@ -181,7 +181,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
     <motion.div
       whileHover={product.in_stock ? { y: -4 } : {}}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl sm:rounded-2xl overflow-hidden flex flex-col justify-between h-full min-w-0 w-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
+      className={`bg-[#101A36]/90 backdrop-blur-md border border-[#172448] hover:border-[#F7B733]/60 rounded-xl sm:rounded-2xl flex flex-col justify-between h-full min-w-0 w-full group relative transition-all duration-300 shadow-xl ${!product.in_stock ? 'opacity-75' : ''}`}
     >
       {/* Promotional Discount Badge */}
       <div className="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 z-10 flex flex-col gap-1">
@@ -243,16 +243,17 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
             <span className="text-[8.5px] sm:text-xs text-slate-400 line-through">₹{product.mrp}</span>
           </div>
 
-          <div className="flex items-center w-full min-w-0 shrink-0">
+          {/* Add to Cart / Quantity — always visible */}
+          <div className="w-full shrink-0">
             {!product.in_stock ? (
-              <span className="w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg sm:rounded-xl flex items-center justify-center text-[9.5px] sm:text-xs font-bold opacity-60">
+              <span className="w-full min-h-[34px] sm:min-h-[40px] h-[34px] sm:h-10 bg-[#172448] text-slate-400 border border-[#172448] rounded-lg sm:rounded-xl flex items-center justify-center text-[9px] sm:text-xs font-bold opacity-60">
                 Out of Stock
               </span>
             ) : inCartQty > 0 ? (
-              <div className="flex items-center justify-between bg-[#0B132B] rounded-lg sm:rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 w-full shadow-sm">
+              <div className="flex items-center justify-between bg-[#0B132B] rounded-lg sm:rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[34px] sm:min-h-[40px] h-[34px] sm:h-10 w-full shadow-sm">
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                  className="w-7 sm:w-10 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-7 sm:w-10 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={11} className="sm:w-3.5 sm:h-3.5" />
@@ -262,7 +263,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
                 </div>
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                  className="w-7 sm:w-10 min-h-[36px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-7 sm:w-10 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   <Plus size={11} className="sm:w-3.5 sm:h-3.5" />
@@ -272,16 +273,16 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               <motion.button
                 onClick={handleAdd}
                 whileTap={{ scale: 0.95 }}
-                className={`w-full min-h-[36px] sm:min-h-[40px] h-9 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center gap-1 text-[9.5px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap shrink-0 shadow-md ${
+                className={`w-full min-h-[34px] sm:min-h-[40px] h-[34px] sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center gap-1 text-[10px] sm:text-xs font-black transition-all cursor-pointer whitespace-nowrap shrink-0 shadow-md ${
                   isAdded
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'bg-[#F7B733] text-[#101A36] hover:bg-[#FFD05C] shadow-md'
                 }`}
               >
                 {isAdded ? (
-                  <><Check size={11} className="sm:w-3.5 sm:h-3.5" /> Added</>
+                  <><Check size={12} className="sm:w-3.5 sm:h-3.5" /> Added</>
                 ) : (
-                  <><ShoppingCart size={11} className="sm:w-3.5 sm:h-3.5" /> Add</>
+                  <><ShoppingCart size={12} className="sm:w-3.5 sm:h-3.5" /> <span className="sm:hidden">Add</span><span className="hidden sm:inline">Add to Cart</span></>
                 )}
               </motion.button>
             )}

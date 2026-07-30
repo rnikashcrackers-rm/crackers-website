@@ -326,7 +326,7 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
           {products.length > 0 ? (
             activeCategory === 'all' ? (
               // E-commerce Grouped Category Sections
-              <div className="space-y-16">
+              <div className="space-y-8 sm:space-y-16">
                 {initialCategories.filter(cat => cat.id !== 'all').map((cat) => {
                   const catProducts = products.filter(p => p.category === cat.id);
                   if (catProducts.length === 0) return null;
@@ -335,7 +335,6 @@ export function ProductCatalogClient({ initialProducts, initialCategories }: Pro
                       key={cat.id} 
                       id={`category-sec-${cat.id}`} 
                       className="scroll-mt-28"
-                      style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 500px' }}
                     >
                       {/* Category Header */}
                       <div className="flex items-center justify-between mb-2">
