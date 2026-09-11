@@ -49,6 +49,8 @@ const categories = [
   },
 ];
 
+export const revalidate = 60;
+
 export default async function HomePage() {
   const settings = await getSiteSettings();
   const discount = settings.global_discount || '60';

@@ -1,6 +1,8 @@
 import { getCategories, getProducts } from '@/lib/db';
 import { ProductCatalogClient } from '@/components/products/ProductCatalogClient';
 
+export const revalidate = 60;
+
 export default async function ProductsPage() {
   // Fetch initial data directly on the server to optimize FCP, LCP and SEO
   const [products, categories] = await Promise.all([
