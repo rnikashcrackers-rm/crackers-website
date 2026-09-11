@@ -9,6 +9,10 @@ export const dynamic = 'force-dynamic';
 let cachedProductsRaw: { data: any[]; timestamp: number } | null = null;
 const CACHE_TTL_MS = 30000; // 30 seconds
 
+export function invalidateProductsCache() {
+  cachedProductsRaw = null;
+}
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);

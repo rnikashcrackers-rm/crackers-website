@@ -25,6 +25,7 @@ export interface Database {
           description_en: string | null;
           description_ta: string | null;
           in_stock: boolean;
+          stock_quantity?: number | null;
           is_featured: boolean;
           is_eco_friendly: boolean;
           sort_order: number;
@@ -45,6 +46,7 @@ export interface Database {
           description_en?: string | null;
           description_ta?: string | null;
           in_stock?: boolean;
+          stock_quantity?: number | null;
           is_featured?: boolean;
           is_eco_friendly?: boolean;
           sort_order?: number;
@@ -65,6 +67,7 @@ export interface Database {
           description_en?: string | null;
           description_ta?: string | null;
           in_stock?: boolean;
+          stock_quantity?: number | null;
           is_featured?: boolean;
           is_eco_friendly?: boolean;
           sort_order?: number;
@@ -267,6 +270,44 @@ export interface Database {
           email?: string;
           name?: string | null;
           subscribed?: boolean;
+          created_at?: string;
+        };
+      };
+      order_items: {
+        Row: {
+          id: string;
+          order_id: string;
+          product_id: string | null;
+          product_name: string;
+          category: string | null;
+          quantity: number;
+          unit_price: number;
+          mrp: number | null;
+          subtotal: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          order_id: string;
+          product_id?: string | null;
+          product_name: string;
+          category?: string | null;
+          quantity: number;
+          unit_price: number;
+          mrp?: number | null;
+          subtotal: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          order_id?: string;
+          product_id?: string | null;
+          product_name?: string;
+          category?: string | null;
+          quantity?: number;
+          unit_price?: number;
+          mrp?: number | null;
+          subtotal?: number;
           created_at?: string;
         };
       };

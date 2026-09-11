@@ -151,8 +151,12 @@ export default function EnquiryPage() {
     
     try {
       const orderItems = items.map(item => ({
-        name: item.product.name_en, quantity: item.quantity,
-        price: item.product.price, mrp: item.product.mrp,
+        id: item.product.id,
+        product_id: item.product.id,
+        name: item.product.name_en,
+        quantity: item.quantity,
+        price: item.product.price,
+        mrp: item.product.mrp,
         category: item.product.category,
       }));
       
@@ -538,11 +542,11 @@ export default function EnquiryPage() {
                 </div>
               )}
               {emailStatus === 'skipped' && (
-                <div className="p-2.5 bg-amber-500/10 border border-amber-500/20 rounded-xl text-[11px] text-amber-300 text-left flex gap-2.5 shadow-sm">
-                  <AlertCircle size={14} className="shrink-0 mt-0.5 text-amber-450" />
+                <div className="p-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs text-emerald-400 text-left flex gap-2.5 shadow-sm">
+                  <CheckCircle2 size={16} className="shrink-0 mt-0.5" />
                   <div>
-                    <strong className="block text-amber-400">Email Status: Sandbox Mode</strong>
-                    Confirmation email was skipped because Resend is not configured.
+                    <strong className="block text-emerald-300">Order Recorded Successfully!</strong>
+                    {customerInfo.email ? 'Confirmation generated and ready for download below.' : 'Order placed without email. Official receipt is ready for download.'}
                   </div>
                 </div>
               )}
@@ -681,16 +685,30 @@ export default function EnquiryPage() {
                         <div className="flex items-center bg-[var(--surface-high)] rounded-lg border border-[var(--border)] overflow-hidden h-8">
                           <button
                             onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
-                            className="w-7 flex justify-center items-center h-full hover:bg-[var(--surface-highest)] transition-colors"
+                            className="w-7 flex justify-center items-center h-full hover:bg-[var(--surface-highest)] transition-colors cursor-pointer"
+                            aria-label="Decrease quantity"
                           >
                             <Minus size={12} />
                           </button>
-                          <div className="w-8 text-center text-xs font-bold border-x border-[var(--border)] h-full flex items-center justify-center">
-                            {item.quantity}
-                          </div>
+                          <input
+                            type="number"
+                            min="1"
+                            max="9999"
+                            value={item.quantity}
+                            onFocus={(e) => e.target.select()}
+                            onChange={(e) => {
+                              const val = parseInt(e.target.value, 10);
+                              if (!isNaN(val) && val > 0) {
+                                updateQuantity(item.product.id, Math.min(val, 9999));
+                              }
+                            }}
+                            className="w-12 bg-transparent text-center text-xs font-bold border-x border-[var(--border)] h-full focus:outline-none focus:bg-[var(--surface-highest)] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            aria-label={`Quantity for ${item.product.name_en}`}
+                          />
                           <button
                             onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                            className="w-7 flex justify-center items-center h-full hover:bg-[var(--surface-highest)] transition-colors"
+                            className="w-7 flex justify-center items-center h-full hover:bg-[var(--surface-highest)] transition-colors cursor-pointer"
+                            aria-label="Increase quantity"
                           >
                             <Plus size={12} />
                           </button>
@@ -786,7 +804,7 @@ export default function EnquiryPage() {
             e.preventDefault(); 
             
             // Mark all mandatory fields as touched to trigger highlights
-            const fields = ['name', 'phone', 'email', 'state', 'district', 'city', 'address', 'pincode'];
+            const fields = ['name', 'phone', 'state', 'district', 'city', 'address', 'pincode'];
             const allTouched: Record<string, boolean> = {};
             fields.forEach(f => { allTouched[f] = true; });
             setTouched(allTouched);

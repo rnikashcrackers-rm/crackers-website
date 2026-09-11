@@ -34,6 +34,9 @@ export async function POST(req: Request) {
 
     const resend = new Resend(apiKey);
 
+    const grossAmount = subtotal || (items as any[]).reduce((sum: number, it: any) => sum + (it.mrp || it.price) * (it.quantity || 1), 0);
+    const discountPercent = (grossAmount > 0 && discountTotal) ? Math.round((discountTotal / grossAmount) * 100) : 0;
+
     // Build HTML email
     const itemsHtml = (items as any[]).map((item: any) =>
       `<tr>
@@ -131,18 +134,17 @@ export async function POST(req: Request) {
                         </table>
                       </td>
                     </tr>
-                    
                     <!-- Totals Section -->
                     <tr>
                       <td style="padding-bottom:40px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color:#FAF7F0;border-radius:16px;padding:20px;border:1px solid #E8E2D1;">
                           <tr>
-                            <td style="font-size:14px;color:#8B735B;padding-bottom:10px;">Subtotal</td>
-                            <td align="right" style="font-size:14px;color:#2D241E;font-weight:600;padding-bottom:10px;">₹${(subtotal || totalAmount).toLocaleString('en-IN')}</td>
+                            <td style="font-size:14px;color:#8B735B;padding-bottom:10px;">Subtotal (MRP Total)</td>
+                            <td align="right" style="font-size:14px;color:#2D241E;font-weight:600;padding-bottom:10px;">₹${(grossAmount).toLocaleString('en-IN')}</td>
                           </tr>
                           ${discountTotal ? `
                           <tr>
-                            <td style="font-size:14px;color:#10B981;padding-bottom:10px;">Discount Savings</td>
+                            <td style="font-size:14px;color:#10B981;padding-bottom:10px;">Festive Discount (${discountPercent}%)</td>
                             <td align="right" style="font-size:14px;color:#10B981;font-weight:700;padding-bottom:10px;">-₹${discountTotal.toLocaleString('en-IN')}</td>
                           </tr>
                           ` : ''}
@@ -225,29 +227,46 @@ export async function POST(req: Request) {
     </html>
     `;
 
-    const emailPayload: any = {
-      from: `NIKASH CRACKERS <${senderEmail}>`,
-      to: [to],
-      subject: `Order Confirmed — ${orderNumber} | NIKASH CRACKERS`,
-      html: emailHtml,
-    };
+    let customerEmailSent = false;
+    let customerEmailId: string | undefined = undefined;
 
-    if (pdfBase64) {
-      const base64Data = pdfBase64.includes('base64,')
-        ? pdfBase64.split('base64,')[1]
-        : pdfBase64;
+    const hasCustomerEmail = typeof to === 'string' && to.trim().length > 0 && to.includes('@');
+    if (hasCustomerEmail) {
+      try {
+        const emailPayload: any = {
+          from: `NIKASH CRACKERS <${senderEmail}>`,
+          to: [to.trim()],
+          subject: `Order Confirmed — ${orderNumber} | NIKASH CRACKERS`,
+          html: emailHtml,
+        };
 
-      emailPayload.attachments = [
-        {
-          filename: `NC-Crackers-Receipt-${orderNumber}.pdf`,
-          content: Buffer.from(base64Data, 'base64'),
-          contentType: 'application/pdf',
-        },
-      ];
+        if (pdfBase64) {
+          const base64Data = pdfBase64.includes('base64,')
+            ? pdfBase64.split('base64,')[1]
+            : pdfBase64;
+
+          emailPayload.attachments = [
+            {
+              filename: `NC-Crackers-Receipt-${orderNumber}.pdf`,
+              content: Buffer.from(base64Data, 'base64'),
+              contentType: 'application/pdf',
+            },
+          ];
+        }
+
+        const { data, error } = await resend.emails.send(emailPayload);
+        if (error) {
+          console.error('Customer email send error (continuing for admin notification):', error);
+        } else {
+          customerEmailSent = true;
+          customerEmailId = data?.id;
+        }
+      } catch (custErr) {
+        console.error('Failed to send customer email:', custErr);
+      }
+    } else {
+      console.log('No valid customer email provided, skipping customer receipt email');
     }
-
-    const { data, error } = await resend.emails.send(emailPayload);
-    if (error) throw error;
 
     // Send dedicated notification email to owner if requested (e.g. on new checkout)
     const adminEmail = process.env.ADMIN_EMAIL || 'rnikashcrackers@gmail.com';
@@ -298,7 +317,7 @@ export async function POST(req: Request) {
                               <td><strong>Phone:</strong> ${customerPhone || 'N/A'}</td>
                             </tr>
                             <tr>
-                              <td><strong>Email:</strong> ${to}</td>
+                              <td><strong>Email:</strong> ${to || 'Not provided'}</td>
                             </tr>
                             <tr>
                               <td><strong>Delivery Address:</strong> ${[customerAddress, customerCity, customerDistrict, customerState, customerPincode].filter(Boolean).join(', ') || 'N/A'}</td>
@@ -316,11 +335,11 @@ export async function POST(req: Request) {
                               <td><strong>Order Number:</strong> <span style="color:#B22222;font-weight:bold;font-family:monospace;font-size:14px;">${orderNumber}</span></td>
                             </tr>
                             <tr>
-                              <td><strong>Subtotal:</strong> ₹${(subtotal || totalAmount).toLocaleString('en-IN')}</td>
+                              <td><strong>Subtotal (MRP Total):</strong> ₹${(grossAmount).toLocaleString('en-IN')}</td>
                             </tr>
                             ${discountTotal ? `
                             <tr>
-                              <td style="color:#10B981;"><strong>Discount:</strong> -₹${discountTotal.toLocaleString('en-IN')}</td>
+                              <td style="color:#10B981;"><strong>Festive Discount (${discountPercent}%):</strong> -₹${discountTotal.toLocaleString('en-IN')}</td>
                             </tr>
                             ` : ''}
                             <tr>
@@ -387,10 +406,14 @@ export async function POST(req: Request) {
       };
 
       if (pdfBase64) {
+        const base64Data = pdfBase64.includes('base64,')
+          ? pdfBase64.split('base64,')[1]
+          : pdfBase64;
+
         adminEmailPayload.attachments = [
           {
             filename: `NC-Crackers-Receipt-${orderNumber}.pdf`,
-            content: pdfBase64,
+            content: Buffer.from(base64Data, 'base64'),
             contentType: 'application/pdf',
           },
         ];
@@ -402,12 +425,17 @@ export async function POST(req: Request) {
     // Track analytics event
     try {
       const { trackEvent } = await import('@/lib/tracking');
-      await trackEvent('email_sent', 'checkout', { orderNumber, emailId: data?.id, recipient: to });
+      await trackEvent('email_sent', 'checkout', { orderNumber, emailId: customerEmailId, recipient: to || 'none' });
     } catch (trackErr) {
       console.error('Failed to log email analytics:', trackErr);
     }
 
-    return NextResponse.json({ success: true, emailId: data?.id });
+    return NextResponse.json({
+      success: true,
+      emailId: customerEmailId,
+      customerEmailSent,
+      skippedCustomerEmail: !hasCustomerEmail
+    });
   } catch (error: any) {
     console.error('Email send error:', error);
     // Log error to database

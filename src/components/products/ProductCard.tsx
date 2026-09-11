@@ -93,17 +93,29 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[40px] h-10 w-full shadow-sm">
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                  className="w-9 min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-8 min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={14} />
                 </button>
-                <div className="flex-grow text-center text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
-                  {inCartQty}
-                </div>
+                <input
+                  type="number"
+                  min="1"
+                  max="9999"
+                  value={inCartQty}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (!isNaN(val) && val > 0) {
+                      updateQuantity(product.id, Math.min(val, 9999));
+                    }
+                  }}
+                  className="w-14 bg-transparent text-center text-xs font-black text-[#F7B733] h-full border-x border-[#172448] focus:outline-none focus:bg-[#101A36] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  aria-label={`Quantity for ${product.name_en}`}
+                />
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                  className="w-9 min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-8 min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   <Plus size={14} />
@@ -139,17 +151,29 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
             <div className="flex items-center justify-between bg-[#0B132B] rounded-lg border border-[#F7B733]/40 overflow-hidden min-h-[34px] h-[34px] w-full shadow-sm">
               <button
                 onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                className="w-10 min-h-[34px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-9 min-h-[34px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Decrease quantity"
               >
                 <Minus size={12} />
               </button>
-              <div className="flex-grow text-center text-[11px] font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
-                {inCartQty}
-              </div>
+              <input
+                type="number"
+                min="1"
+                max="9999"
+                value={inCartQty}
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value, 10);
+                  if (!isNaN(val) && val > 0) {
+                    updateQuantity(product.id, Math.min(val, 9999));
+                  }
+                }}
+                className="w-12 bg-transparent text-center text-[11px] font-black text-[#F7B733] h-full border-x border-[#172448] focus:outline-none focus:bg-[#101A36] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                aria-label={`Quantity for ${product.name_en}`}
+              />
               <button
                 onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                className="w-10 min-h-[34px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                className="w-9 min-h-[34px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                 aria-label="Increase quantity"
               >
                 <Plus size={12} />
@@ -253,17 +277,29 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               <div className="flex items-center justify-between bg-[#0B132B] rounded-lg sm:rounded-xl border border-[#F7B733]/40 overflow-hidden min-h-[34px] sm:min-h-[40px] h-[34px] sm:h-10 w-full shadow-sm">
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty - 1)}
-                  className="w-7 sm:w-10 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-7 sm:w-9 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={11} className="sm:w-3.5 sm:h-3.5" />
                 </button>
-                <div className="flex-grow text-center text-[10.5px] sm:text-xs font-black text-[#F7B733] h-full flex items-center justify-center border-x border-[#172448] select-none">
-                  {inCartQty}
-                </div>
+                <input
+                  type="number"
+                  min="1"
+                  max="9999"
+                  value={inCartQty}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (!isNaN(val) && val > 0) {
+                      updateQuantity(product.id, Math.min(val, 9999));
+                    }
+                  }}
+                  className="w-10 sm:w-14 bg-transparent text-center text-[10.5px] sm:text-xs font-black text-[#F7B733] h-full border-x border-[#172448] focus:outline-none focus:bg-[#101A36] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  aria-label={`Quantity for ${product.name_en}`}
+                />
                 <button
                   onClick={() => updateQuantity(product.id, inCartQty + 1)}
-                  className="w-7 sm:w-10 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
+                  className="w-7 sm:w-9 min-h-[34px] sm:min-h-[40px] flex justify-center items-center text-slate-300 hover:text-white transition-colors h-full hover:bg-[#172448] cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   <Plus size={11} className="sm:w-3.5 sm:h-3.5" />

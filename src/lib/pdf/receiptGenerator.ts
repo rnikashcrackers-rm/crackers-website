@@ -121,7 +121,7 @@ interface ReceiptData {
   orderNumber: string;
   date: string;
   customerName: string;
-  customerEmail: string;
+  customerEmail?: string;
   customerPhone: string;
   customerAddress?: string;
   customerCity?: string;
@@ -133,6 +133,7 @@ interface ReceiptData {
   discountTotal: number;
   totalAmount: number;
   packingCharges?: number;
+  discountPercent?: number;
 }
 
 // ─── COLOR CONSTANTS ────────────────────────────────────────────────────────
@@ -559,9 +560,12 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   // 2. Less: Discount
   const totalDiscount = data.discountTotal || 0;
   if (totalDiscount > 0) {
+    const calcDiscountPercent = data.discountPercent !== undefined
+      ? data.discountPercent
+      : (grossAmount > 0 ? Math.round((totalDiscount / grossAmount) * 100) : 0);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...C.mid);
-    doc.text('Less: Discount:', totLabelX, y);
+    doc.text(`Less: Festive Discount (${calcDiscountPercent}%):`, totLabelX, y);
     doc.setTextColor(...C.green);
     doc.setFont('helvetica', 'bold');
     doc.text('-' + rs(totalDiscount), totValueX, y, { align: 'right' });

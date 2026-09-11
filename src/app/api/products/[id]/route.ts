@@ -81,6 +81,10 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     if (body.image_url !== undefined) updateData.image_url = body.image_url;
     if (body.in_stock !== undefined) updateData.in_stock = body.in_stock;
     if (body.is_featured !== undefined) updateData.is_featured = body.is_featured;
+    if (body.stock_quantity !== undefined) {
+      updateData.stock_quantity = Math.max(0, parseInt(body.stock_quantity, 10) || 0);
+      updateData.in_stock = updateData.stock_quantity > 0;
+    }
 
     // Recalculate discount
     if (body.mrp !== undefined || body.price !== undefined) {
@@ -94,6 +98,12 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 
     const { data, error } = await supabase.from('products').update(updateData).eq('id', id).select().single();
     if (error) throw error;
+
+    try {
+      const { invalidateProductsCache } = await import('../route');
+      invalidateProductsCache();
+    } catch {}
+
     return NextResponse.json(data);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -121,6 +131,12 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     const supabase = createClient(supabaseUrl, supabaseKey);
     const { error } = await supabase.from('products').delete().eq('id', id);
     if (error) throw error;
+
+    try {
+      const { invalidateProductsCache } = await import('../route');
+      invalidateProductsCache();
+    } catch {}
+
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

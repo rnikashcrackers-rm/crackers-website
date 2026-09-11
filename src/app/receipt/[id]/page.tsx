@@ -164,10 +164,31 @@ export default function ReceiptDownloadPage({ params }: PageProps) {
                 </div>
               ))}
             </div>
-            <div className="bg-[var(--surface-high)] px-4 py-3 flex justify-between items-center border-t border-[var(--border)]">
-              <span className="text-xs font-bold text-[var(--text)]">Net Payable Total:</span>
-              <span className="text-base font-bold text-[var(--color-coral)] font-display">₹{order.total_amount?.toLocaleString('en-IN')}</span>
-            </div>
+            {(() => {
+              const subtotalVal = order.subtotal || (order.items || []).reduce((s: number, it: any) => s + (it.mrp || it.price) * (it.quantity || 1), 0);
+              const discountVal = order.discount_total || (subtotalVal - (order.total_amount || 0));
+              const discountPct = (subtotalVal > 0 && discountVal > 0) ? Math.round((discountVal / subtotalVal) * 100) : 0;
+              return (
+                <div className="bg-[var(--surface-high)] px-4 py-3 border-t border-[var(--border)] space-y-1.5 text-xs">
+                  {subtotalVal > order.total_amount && (
+                    <div className="flex justify-between text-[var(--text-muted)]">
+                      <span>Gross Total (MRP):</span>
+                      <span>₹{subtotalVal.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  {discountVal > 0 && (
+                    <div className="flex justify-between text-emerald-400 font-semibold">
+                      <span>Festive Discount ({discountPct}%):</span>
+                      <span>-₹{discountVal.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center pt-2 border-t border-[var(--border)] font-bold text-sm text-[var(--text)]">
+                    <span>Net Payable Total:</span>
+                    <span className="text-base font-bold text-[var(--color-coral)] font-display">₹{order.total_amount?.toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           {/* Payment Card */}

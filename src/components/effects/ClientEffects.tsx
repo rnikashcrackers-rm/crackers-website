@@ -37,18 +37,28 @@ export function ClientEffects() {
     checkCartExpiry();
 
     const handleUserActivity = () => {
-      const { setLastActive } = useEnquiryStore.getState();
-      setLastActive(Date.now());
+      const { touchActive } = useEnquiryStore.getState();
+      touchActive();
     };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        const { checkCartExpiry } = useEnquiryStore.getState();
+        checkCartExpiry();
+      }
+    };
+
+    // Periodically check cart expiry every 30 seconds
+    const expiryInterval = setInterval(() => {
+      const { checkCartExpiry } = useEnquiryStore.getState();
+      checkCartExpiry();
+    }, 30 * 1000);
 
     window.addEventListener('click', handleUserActivity, { passive: true });
     window.addEventListener('touchstart', handleUserActivity, { passive: true });
     window.addEventListener('scroll', handleUserActivity, { passive: true });
-    window.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        handleUserActivity();
-      }
-    });
+    window.addEventListener('focus', handleVisibility);
+    document.addEventListener('visibilitychange', handleVisibility);
 
     const entryTimer = setTimeout(() => {
       setEntryBursting(false);
@@ -57,9 +67,12 @@ export function ClientEffects() {
     return () => {
       console.warn = originalWarn;
       clearTimeout(entryTimer);
+      clearInterval(expiryInterval);
       window.removeEventListener('click', handleUserActivity);
       window.removeEventListener('touchstart', handleUserActivity);
       window.removeEventListener('scroll', handleUserActivity);
+      window.removeEventListener('focus', handleVisibility);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 

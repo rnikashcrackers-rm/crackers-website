@@ -19,6 +19,7 @@ interface EnquiryState {
   getItemCount: () => number;
   getTotalQuantity: () => number;
   setLastActive: (timestamp: number) => void;
+  touchActive: () => void;
   checkCartExpiry: () => void;
 }
 
@@ -56,13 +57,14 @@ export const useEnquiryStore = create<EnquiryState>()(
       },
 
       updateQuantity: (id, quantity) => {
-        if (quantity < 1) {
+        const parsed = Math.floor(Number(quantity) || 0);
+        if (parsed < 1) {
           get().removeItem(id);
           return;
         }
         set((state) => ({
           items: state.items.map((i) =>
-            String(i.product.id) === String(id) ? { ...i, quantity: Math.min(quantity, 100) } : i
+            String(i.product.id) === String(id) ? { ...i, quantity: Math.min(parsed, 9999) } : i
           ),
           lastActive: Date.now(),
         }));
@@ -73,26 +75,33 @@ export const useEnquiryStore = create<EnquiryState>()(
       },
 
       setLastActive: (timestamp) => {
+        const { lastActive, items } = get();
+        const CART_EXPIRY_MS = 10 * 60 * 1000;
+        if (lastActive && items.length > 0 && Date.now() - lastActive > CART_EXPIRY_MS) {
+          set({ items: [], lastActive: null });
+          return;
+        }
         set({ lastActive: timestamp });
       },
 
       touchActive: () => {
-        set({ lastActive: Date.now() });
+        get().setLastActive(Date.now());
       },
 
       checkCartExpiry: () => {
         const { lastActive, items } = get();
-        // If customer is inside the website, keep timestamp fresh & cart intact
-        if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
-          set({ lastActive: Date.now() });
-          return;
-        }
-        // Expire cart only if customer has left/closed the site for over 24 hours
+        // Expire cart if customer has left/closed the site or been inactive for over 10 minutes
+        const CART_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes
         if (lastActive && items.length > 0) {
           const diff = Date.now() - lastActive;
-          if (diff > 24 * 60 * 60 * 1000) {
+          if (diff > CART_EXPIRY_MS) {
             set({ items: [], lastActive: null });
+            return;
           }
+        }
+        // If customer is currently active inside the website, keep timestamp fresh
+        if (items.length > 0 && typeof document !== 'undefined' && document.visibilityState === 'visible') {
+          set({ lastActive: Date.now() });
         }
       },
 
