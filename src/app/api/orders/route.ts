@@ -193,17 +193,21 @@ export async function POST(req: Request) {
     const pricing = calculateOrderPricing(authoritativeItems);
     const orderNumber = generateOrderNumber();
 
+    const rawEmail = (body.customer_email || '').trim();
+
     // 7. Insert Order into Supabase Orders Table
-    const orderPayload = {
+    // Use empty string '' if not provided so it satisfies NOT NULL column constraints,
+    // and seamlessly retries with null if schema has dropped NOT NULL.
+    const orderPayload: any = {
       order_number: orderNumber,
       customer_name: customerName,
-      customer_email: (body.customer_email || '').trim() || null,
+      customer_email: rawEmail || '',
       customer_phone: customerPhone,
       customer_address: customerAddress,
-      customer_city: body.customer_city || null,
-      customer_pincode: body.customer_pincode || null,
-      customer_state: body.customer_state || null,
-      customer_district: body.customer_district || null,
+      customer_city: (body.customer_city || '').trim(),
+      customer_pincode: (body.customer_pincode || '').trim(),
+      customer_state: (body.customer_state || '').trim(),
+      customer_district: (body.customer_district || '').trim(),
       items: authoritativeItems,
       subtotal: pricing.subtotal + pricing.discountTotal, // Standard MRP subtotal
       discount_total: pricing.discountTotal,
@@ -216,11 +220,28 @@ export async function POST(req: Request) {
         `Includes 3% packing charges (₹${pricing.packingCharges.toLocaleString('en-IN')}) on order value (₹${pricing.subtotal.toLocaleString('en-IN')})`,
     };
 
-    const { data: orderData, error: orderError } = await supabase
+    let { data: orderData, error: orderError } = await supabase
       .from('orders')
       .insert(orderPayload)
       .select()
       .single();
+
+    // Auto-retry with NULL if empty string was rejected by any specific check
+    if (orderError && (orderError.message.includes('customer_email') || orderError.code === '23502')) {
+      const retryPayload = {
+        ...orderPayload,
+        customer_email: rawEmail || null,
+        customer_city: (body.customer_city || '').trim() || null,
+        customer_pincode: (body.customer_pincode || '').trim() || null,
+        customer_state: (body.customer_state || '').trim() || null,
+        customer_district: (body.customer_district || '').trim() || null,
+      };
+      const retryResult = await supabase.from('orders').insert(retryPayload).select().single();
+      if (!retryResult.error) {
+        orderData = retryResult.data;
+        orderError = null;
+      }
+    }
 
     if (orderError) {
       console.error('Authoritative order insert failed:', orderError);

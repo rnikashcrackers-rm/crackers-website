@@ -195,6 +195,13 @@ export default function EnquiryPage() {
       setEmailStatus('sending');
       setReceiptStatus('generating');
 
+      // Authoritative database values
+      const authItems = data.items || orderItems;
+      const authTotal = Number(data.total_amount) || grandTotal;
+      const authSubtotal = Number(data.subtotal) || (getTotal() + getSavings());
+      const authDiscount = Number(data.discount_total) || getSavings();
+      const authEmail = data.customer_email || customerInfo.email || '';
+
       // 1. Generate PDF & Prepare Base64
       let pdfBase64Data = null;
       try {
@@ -202,12 +209,18 @@ export default function EnquiryPage() {
         const doc = await generateReceipt({
           orderNumber: data.order_number,
           date: formatOrderDate(data.created_at),
-          customerName: customerInfo.name, customerEmail: customerInfo.email,
-          customerPhone: customerInfo.phone, customerAddress: customerInfo.address,
-          customerCity: customerInfo.city, customerPincode: customerInfo.pincode,
-          customerState: customerInfo.state, customerDistrict: customerInfo.district,
-          items: orderItems, subtotal: getTotal() + getSavings(),
-          discountTotal: getSavings(), totalAmount: grandTotal,
+          customerName: data.customer_name || customerInfo.name,
+          customerEmail: authEmail,
+          customerPhone: data.customer_phone || customerInfo.phone,
+          customerAddress: data.customer_address || customerInfo.address,
+          customerCity: data.customer_city || customerInfo.city,
+          customerPincode: data.customer_pincode || customerInfo.pincode,
+          customerState: data.customer_state || customerInfo.state,
+          customerDistrict: data.customer_district || customerInfo.district,
+          items: authItems,
+          subtotal: authSubtotal,
+          discountTotal: authDiscount,
+          totalAmount: authTotal,
           packingCharges: packingCharges,
         });
         
@@ -232,18 +245,21 @@ export default function EnquiryPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          to: customerInfo.email, orderNumber: data.order_number,
-          customerName: customerInfo.name, items: orderItems,
-          totalAmount: grandTotal, subtotal: getTotal() + getSavings(),
-          discountTotal: getSavings(),
+          to: authEmail,
+          orderNumber: data.order_number,
+          customerName: data.customer_name || customerInfo.name,
+          items: authItems,
+          totalAmount: authTotal,
+          subtotal: authSubtotal,
+          discountTotal: authDiscount,
           packingCharges: packingCharges,
           pdfBase64: pdfBase64Data,
-          customerPhone: customerInfo.phone,
-          customerAddress: customerInfo.address,
-          customerCity: customerInfo.city,
-          customerPincode: customerInfo.pincode,
-          customerState: customerInfo.state,
-          customerDistrict: customerInfo.district,
+          customerPhone: data.customer_phone || customerInfo.phone,
+          customerAddress: data.customer_address || customerInfo.address,
+          customerCity: data.customer_city || customerInfo.city,
+          customerPincode: data.customer_pincode || customerInfo.pincode,
+          customerState: data.customer_state || customerInfo.state,
+          customerDistrict: data.customer_district || customerInfo.district,
           notifyAdmin: true,
         }),
       })
@@ -337,25 +353,37 @@ export default function EnquiryPage() {
 
   const handleDownloadReceipt = async () => {
     if (!orderResult) return;
-    const orderItems = items.length > 0 ? items.map(i => ({ name: i.product.name_en, quantity: i.quantity, price: i.product.price, mrp: i.product.mrp })) : (orderResult.items || []);
-    const itemsTotal = orderItems.reduce((sum: number, item: any) => sum + (item.price || 0) * (item.quantity || 0), 0);
-    const calculatedPacking = Math.round(itemsTotal * 0.03);
-    const grandTotal = itemsTotal + calculatedPacking;
+    const authItems = (orderResult.items && orderResult.items.length > 0)
+      ? orderResult.items
+      : items.map((i) => ({
+          name: i.product.name_en,
+          quantity: i.quantity,
+          price: i.product.price,
+          mrp: i.product.mrp,
+          category: i.product.category,
+        }));
+    const authSubtotal = Number(orderResult.subtotal) || (getTotal() + getSavings());
+    const authDiscount = Number(orderResult.discount_total) || getSavings();
+    const authTotal = Number(orderResult.total_amount) || getTotal();
+    const diff = authTotal - (authSubtotal - authDiscount);
+    const calculatedPacking = diff > 0 ? diff : Math.round((authSubtotal - authDiscount) * 0.03);
     
     const { generateReceipt, downloadReceipt } = await import('@/lib/pdf/receiptGenerator');
     const doc = await generateReceipt({
-      orderNumber: orderResult.order_number, date: formatOrderDate(orderResult.created_at),
-      customerName: orderResult.customer_name || customerInfo.name, customerEmail: orderResult.customer_email || customerInfo.email,
+      orderNumber: orderResult.order_number,
+      date: formatOrderDate(orderResult.created_at),
+      customerName: orderResult.customer_name || customerInfo.name,
+      customerEmail: orderResult.customer_email || customerInfo.email || '',
       customerPhone: orderResult.customer_phone || customerInfo.phone, 
       customerAddress: orderResult.customer_address || customerInfo.address,
       customerCity: orderResult.customer_city || customerInfo.city,
       customerPincode: orderResult.customer_pincode || customerInfo.pincode,
       customerState: orderResult.customer_state || customerInfo.state,
       customerDistrict: orderResult.customer_district || customerInfo.district,
-      items: orderItems,
-      subtotal: orderResult.subtotal || (itemsTotal + (orderResult.discount_total || 0)), 
-      discountTotal: orderResult.discount_total || 0,
-      totalAmount: grandTotal,
+      items: authItems,
+      subtotal: authSubtotal, 
+      discountTotal: authDiscount,
+      totalAmount: authTotal,
       packingCharges: calculatedPacking,
     });
     downloadReceipt(doc, orderResult.order_number);
