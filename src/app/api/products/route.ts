@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { products as staticProducts } from '@/lib/data/products';
 import { requireAdmin } from '@/lib/admin-auth';
+import { createServiceClient, isServiceConfigured, ServiceConfigError } from '@/lib/supabase/service';
 
 export const dynamic = 'force-dynamic';
 
@@ -148,55 +149,73 @@ export async function POST(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
     const body = await req.json();
 
-    const mrp = body.mrp || body.original_price || 0;
-    const price = body.price || body.discounted_price || mrp;
+    // Input validation
+    if (!body.name_en && !body.product_name) {
+      return NextResponse.json({ error: 'Product name is required' }, { status: 400 });
+    }
+    if (!body.category) {
+      return NextResponse.json({ error: 'Product category is required' }, { status: 400 });
+    }
+
+    const mrp = Number(body.mrp || body.original_price || 0);
+    const price = Number(body.price || body.discounted_price || mrp);
     let discount_percent = 0;
     if (mrp > 0 && price < mrp) {
       discount_percent = Math.round(((mrp - price) / mrp) * 100);
     }
 
-    // Local DB fallback
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      const { getLocalProducts, saveLocalProducts } = await import('@/lib/local-db');
-      const currentList = getLocalProducts();
-      
-      const newId = String(currentList.length > 0 ? Math.max(...currentList.map(p => parseInt(p.id) || 0)) + 1 : 1);
-      const slug = body.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + newId;
+    // Check if Supabase service is configured
+    if (!isServiceConfigured()) {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+      if (!supabaseUrl || supabaseUrl.includes('your_supabase')) {
+        // Local DB fallback
+        const { getLocalProducts, saveLocalProducts } = await import('@/lib/local-db');
+        const currentList = getLocalProducts();
+        
+        const newId = String(currentList.length > 0 ? Math.max(...currentList.map(p => parseInt(p.id) || 0)) + 1 : 1);
+        const nameEn = body.name_en || body.product_name;
+        const slug = nameEn.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + newId;
 
-      const newProduct = {
-        id: newId,
-        name_en: body.name_en,
-        name_ta: body.name_ta || body.name_en,
-        slug,
-        category: body.category,
-        price,
-        mrp,
-        discount_percent,
-        badge_text: discount_percent > 0 ? `🔥 ${discount_percent}% OFF` : null,
-        image_url: body.image_url || '/product-assets/10-cm-color-sparkler-110.jpg',
-        in_stock: body.in_stock !== undefined ? body.in_stock : true,
-        is_featured: body.is_featured || false,
-      };
+        const newProduct = {
+          id: newId,
+          name_en: nameEn,
+          name_ta: body.name_ta || nameEn,
+          slug,
+          category: body.category,
+          price,
+          mrp,
+          discount_percent,
+          badge_text: discount_percent > 0 ? `🔥 ${discount_percent}% OFF` : null,
+          image_url: body.image_url || '/product-assets/10-cm-color-sparkler-110.jpg',
+          in_stock: body.in_stock !== undefined ? body.in_stock : true,
+          is_featured: body.is_featured || false,
+        };
 
-      currentList.push(newProduct);
-      saveLocalProducts(currentList);
-      return NextResponse.json(newProduct, { status: 201 });
+        currentList.push(newProduct);
+        saveLocalProducts(currentList);
+        cachedProductsRaw = null;
+        return NextResponse.json(newProduct, { status: 201 });
+      }
+
+      return NextResponse.json(
+        { error: 'Supabase service role key is not configured correctly. Admin operations require the actual service_role key from your Supabase Dashboard → Settings → API.' },
+        { status: 500 }
+      );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const slug = body.name_en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Math.random().toString(36).substring(2, 6);
+    const supabase = createServiceClient();
+    const nameEn = body.name_en || body.product_name;
+    const slug = nameEn.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Math.random().toString(36).substring(2, 6);
     const productId = body.id ? String(body.id) : String(Date.now() + Math.floor(Math.random() * 1000));
 
     const { data, error } = await supabase
       .from('products')
       .insert({
         id: productId,
-        name_en: body.name_en || body.product_name,
-        name_ta: body.name_ta || body.name_en || body.product_name || '',
+        name_en: nameEn,
+        name_ta: body.name_ta || nameEn || '',
         slug,
         category: body.category,
         price,
@@ -210,12 +229,26 @@ export async function POST(req: Request) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error creating product:', error);
+      // Provide helpful error message for RLS violations
+      if (error.message.includes('row-level security')) {
+        return NextResponse.json(
+          { error: 'Product creation blocked by database security policy. The SUPABASE_SERVICE_ROLE_KEY may be incorrect. Please verify it in your Supabase Dashboard → Settings → API.' },
+          { status: 403 }
+        );
+      }
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    
     cachedProductsRaw = null;
     return NextResponse.json(data, { status: 201 });
   } catch (error: any) {
     console.error('Error creating product:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to create product' }, { status: 500 });
   }
 }
 
@@ -224,8 +257,6 @@ export async function DELETE(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
     const { searchParams } = new URL(req.url);
     const idsString = searchParams.get('ids');
     if (!idsString) {
@@ -237,27 +268,38 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: 'No IDs provided' }, { status: 400 });
     }
 
-    // Local DB fallback
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      const { getLocalProducts, saveLocalProducts } = await import('@/lib/local-db');
-      const currentList = getLocalProducts();
-      const newList = currentList.filter(p => !ids.includes(String(p.id)));
-      saveLocalProducts(newList);
-      return NextResponse.json({ success: true, count: currentList.length - newList.length });
+    if (!isServiceConfigured()) {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+      if (!supabaseUrl || supabaseUrl.includes('your_supabase')) {
+        const { getLocalProducts, saveLocalProducts } = await import('@/lib/local-db');
+        const currentList = getLocalProducts();
+        const newList = currentList.filter(p => !ids.includes(String(p.id)));
+        saveLocalProducts(newList);
+        cachedProductsRaw = null;
+        return NextResponse.json({ success: true, count: currentList.length - newList.length });
+      }
+      return NextResponse.json({ error: 'Supabase service role key is not configured correctly.' }, { status: 500 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const { data, error } = await supabase
       .from('products')
       .delete()
       .in('id', ids)
       .select();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error deleting products:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    
     cachedProductsRaw = null;
     return NextResponse.json({ success: true, count: data?.length || 0 });
   } catch (error: any) {
     console.error('Error deleting products:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to delete products' }, { status: 500 });
   }
 }

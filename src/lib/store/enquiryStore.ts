@@ -76,7 +76,7 @@ export const useEnquiryStore = create<EnquiryState>()(
 
       setLastActive: (timestamp) => {
         const { lastActive, items } = get();
-        const CART_EXPIRY_MS = 10 * 60 * 1000;
+        const CART_EXPIRY_MS = 60 * 60 * 1000; // 60 minutes
         if (lastActive && items.length > 0 && Date.now() - lastActive > CART_EXPIRY_MS) {
           set({ items: [], lastActive: null });
           return;
@@ -90,8 +90,8 @@ export const useEnquiryStore = create<EnquiryState>()(
 
       checkCartExpiry: () => {
         const { lastActive, items } = get();
-        // Expire cart if customer has left/closed the site or been inactive for over 10 minutes
-        const CART_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes
+        // Expire cart if customer has left/closed the site or been inactive for over 60 minutes
+        const CART_EXPIRY_MS = 60 * 60 * 1000; // 60 minutes
         if (lastActive && items.length > 0) {
           const diff = Date.now() - lastActive;
           if (diff > CART_EXPIRY_MS) {

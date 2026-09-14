@@ -160,6 +160,8 @@ export interface Database {
           customer_address: string | null;
           customer_city: string | null;
           customer_pincode: string | null;
+          customer_state: string | null;
+          customer_district: string | null;
           items: Json;
           subtotal: number;
           discount_total: number;
@@ -182,6 +184,8 @@ export interface Database {
           customer_address?: string | null;
           customer_city?: string | null;
           customer_pincode?: string | null;
+          customer_state?: string | null;
+          customer_district?: string | null;
           items: Json;
           subtotal: number;
           discount_total: number;
@@ -204,6 +208,8 @@ export interface Database {
           customer_address?: string | null;
           customer_city?: string | null;
           customer_pincode?: string | null;
+          customer_state?: string | null;
+          customer_district?: string | null;
           items?: Json;
           subtotal?: number;
           discount_total?: number;
@@ -311,6 +317,168 @@ export interface Database {
           created_at?: string;
         };
       };
+      bank_accounts: {
+        Row: {
+          id: string;
+          bank_name: string;
+          branch: string;
+          holder_name: string;
+          account_number: string;
+          ifsc_code: string;
+          gpay_number: string | null;
+          phonepe_number: string | null;
+          is_active?: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          bank_name: string;
+          branch: string;
+          holder_name: string;
+          account_number: string;
+          ifsc_code: string;
+          gpay_number?: string | null;
+          phonepe_number?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          bank_name?: string;
+          branch?: string;
+          holder_name?: string;
+          account_number?: string;
+          ifsc_code?: string;
+          gpay_number?: string | null;
+          phonepe_number?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+        };
+      };
+      categories: {
+        Row: {
+          id: string;
+          label: string;
+          emoji: string | null;
+          sort_order: number;
+          created_at?: string;
+        };
+        Insert: {
+          id?: string;
+          label: string;
+          emoji?: string | null;
+          sort_order?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          label?: string;
+          emoji?: string | null;
+          sort_order?: number;
+          created_at?: string;
+        };
+      };
+      sliders: {
+        Row: {
+          id: string;
+          image_url: string;
+          link_url: string | null;
+          title: string | null;
+          sort_order: number;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Insert: {
+          id?: string;
+          image_url: string;
+          link_url?: string | null;
+          title?: string | null;
+          sort_order?: number;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          image_url?: string;
+          link_url?: string | null;
+          title?: string | null;
+          sort_order?: number;
+          is_active?: boolean;
+          created_at?: string;
+        };
+      };
+      site_settings: {
+        Row: {
+          key: string;
+          value: string;
+          updated_at?: string;
+        };
+        Insert: {
+          key: string;
+          value: string;
+          updated_at?: string;
+        };
+        Update: {
+          key?: string;
+          value?: string;
+          updated_at?: string;
+        };
+      };
+      error_logs: {
+        Row: {
+          id: string;
+          error_type?: string;
+          message: string;
+          stack?: string | null;
+          context?: Json | null;
+          url?: string | null;
+          user_agent?: string | null;
+          created_at?: string;
+        };
+        Insert: {
+          id?: string;
+          error_type?: string;
+          message: string;
+          stack?: string | null;
+          context?: Json | null;
+          url?: string | null;
+          user_agent?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          error_type?: string;
+          message?: string;
+          stack?: string | null;
+          context?: Json | null;
+          url?: string | null;
+          user_agent?: string | null;
+          created_at?: string;
+        };
+      };
+      analytics_events: {
+        Row: {
+          id: string;
+          event_name: string;
+          category?: string | null;
+          metadata?: Json | null;
+          created_at?: string;
+        };
+        Insert: {
+          id?: string;
+          event_name: string;
+          category?: string | null;
+          metadata?: Json | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          event_name?: string;
+          category?: string | null;
+          metadata?: Json | null;
+          created_at?: string;
+        };
+      };
     };
   };
 }
@@ -324,3 +492,7 @@ export type OrderInsert = Database['public']['Tables']['orders']['Insert'];
 export type ContactMessage = Database['public']['Tables']['contact_messages']['Row'];
 export type ContactMessageInsert = Database['public']['Tables']['contact_messages']['Insert'];
 export type NewsletterSubscriber = Database['public']['Tables']['newsletter_subscribers']['Row'];
+export type BankAccount = Database['public']['Tables']['bank_accounts']['Row'];
+export type Category = Database['public']['Tables']['categories']['Row'];
+export type Slider = Database['public']['Tables']['sliders']['Row'];
+export type SiteSetting = Database['public']['Tables']['site_settings']['Row'];

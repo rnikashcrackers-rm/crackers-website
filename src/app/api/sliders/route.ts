@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { requireAdmin } from '@/lib/admin-auth';
+import { createServiceClient, isServiceConfigured, ServiceConfigError } from '@/lib/supabase/service';
 
 export const dynamic = 'force-dynamic';
 
-// GET — List sliders
+// GET — List sliders (public — uses anon key)
 export async function GET() {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -28,19 +29,16 @@ export async function GET() {
   }
 }
 
-// POST — Add new slider
+// POST — Add new slider (admin — uses service role key)
 export async function POST(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json({ error: 'Supabase service role key is not configured correctly.' }, { status: 500 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const body = await req.json();
 
     const { data, error } = await supabase
@@ -58,23 +56,23 @@ export async function POST(req: Request) {
     return NextResponse.json(data, { status: 201 });
   } catch (error: any) {
     console.error('Error creating slider:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to create slider' }, { status: 500 });
   }
 }
 
-// PUT — Update slider
+// PUT — Update slider (admin — uses service role key)
 export async function PUT(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json({ error: 'Supabase service role key is not configured correctly.' }, { status: 500 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const body = await req.json();
     const { id, ...updateData } = body;
 
@@ -98,20 +96,20 @@ export async function PUT(req: Request) {
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Error updating slider:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to update slider' }, { status: 500 });
   }
 }
 
-// DELETE — Delete slider
+// DELETE — Delete slider (admin — uses service role key)
 export async function DELETE(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json({ error: 'Supabase service role key is not configured correctly.' }, { status: 500 });
     }
 
     const { searchParams } = new URL(req.url);
@@ -121,13 +119,16 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: 'Missing slider ID' }, { status: 400 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const { error } = await supabase.from('sliders').delete().eq('id', id);
 
     if (error) throw error;
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error('Error deleting slider:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to delete slider' }, { status: 500 });
   }
 }

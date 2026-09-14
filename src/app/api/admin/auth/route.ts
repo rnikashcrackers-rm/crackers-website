@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import * as crypto from 'crypto';
 
 export async function POST(req: Request) {
   try {
@@ -7,8 +8,13 @@ export async function POST(req: Request) {
     const adminPassword = process.env.ADMIN_PASSWORD || 'nikash@admin2026';
 
     if (password === adminPassword) {
-      // Simple token — in production use JWT
-      const token = Buffer.from(`admin:${Date.now()}:${adminPassword}`).toString('base64');
+      // Generate HMAC-based token — the password is NOT embedded in the token
+      const timestamp = Date.now().toString();
+      const hmacSecret = process.env.ADMIN_HMAC_SECRET || adminPassword;
+      const hmac = crypto.createHmac('sha256', hmacSecret)
+        .update(`admin:${timestamp}`)
+        .digest('hex');
+      const token = Buffer.from(`admin:${timestamp}:${hmac}`).toString('base64');
       return NextResponse.json({ success: true, token });
     }
 

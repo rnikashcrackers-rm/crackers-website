@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { requireAdmin } from '@/lib/admin-auth';
+import { createServiceClient, isServiceConfigured, ServiceConfigError } from '@/lib/supabase/service';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +20,7 @@ const DEFAULT_CATEGORIES = [
   { id: 'giftbox', label: 'Gift Boxes', emoji: '🎁', sort_order: 11 },
 ];
 
-// GET — List categories
+// GET — List categories (public — uses anon key)
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -70,19 +71,19 @@ export async function GET(req: Request) {
   }
 }
 
-// POST — Add new category
+// POST — Add new category (admin — uses service role key)
 export async function POST(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured. Please set SUPABASE_SERVICE_ROLE_KEY in environment.' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json(
+        { error: 'Supabase service role key is not configured correctly. Please set the correct SUPABASE_SERVICE_ROLE_KEY.' },
+        { status: 500 }
+      );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const body = await req.json();
 
     const id = body.id || body.label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -98,27 +99,33 @@ export async function POST(req: Request) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error creating category:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json(data, { status: 201 });
   } catch (error: any) {
     console.error('Error creating category:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to create category' }, { status: 500 });
   }
 }
 
-// PUT — Update category
+// PUT — Update category (admin — uses service role key)
 export async function PUT(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured. Please set SUPABASE_SERVICE_ROLE_KEY in environment.' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json(
+        { error: 'Supabase service role key is not configured correctly. Please set the correct SUPABASE_SERVICE_ROLE_KEY.' },
+        { status: 500 }
+      );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const body = await req.json();
     const { id, ...updateData } = body;
 
@@ -137,24 +144,30 @@ export async function PUT(req: Request) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error updating category:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json(data);
   } catch (error: any) {
     console.error('Error updating category:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to update category' }, { status: 500 });
   }
 }
 
-// DELETE — Delete category
+// DELETE — Delete category (admin — uses service role key)
 export async function DELETE(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured. Please set SUPABASE_SERVICE_ROLE_KEY in environment.' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json(
+        { error: 'Supabase service role key is not configured correctly. Please set the correct SUPABASE_SERVICE_ROLE_KEY.' },
+        { status: 500 }
+      );
     }
 
     const { searchParams } = new URL(req.url);
@@ -164,13 +177,19 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: 'Missing category ID' }, { status: 400 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const { error } = await supabase.from('categories').delete().eq('id', id);
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error deleting category:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error('Error deleting category:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: error.message || 'Failed to delete category' }, { status: 500 });
   }
 }

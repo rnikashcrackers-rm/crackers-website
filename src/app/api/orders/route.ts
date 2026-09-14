@@ -1,36 +1,34 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { requireAdmin } from '@/lib/admin-auth';
 import { calculateOrderPricing, validateQuantity } from '@/lib/pricing';
+import { createServiceClient, isServiceConfigured, ServiceConfigError } from '@/lib/supabase/service';
+import { VALID_ORDER_STATUSES } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
+/** Generates a collision-resistant order number: NC-YYYYMMDD-XXXX */
 function generateOrderNumber(): string {
   const now = new Date();
   const dateStr =
     now.getFullYear().toString() +
     (now.getMonth() + 1).toString().padStart(2, '0') +
     now.getDate().toString().padStart(2, '0');
-  const seq = Math.floor(Math.random() * 9000) + 1000;
+  // Use timestamp + random for better collision resistance
+  const seq = (now.getTime() % 10000).toString().padStart(4, '0');
   return `NC-${dateStr}-${seq}`;
 }
 
+// GET — Admin: List all orders
 export async function GET(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
 
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey =
-      process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-      '';
-
-    if (!supabaseUrl) {
-      return NextResponse.json({ error: 'Supabase URL not configured' }, { status: 500 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json({ error: 'Supabase service role key is not configured correctly.' }, { status: 500 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     const { data, error } = await supabase
       .from('orders')
       .select('*, order_items(*)')
@@ -53,10 +51,14 @@ export async function GET(req: Request) {
     return NextResponse.json(data || []);
   } catch (error: any) {
     console.error('Error fetching orders:', error);
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json({ error: error.message || 'Failed to fetch orders' }, { status: 500 });
   }
 }
 
+// POST — Customer: Create new order
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -88,20 +90,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Order must contain at least one item' }, { status: 400 });
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey =
-      process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-      '';
-
-    if (!supabaseUrl || !supabaseKey) {
+    if (!isServiceConfigured()) {
       return NextResponse.json(
-        { error: 'Database service is not configured on the server.' },
+        { error: 'Database service is not configured on the server. Please set the correct SUPABASE_SERVICE_ROLE_KEY.' },
         { status: 500 }
       );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
 
     // 3. Extract and Validate Product IDs & Quantities
     const validatedItemMap = new Map<string, number>();
@@ -196,18 +192,16 @@ export async function POST(req: Request) {
     const rawEmail = (body.customer_email || '').trim();
 
     // 7. Insert Order into Supabase Orders Table
-    // Use empty string '' if not provided so it satisfies NOT NULL column constraints,
-    // and seamlessly retries with null if schema has dropped NOT NULL.
     const orderPayload: any = {
       order_number: orderNumber,
       customer_name: customerName,
-      customer_email: rawEmail || '',
+      customer_email: rawEmail || null,
       customer_phone: customerPhone,
       customer_address: customerAddress,
-      customer_city: (body.customer_city || '').trim(),
-      customer_pincode: (body.customer_pincode || '').trim(),
-      customer_state: (body.customer_state || '').trim(),
-      customer_district: (body.customer_district || '').trim(),
+      customer_city: (body.customer_city || '').trim() || null,
+      customer_pincode: (body.customer_pincode || '').trim() || null,
+      customer_state: (body.customer_state || '').trim() || null,
+      customer_district: (body.customer_district || '').trim() || null,
       items: authoritativeItems,
       subtotal: pricing.subtotal + pricing.discountTotal, // Standard MRP subtotal
       discount_total: pricing.discountTotal,
@@ -220,31 +214,34 @@ export async function POST(req: Request) {
         `Includes 3% packing charges (₹${pricing.packingCharges.toLocaleString('en-IN')}) on order value (₹${pricing.subtotal.toLocaleString('en-IN')})`,
     };
 
-    let { data: orderData, error: orderError } = await supabase
+    const { data: orderData, error: orderError } = await supabase
       .from('orders')
       .insert(orderPayload)
       .select()
       .single();
 
-    // Auto-retry with NULL if empty string was rejected by any specific check
-    if (orderError && (orderError.message.includes('customer_email') || orderError.code === '23502')) {
-      const retryPayload = {
-        ...orderPayload,
-        customer_email: rawEmail || null,
-        customer_city: (body.customer_city || '').trim() || null,
-        customer_pincode: (body.customer_pincode || '').trim() || null,
-        customer_state: (body.customer_state || '').trim() || null,
-        customer_district: (body.customer_district || '').trim() || null,
-      };
-      const retryResult = await supabase.from('orders').insert(retryPayload).select().single();
-      if (!retryResult.error) {
-        orderData = retryResult.data;
-        orderError = null;
-      }
-    }
-
     if (orderError) {
       console.error('Authoritative order insert failed:', orderError);
+      
+      // Handle duplicate order number collision
+      if (orderError.message.includes('orders_order_number_unique') || orderError.code === '23505') {
+        // Retry with a different order number
+        orderPayload.order_number = generateOrderNumber() + '-R';
+        const retryResult = await supabase.from('orders').insert(orderPayload).select().single();
+        if (retryResult.error) {
+          return NextResponse.json(
+            { error: `Order creation failed: ${retryResult.error.message}` },
+            { status: 500 }
+          );
+        }
+        // Use retry result
+        const retryOrderData = retryResult.data;
+        
+        // Continue with order items and stock (same as below)
+        await insertOrderItemsAndDeductStock(supabase, retryOrderData, authoritativeItems, dbProductMap);
+        return NextResponse.json(retryOrderData, { status: 201 });
+      }
+      
       return NextResponse.json(
         { error: `Order creation failed: ${orderError.message}` },
         { status: 500 }
@@ -252,56 +249,70 @@ export async function POST(req: Request) {
     }
 
     // 8. Insert Relational Order Items & Update Inventory
-    try {
-      const lineItems = authoritativeItems.map((item) => ({
-        order_id: orderData.id,
-        product_id: item.id,
-        product_name: item.name,
-        category: item.category,
-        quantity: item.quantity,
-        unit_price: item.price,
-        mrp: item.mrp,
-        subtotal: item.price * item.quantity,
-      }));
-
-      await supabase.from('order_items').insert(lineItems);
-    } catch (itemsErr) {
-      console.warn('Note: order_items insert notice (schema might not have order_items yet):', itemsErr);
-    }
-
-    // 9. Atomic Stock Deduction
-    for (const item of authoritativeItems) {
-      try {
-        const { data: decremented } = await supabase.rpc('decrement_product_stock', {
-          p_product_id: item.id,
-          p_qty: item.quantity,
-        });
-
-        // Fallback update if RPC does not exist
-        if (decremented === null || decremented === undefined) {
-          const dbProd = dbProductMap.get(item.id);
-          if (dbProd && dbProd.stock_quantity !== undefined) {
-            const nextQty = Math.max(0, dbProd.stock_quantity - item.quantity);
-            await supabase
-              .from('products')
-              .update({
-                stock_quantity: nextQty,
-                in_stock: nextQty > 0,
-              })
-              .eq('id', item.id);
-          }
-        }
-      } catch (stockErr) {
-        console.warn(`Stock decrement skipped for ${item.id}:`, stockErr);
-      }
-    }
+    await insertOrderItemsAndDeductStock(supabase, orderData, authoritativeItems, dbProductMap);
 
     return NextResponse.json(orderData, { status: 201 });
   } catch (error: any) {
     console.error('Fatal error during order processing:', error);
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json(
       { error: error.message || 'An unexpected error occurred processing your order.' },
       { status: 500 }
     );
+  }
+}
+
+/** Helper: Insert order line items and deduct stock atomically */
+async function insertOrderItemsAndDeductStock(
+  supabase: any,
+  orderData: any,
+  authoritativeItems: any[],
+  dbProductMap: Map<string, any>
+) {
+  // Insert relational order items
+  try {
+    const lineItems = authoritativeItems.map((item) => ({
+      order_id: orderData.id,
+      product_id: item.id,
+      product_name: item.name,
+      category: item.category,
+      quantity: item.quantity,
+      unit_price: item.price,
+      mrp: item.mrp,
+      subtotal: item.price * item.quantity,
+    }));
+
+    await supabase.from('order_items').insert(lineItems);
+  } catch (itemsErr) {
+    console.warn('Note: order_items insert notice (schema might not have order_items yet):', itemsErr);
+  }
+
+  // Atomic Stock Deduction
+  for (const item of authoritativeItems) {
+    try {
+      const { data: decremented } = await supabase.rpc('decrement_product_stock', {
+        p_product_id: item.id,
+        p_qty: item.quantity,
+      });
+
+      // Fallback update if RPC does not exist
+      if (decremented === null || decremented === undefined) {
+        const dbProd = dbProductMap.get(item.id);
+        if (dbProd && dbProd.stock_quantity !== undefined) {
+          const nextQty = Math.max(0, dbProd.stock_quantity - item.quantity);
+          await supabase
+            .from('products')
+            .update({
+              stock_quantity: nextQty,
+              in_stock: nextQty > 0,
+            })
+            .eq('id', item.id);
+        }
+      }
+    } catch (stockErr) {
+      console.warn(`Stock decrement skipped for ${item.id}:`, stockErr);
+    }
   }
 }

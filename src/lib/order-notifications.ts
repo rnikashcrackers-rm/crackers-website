@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/lib/supabase/service';
 import { Resend } from 'resend';
 
 export interface SendNotificationOptions {
@@ -14,14 +14,7 @@ export async function sendOrderStatusNotification(options: SendNotificationOptio
   const { order, trackingInfo, customMessage, sendWhatsApp = true, sendEmail = true } = options;
   const status = options.status || order.status;
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase not configured on the server');
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = createServiceClient();
 
   // Fetch site settings
   const { data: settingsData } = await supabase

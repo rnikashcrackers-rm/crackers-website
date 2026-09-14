@@ -1,15 +1,12 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createServiceClient, isServiceConfigured, ServiceConfigError } from '@/lib/supabase/service';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-    if (!supabaseUrl || supabaseUrl.includes('your_supabase')) {
-      return NextResponse.json({ error: 'Supabase not configured' }, { status: 400 });
+    if (!isServiceConfigured()) {
+      return NextResponse.json({ error: 'Supabase not configured for file uploads' }, { status: 400 });
     }
 
     const formData = await req.formData();
@@ -18,7 +15,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
     
     // Generate unique filename
     const ext = file.name.split('.').pop() || 'jpg';
@@ -57,6 +54,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: urlData.publicUrl });
   } catch (error: any) {
     console.error('Upload error:', error);
+    if (error instanceof ServiceConfigError) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
     return NextResponse.json({ error: error.message || 'Upload failed' }, { status: 500 });
   }
 }
