@@ -192,15 +192,16 @@ export default function EnquiryPage() {
       
       setOrderResult(data);
       setStep(4);
-      setEmailStatus('sending');
-      setReceiptStatus('generating');
 
       // Authoritative database values
       const authItems = data.items || orderItems;
       const authTotal = Number(data.total_amount) || grandTotal;
       const authSubtotal = Number(data.subtotal) || (getTotal() + getSavings());
       const authDiscount = Number(data.discount_total) || getSavings();
-      const authEmail = data.customer_email || customerInfo.email || '';
+      const authEmail = (data.customer_email || customerInfo.email || '').trim();
+
+      setEmailStatus(authEmail ? 'sending' : 'skipped');
+      setReceiptStatus('generating');
 
       // 1. Generate PDF & Prepare Base64
       let pdfBase64Data = null;
@@ -264,22 +265,30 @@ export default function EnquiryPage() {
         }),
       })
       .then(async (emailRes) => {
-        const emailData = await emailRes.json();
+        const emailData = await emailRes.json().catch(() => ({}));
         if (emailRes.ok) {
-          if (emailData.skipped) {
+          if (!authEmail || emailData.skipped || emailData.skippedCustomerEmail) {
             setEmailStatus('skipped');
           } else {
             setEmailStatus('sent');
           }
         } else {
-          setEmailStatus('failed');
-          setEmailErrorMessage(emailData.error || 'Mail delivery failed.');
+          if (!authEmail) {
+            setEmailStatus('skipped');
+          } else {
+            setEmailStatus('failed');
+            setEmailErrorMessage(emailData.error || 'Mail delivery failed.');
+          }
         }
       })
       .catch(err => {
         console.error('Email receipt dispatch error:', err);
-        setEmailStatus('failed');
-        setEmailErrorMessage(err instanceof Error ? err.message : String(err));
+        if (authEmail) {
+          setEmailStatus('failed');
+          setEmailErrorMessage(err instanceof Error ? err.message : String(err));
+        } else {
+          setEmailStatus('skipped');
+        }
       });
 
       // 3. Trigger WhatsApp notification automatically
@@ -927,7 +936,7 @@ export default function EnquiryPage() {
               {/* Email Address (Optional) */}
               <div>
                 <label className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase tracking-wider">
-                  Email Address
+                  Email Address <span className="text-slate-400 font-normal lowercase tracking-normal">(optional)</span>
                 </label>
                 <input
                   id="input-email"

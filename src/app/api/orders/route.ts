@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin-auth';
 import { calculateOrderPricing, validateQuantity } from '@/lib/pricing';
 import { createServiceClient, isServiceConfigured, ServiceConfigError } from '@/lib/supabase/service';
-import { VALID_ORDER_STATUSES } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,10 +44,18 @@ export async function GET(req: Request) {
         console.error('Database error fetching orders:', fallbackQuery.error);
         return NextResponse.json({ error: fallbackQuery.error.message }, { status: 500 });
       }
-      return NextResponse.json(fallbackQuery.data || []);
+      const normalizedFallback = (fallbackQuery.data || []).map((o: any) => ({
+        ...o,
+        customer_email: (o.customer_email && o.customer_email.trim()) ? o.customer_email.trim() : null,
+      }));
+      return NextResponse.json(normalizedFallback);
     }
 
-    return NextResponse.json(data || []);
+    const normalizedData = (data || []).map((o: any) => ({
+      ...o,
+      customer_email: (o.customer_email && o.customer_email.trim()) ? o.customer_email.trim() : null,
+    }));
+    return NextResponse.json(normalizedData);
   } catch (error: any) {
     console.error('Error fetching orders:', error);
     if (error instanceof ServiceConfigError) {
@@ -189,13 +196,24 @@ export async function POST(req: Request) {
     const pricing = calculateOrderPricing(authoritativeItems);
     const orderNumber = generateOrderNumber();
 
-    const rawEmail = (body.customer_email || '').trim();
+    // Customer email is strictly optional. Validate format only if provided.
+    const rawEmail = typeof body.customer_email === 'string' ? body.customer_email.trim() : '';
+    const normalizedEmail = (rawEmail && rawEmail.length > 0 && rawEmail !== 'null' && rawEmail !== 'undefined') ? rawEmail : null;
+    if (normalizedEmail) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(normalizedEmail)) {
+        return NextResponse.json(
+          { error: 'Please enter a valid email address, or leave the email field blank.' },
+          { status: 400 }
+        );
+      }
+    }
 
     // 7. Insert Order into Supabase Orders Table
     const orderPayload: any = {
       order_number: orderNumber,
       customer_name: customerName,
-      customer_email: rawEmail || null,
+      customer_email: normalizedEmail,
       customer_phone: customerPhone,
       customer_address: customerAddress,
       customer_city: (body.customer_city || '').trim() || null,
@@ -214,7 +232,7 @@ export async function POST(req: Request) {
         `Includes 3% packing charges (₹${pricing.packingCharges.toLocaleString('en-IN')}) on order value (₹${pricing.subtotal.toLocaleString('en-IN')})`,
     };
 
-    const { data: orderData, error: orderError } = await supabase
+    let { data: orderData, error: orderError } = await supabase
       .from('orders')
       .insert(orderPayload)
       .select()
@@ -222,30 +240,53 @@ export async function POST(req: Request) {
 
     if (orderError) {
       console.error('Authoritative order insert failed:', orderError);
-      
-      // Handle duplicate order number collision
-      if (orderError.message.includes('orders_order_number_unique') || orderError.code === '23505') {
-        // Retry with a different order number
-        orderPayload.order_number = generateOrderNumber() + '-R';
-        const retryResult = await supabase.from('orders').insert(orderPayload).select().single();
-        if (retryResult.error) {
-          return NextResponse.json(
-            { error: `Order creation failed: ${retryResult.error.message}` },
-            { status: 500 }
-          );
+
+      // A. Gracefully resolve customer_email NOT NULL constraint if database has not applied Migration 03
+      const isEmailConstraintError = 
+        (orderError.code === '23502' && String(orderError.message).includes('customer_email')) ||
+        String(orderError.message || '').toLowerCase().includes('customer_email');
+
+      if (isEmailConstraintError) {
+        console.warn('Orders table returned NOT NULL constraint on customer_email. Retrying insert with empty string fallback.');
+        const emailFallbackPayload = { ...orderPayload, customer_email: '' };
+        const fallbackRes = await supabase.from('orders').insert(emailFallbackPayload).select().single();
+        if (!fallbackRes.error && fallbackRes.data) {
+          orderData = { ...fallbackRes.data, customer_email: null };
+          orderError = null;
+        } else if (fallbackRes.error) {
+          orderError = fallbackRes.error;
         }
-        // Use retry result
-        const retryOrderData = retryResult.data;
-        
-        // Continue with order items and stock (same as below)
-        await insertOrderItemsAndDeductStock(supabase, retryOrderData, authoritativeItems, dbProductMap);
-        return NextResponse.json(retryOrderData, { status: 201 });
       }
-      
-      return NextResponse.json(
-        { error: `Order creation failed: ${orderError.message}` },
-        { status: 500 }
-      );
+
+      // B. Handle order number collision (unique constraint)
+      if (orderError && (orderError.message?.includes('orders_order_number_unique') || orderError.code === '23505')) {
+        const retryNumber = generateOrderNumber() + '-R';
+        const retryPayload = { ...orderPayload, order_number: retryNumber };
+        const retryRes = await supabase.from('orders').insert(retryPayload).select().single();
+        if (!retryRes.error && retryRes.data) {
+          orderData = retryRes.data;
+          orderError = null;
+        } else if (retryRes.error && (retryRes.error.code === '23502' || retryRes.error.message?.includes('customer_email'))) {
+          // Double fallback: retry with both new order number and empty email
+          const doubleRetryPayload = { ...orderPayload, order_number: retryNumber, customer_email: '' };
+          const doubleRes = await supabase.from('orders').insert(doubleRetryPayload).select().single();
+          if (!doubleRes.error && doubleRes.data) {
+            orderData = { ...doubleRes.data, customer_email: null };
+            orderError = null;
+          } else {
+            orderError = doubleRes.error;
+          }
+        } else {
+          orderError = retryRes.error;
+        }
+      }
+
+      if (orderError) {
+        return NextResponse.json(
+          { error: 'Order creation could not be completed. Please verify your details and try again.' },
+          { status: 500 }
+        );
+      }
     }
 
     // 8. Insert Relational Order Items & Update Inventory

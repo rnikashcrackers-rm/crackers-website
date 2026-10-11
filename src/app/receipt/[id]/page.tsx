@@ -52,7 +52,7 @@ export default function ReceiptDownloadPage({ params }: PageProps) {
       const itemsTotal = orderItems.reduce((sum: number, item: any) => sum + (item.price || 0) * (item.quantity || 0), 0);
       const diff = (order.total_amount || 0) - itemsTotal;
       const calculatedPacking = Math.round(itemsTotal * 0.03);
-      const packingCharges = (diff >= calculatedPacking - 2 && diff <= calculatedPacking + 2) ? diff : 0;
+      const packingCharges = diff > 0 ? diff : calculatedPacking;
 
       const doc = await generateReceipt({
         orderNumber: order.order_number,

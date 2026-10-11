@@ -222,8 +222,8 @@ export async function POST(req: Request) {
         mrp,
         discount_percent,
         badge_text: discount_percent > 0 ? `🔥 ${discount_percent}% OFF` : null,
-        image_url: body.image_url || null,
-        in_stock: body.in_stock !== undefined ? body.in_stock : true,
+        image_url: (typeof body.image_url === 'string' && body.image_url.trim() && body.image_url.trim() !== 'null') ? body.image_url.trim() : null,
+        in_stock: body.in_stock !== undefined ? Boolean(body.in_stock) : true,
         is_featured: body.is_featured || body.featured || false,
       })
       .select()

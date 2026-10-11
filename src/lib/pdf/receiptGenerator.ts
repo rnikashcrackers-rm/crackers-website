@@ -1,4 +1,4 @@
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 
 // Helper to render mixed Tamil and English lines (with optional bold title) to a canvas and return an image data URL
 function renderTamilEnglishSectionToImage(title: string, lines: string[], fontSize: number, widthMm: number, lineSpacing: number = 3): { dataUrl: string, heightMm: number } {
@@ -172,15 +172,19 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
 
   // ─── Load logo ────────────────────────────────────────────────────────
   let logoLoaded = false;
-  const logoImg = new Image();
-  logoImg.crossOrigin = 'anonymous';
-  try {
-    await new Promise<void>((resolve) => {
-      logoImg.onload = () => { logoLoaded = true; resolve(); };
-      logoImg.onerror = () => resolve();
-      logoImg.src = '/logo/logo.png';
-    });
-  } catch { /* silent */ }
+  let logoImg: HTMLImageElement | null = null;
+  if (typeof Image !== 'undefined') {
+    logoImg = new Image();
+    logoImg.crossOrigin = 'anonymous';
+    try {
+      await new Promise<void>((resolve) => {
+        if (!logoImg) return resolve();
+        logoImg.onload = () => { logoLoaded = true; resolve(); };
+        logoImg.onerror = () => resolve();
+        logoImg.src = '/logo/logo.png';
+      });
+    } catch { /* silent */ }
+  }
 
   // ═══════════════════════════════════════════════════════════════════════
   //  COLUMN LAYOUT — well-spaced, no overflow
@@ -206,7 +210,7 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
     y = M;
 
     // Logo
-    if (logoLoaded && logoImg.complete && logoImg.naturalHeight > 0) {
+    if (logoLoaded && logoImg && logoImg.complete && logoImg.naturalHeight > 0) {
       doc.addImage(logoImg, 'PNG', M, y, 20, 20, undefined, 'FAST');
     }
 
@@ -416,15 +420,21 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   doc.setFontSize(7);
   doc.setTextColor(...C.dark);
   doc.text('Phone:  ' + String(data.customerPhone || ''), M + 6, y + 17);
-  if (data.customerEmail) {
-    doc.text('Email:  ' + String(data.customerEmail), M + 6, y + 21.5);
+  const cleanEmail = (typeof data.customerEmail === 'string') ? data.customerEmail.trim() : '';
+  const hasValidEmail = Boolean(cleanEmail && cleanEmail !== 'null' && cleanEmail !== 'undefined');
+  if (hasValidEmail) {
+    doc.text('Email:  ' + cleanEmail, M + 6, y + 21.5);
+  } else {
+    doc.setTextColor(...C.mid);
+    doc.text('Email:  Not provided', M + 6, y + 21.5);
+    doc.setTextColor(...C.dark);
   }
   if (hasAddr) {
     doc.setFontSize(6.5);
     doc.setTextColor(...C.mid);
     const addr = [custAddress, custCity, custPincode].filter(Boolean).join(', ');
     const addrLines = doc.splitTextToSize(addr, CW / 2 - 14);
-    doc.text(addrLines, M + 6, data.customerEmail ? y + 26 : y + 21.5);
+    doc.text(addrLines, M + 6, y + 26);
   }
 
   // RIGHT: Place of Supply & Transport
@@ -599,23 +609,25 @@ export async function generateReceipt(data: ReceiptData): Promise<jsPDF> {
   y += 4;
 
   // NET PAYABLE bar (Grand Total)
-  const finalGrandTotal = netValue + packingCharges;
+  const finalGrandTotal = (typeof data.totalAmount === 'number' && data.totalAmount > 0)
+    ? data.totalAmount
+    : (netValue + packingCharges);
   const npX = totLabelX - 4;
   const npW = PAGE_W - M - npX;
   doc.setFillColor(...C.tableHead);
   doc.roundedRect(npX, y - 2.5, npW, 11, 1.5, 1.5, 'F');
 
-  doc.setFontSize(8.5);
+  doc.setFontSize(9);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...C.white);
   doc.text('NET PAYABLE AMOUNT:', npX + 4, y + 4.5);
-  doc.setTextColor(...C.coral);
+  // Prominently display the calculated amount in contrasting white bold text
   doc.text(rs(finalGrandTotal), PAGE_W - M - 4, y + 4.5, { align: 'right' });
 
   // ── Authorized Signatory (left side, dynamically aligned with Net Payable) ──
   const sigX = 44;
   const sigLineY = y - 1; // Aligned near the top of the Net Payable bar
-  if (logoLoaded && logoImg.complete && logoImg.naturalHeight > 0) {
+  if (logoLoaded && logoImg && logoImg.complete && logoImg.naturalHeight > 0) {
     doc.addImage(logoImg, 'PNG', 57.5, sigLineY - 20, 18, 18, undefined, 'FAST');
   }
   doc.setDrawColor(...C.border);

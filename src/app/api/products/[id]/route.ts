@@ -84,9 +84,12 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     if (body.category !== undefined) updateData.category = body.category;
     if (body.price !== undefined) updateData.price = Number(body.price);
     if (body.mrp !== undefined) updateData.mrp = Number(body.mrp);
-    if (body.image_url !== undefined) updateData.image_url = body.image_url;
-    if (body.in_stock !== undefined) updateData.in_stock = body.in_stock;
-    if (body.is_featured !== undefined) updateData.is_featured = body.is_featured;
+    if (body.image_url !== undefined) {
+      const cleanImg = typeof body.image_url === 'string' ? body.image_url.trim() : '';
+      updateData.image_url = (cleanImg && cleanImg !== 'null' && cleanImg !== 'undefined') ? cleanImg : null;
+    }
+    if (body.in_stock !== undefined) updateData.in_stock = Boolean(body.in_stock);
+    if (body.is_featured !== undefined) updateData.is_featured = Boolean(body.is_featured);
     if (body.stock_quantity !== undefined) {
       updateData.stock_quantity = Math.max(0, parseInt(body.stock_quantity, 10) || 0);
       updateData.in_stock = updateData.stock_quantity > 0;

@@ -21,13 +21,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       .eq('id', id)
       .single();
 
+    let orderData = data;
     if (error) {
       const fallback = await supabase.from('orders').select('*').eq('id', id).single();
       if (fallback.error) throw fallback.error;
-      return NextResponse.json(fallback.data);
+      orderData = fallback.data;
     }
 
-    return NextResponse.json(data);
+    if (orderData) {
+      orderData = {
+        ...orderData,
+        customer_email: (orderData.customer_email && orderData.customer_email.trim()) ? orderData.customer_email.trim() : null,
+      };
+    }
+
+    return NextResponse.json(orderData);
   } catch (error: any) {
     console.error('Error fetching order:', error);
     return NextResponse.json({ error: 'Order not found' }, { status: 404 });

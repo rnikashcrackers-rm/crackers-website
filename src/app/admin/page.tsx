@@ -1022,12 +1022,13 @@ export default function AdminPage() {
         } else if (target === 'slider') {
           setCurrentSlider((prev: any) => prev ? { ...prev, image_url: data.url } : prev);
         }
+        showSuccess('✅ Image uploaded successfully!');
       } else {
         alert('Upload failed: ' + (data.error || 'Unknown error'));
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Upload error:', err);
-      alert('Image upload failed. Please try again.');
+      alert('Image upload failed: ' + (err.message || 'Please check network and try again.'));
     }
     setUploading(false);
   };
@@ -1968,6 +1969,7 @@ export default function AdminPage() {
                             }}
                           />
                         </th>
+                        <th className="p-4 w-14 text-center">Image</th>
                         <th className="p-4">Label Name</th>
                         <th className="p-4">Category</th>
                         <th className="p-4 text-right">Standard MRP</th>
@@ -1993,6 +1995,22 @@ export default function AdminPage() {
                                 }
                               }}
                             />
+                          </td>
+                          <td className="p-4 text-center">
+                            {p.image_url ? (
+                              <div className="w-10 h-10 rounded-lg overflow-hidden border border-[#22345E] mx-auto bg-[#0B132B] flex items-center justify-center p-0.5">
+                                <img
+                                  src={p.image_url}
+                                  alt={p.name_en}
+                                  className="w-full h-full object-contain"
+                                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                                />
+                              </div>
+                            ) : (
+                              <div className="w-10 h-10 rounded-lg border border-dashed border-[#22345E] flex items-center justify-center mx-auto text-slate-500 text-xs">
+                                🎆
+                              </div>
+                            )}
                           </td>
                           <td className="p-4">
                             <div className="font-bold text-white">{p.name_en}</div>
@@ -2888,7 +2906,7 @@ export default function AdminPage() {
                     <div className="bg-[#172448]/60/60 border border-[#172448] rounded-xl p-4 space-y-2">
                       <div className="font-bold text-white">{inspectedOrder.customer_name}</div>
                       <div>📞 {inspectedOrder.customer_phone}</div>
-                      <div>✉️ {inspectedOrder.customer_email || 'N/A'}</div>
+                      <div>✉️ {inspectedOrder.customer_email ? inspectedOrder.customer_email : <span className="text-slate-400 italic">Not provided</span>}</div>
                       <div className="pt-2 border-t border-[#172448]/40 mt-1 flex gap-2 items-start text-slate-300">
                         <MapPin size={12} className="shrink-0 mt-0.5 text-[#F7B733]" />
                         <span>{[inspectedOrder.customer_address, inspectedOrder.customer_city, inspectedOrder.customer_pincode].filter(Boolean).join(', ')}</span>
@@ -3051,10 +3069,11 @@ export default function AdminPage() {
                   </button>
                   <button 
                     onClick={() => handleResendReceiptEmail(inspectedOrder)}
-                    disabled={resendingEmailId === inspectedOrder.id}
+                    disabled={resendingEmailId === inspectedOrder.id || !inspectedOrder.customer_email}
                     className="flex-1 py-3 bg-gradient-to-r from-[#F7B733] to-[#D49619] hover:shadow-[0_0_15px_rgba(212,175,55,0.15)] text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-40"
+                    title={!inspectedOrder.customer_email ? 'No customer email provided for this order' : 'Resend email receipt'}
                   >
-                    <Send size={13} /> {resendingEmailId === inspectedOrder.id ? 'Resending...' : 'Resend Receipt'}
+                    <Send size={13} /> {resendingEmailId === inspectedOrder.id ? 'Resending...' : (!inspectedOrder.customer_email ? 'No Email' : 'Resend Receipt')}
                   </button>
                 </div>
               </div>
@@ -3166,6 +3185,7 @@ export default function AdminPage() {
                           onChange={(e) => {
                             const f = e.target.files?.[0];
                             if (f) handleImageUpload(f, 'product');
+                            e.target.value = '';
                           }} 
                         />
                         {uploading ? (
@@ -3184,8 +3204,21 @@ export default function AdminPage() {
                       />
                     </div>
                     {currentProduct.image_url && (
-                      <div className="w-16 h-16 rounded-xl overflow-hidden border border-[#172448] flex-shrink-0 bg-[#172448]/60">
-                        <img src={currentProduct.image_url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                      <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-[#22345E] flex-shrink-0 bg-[#0B132B] group">
+                        <img 
+                          src={currentProduct.image_url} 
+                          alt="Preview" 
+                          className="w-full h-full object-contain p-1" 
+                          onError={(e) => { (e.target as HTMLImageElement).src = '/logo/logo.png'; }} 
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setCurrentProduct({ ...currentProduct, image_url: null })}
+                          className="absolute top-1 right-1 bg-rose-600/90 hover:bg-rose-600 text-white p-1 rounded-full text-[10px] transition-all shadow-md cursor-pointer"
+                          title="Remove image"
+                        >
+                          <X size={10} />
+                        </button>
                       </div>
                     )}
                   </div>

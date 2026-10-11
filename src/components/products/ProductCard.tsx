@@ -17,6 +17,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
   const addItem = useEnquiryStore((state) => state.addItem);
   const updateQuantity = useEnquiryStore((state) => state.updateQuantity);
   const [isAdded, setIsAdded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const cartItem = useMemo(() => items.find(i => String(i.product.id) === String(product.id)), [items, product.id]);
   const inCartQty = cartItem ? cartItem.quantity : 0;
@@ -52,7 +53,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
         <div className="flex gap-1.5 sm:gap-4 items-center min-w-0">
           {/* Image Frame Deck */}
           <div className="relative w-12 h-12 sm:w-20 sm:h-20 rounded-lg bg-[#0B132B] flex items-center justify-center p-0.5 shrink-0 border border-[#172448] shadow-inner overflow-hidden">
-            {product.image_url ? (
+            {product.image_url && !imgError ? (
               <Image
                 src={product.image_url}
                 alt={product.name_en}
@@ -60,6 +61,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
                 sizes="80px"
                 className="object-contain p-0.5"
                 loading="lazy"
+                onError={() => setImgError(true)}
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
@@ -231,7 +233,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
       {/* Image Deck */}
       <div className="p-1 sm:p-2.5">
         <div className="relative w-full aspect-square rounded-lg sm:rounded-xl bg-[#0B132B] overflow-hidden border border-[#172448] flex items-center justify-center p-1 sm:p-2">
-          {product.image_url ? (
+          {product.image_url && !imgError ? (
             <Image
               src={product.image_url}
               alt={product.name_en}
@@ -239,6 +241,7 @@ export function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
               sizes="(max-width: 640px) 45vw, (max-width: 1024px) 33vw, 25vw"
               className={`object-contain p-1 sm:p-2 transition-transform duration-500 ${product.in_stock ? 'group-hover:scale-105' : 'opacity-40'}`}
               loading="lazy"
+              onError={() => setImgError(true)}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
