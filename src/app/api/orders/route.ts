@@ -210,10 +210,13 @@ export async function POST(req: Request) {
     }
 
     // 7. Insert Order into Supabase Orders Table
+    // Use empty string fallback directly for missing email to avoid 23502 NOT NULL constraint roundtrip
+    const dbCustomerEmail = normalizedEmail ?? '';
+
     const orderPayload: any = {
       order_number: orderNumber,
       customer_name: customerName,
-      customer_email: normalizedEmail,
+      customer_email: dbCustomerEmail,
       customer_phone: customerPhone,
       customer_address: customerAddress,
       customer_city: (body.customer_city || '').trim() || null,
@@ -241,41 +244,14 @@ export async function POST(req: Request) {
     if (orderError) {
       console.error('Authoritative order insert failed:', orderError);
 
-      // A. Gracefully resolve customer_email NOT NULL constraint if database has not applied Migration 03
-      const isEmailConstraintError = 
-        (orderError.code === '23502' && String(orderError.message).includes('customer_email')) ||
-        String(orderError.message || '').toLowerCase().includes('customer_email');
-
-      if (isEmailConstraintError) {
-        console.warn('Orders table returned NOT NULL constraint on customer_email. Retrying insert with empty string fallback.');
-        const emailFallbackPayload = { ...orderPayload, customer_email: '' };
-        const fallbackRes = await supabase.from('orders').insert(emailFallbackPayload).select().single();
-        if (!fallbackRes.error && fallbackRes.data) {
-          orderData = { ...fallbackRes.data, customer_email: null };
-          orderError = null;
-        } else if (fallbackRes.error) {
-          orderError = fallbackRes.error;
-        }
-      }
-
-      // B. Handle order number collision (unique constraint)
-      if (orderError && (orderError.message?.includes('orders_order_number_unique') || orderError.code === '23505')) {
+      // Handle order number collision (unique constraint)
+      if (orderError.message?.includes('orders_order_number_unique') || orderError.code === '23505') {
         const retryNumber = generateOrderNumber() + '-R';
         const retryPayload = { ...orderPayload, order_number: retryNumber };
         const retryRes = await supabase.from('orders').insert(retryPayload).select().single();
         if (!retryRes.error && retryRes.data) {
           orderData = retryRes.data;
           orderError = null;
-        } else if (retryRes.error && (retryRes.error.code === '23502' || retryRes.error.message?.includes('customer_email'))) {
-          // Double fallback: retry with both new order number and empty email
-          const doubleRetryPayload = { ...orderPayload, order_number: retryNumber, customer_email: '' };
-          const doubleRes = await supabase.from('orders').insert(doubleRetryPayload).select().single();
-          if (!doubleRes.error && doubleRes.data) {
-            orderData = { ...doubleRes.data, customer_email: null };
-            orderError = null;
-          } else {
-            orderError = doubleRes.error;
-          }
         } else {
           orderError = retryRes.error;
         }
@@ -289,7 +265,12 @@ export async function POST(req: Request) {
       }
     }
 
-    // 8. Insert Relational Order Items & Update Inventory
+    if (orderData) {
+      // Normalize email output to clean null if it was stored as empty string
+      orderData = { ...orderData, customer_email: normalizedEmail };
+    }
+
+    // 8. Insert Relational Order Items & Update Inventory in parallel for ultra-fast response
     await insertOrderItemsAndDeductStock(supabase, orderData, authoritativeItems, dbProductMap);
 
     return NextResponse.json(orderData, { status: 201 });
@@ -305,43 +286,45 @@ export async function POST(req: Request) {
   }
 }
 
-/** Helper: Insert order line items and deduct stock atomically */
+/** Helper: Insert order line items and deduct stock concurrently for blazing fast order placement */
 async function insertOrderItemsAndDeductStock(
   supabase: any,
   orderData: any,
   authoritativeItems: any[],
   dbProductMap: Map<string, any>
 ) {
-  // Insert relational order items
-  try {
-    const lineItems = authoritativeItems.map((item) => ({
-      order_id: orderData.id,
-      product_id: item.id,
-      product_name: item.name,
-      category: item.category,
-      quantity: item.quantity,
-      unit_price: item.price,
-      mrp: item.mrp,
-      subtotal: item.price * item.quantity,
-    }));
+  const lineItems = authoritativeItems.map((item) => ({
+    order_id: orderData.id,
+    product_id: item.id,
+    product_name: item.name,
+    category: item.category,
+    quantity: item.quantity,
+    unit_price: item.price,
+    mrp: item.mrp,
+    subtotal: item.price * item.quantity,
+  }));
 
-    await supabase.from('order_items').insert(lineItems);
-  } catch (itemsErr) {
-    console.warn('Note: order_items insert notice (schema might not have order_items yet):', itemsErr);
-  }
+  // 1. Bulk insert order_items
+  const itemsPromise = supabase
+    .from('order_items')
+    .insert(lineItems)
+    .then(() => {})
+    .catch((err: any) => {
+      console.warn('Note: order_items insert notice (schema might not have order_items yet):', err);
+    });
 
-  // Atomic Stock Deduction
-  for (const item of authoritativeItems) {
+  // 2. Parallel stock deduction for all ordered products
+  const stockPromises = authoritativeItems.map(async (item) => {
     try {
       const { data: decremented } = await supabase.rpc('decrement_product_stock', {
         p_product_id: item.id,
         p_qty: item.quantity,
       });
 
-      // Fallback update if RPC does not exist
-      if (decremented === null || decremented === undefined) {
+      // Fallback update if RPC does not decrement
+      if (decremented === null || decremented === undefined || decremented === false) {
         const dbProd = dbProductMap.get(item.id);
-        if (dbProd && dbProd.stock_quantity !== undefined) {
+        if (dbProd && dbProd.stock_quantity !== undefined && dbProd.stock_quantity !== null) {
           const nextQty = Math.max(0, dbProd.stock_quantity - item.quantity);
           await supabase
             .from('products')
@@ -355,5 +338,9 @@ async function insertOrderItemsAndDeductStock(
     } catch (stockErr) {
       console.warn(`Stock decrement skipped for ${item.id}:`, stockErr);
     }
-  }
+  });
+
+  // Run all database persistence tasks concurrently in parallel!
+  await Promise.allSettled([itemsPromise, ...stockPromises]);
 }
+
